@@ -1,5 +1,7 @@
 ## This is my Leetcode Solution Repo
 
+- Programming Language: Java
+
 - Array 
   - Binary Search
     - 704, 1351, 702
