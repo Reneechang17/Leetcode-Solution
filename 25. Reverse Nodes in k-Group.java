@@ -1,7 +1,7 @@
-/**
- * Definition for singly-linked list.
+// Hard
+// LinkedList
+// O(n)
 
- */
 class Solution {
     public class ListNode {
          int val;
