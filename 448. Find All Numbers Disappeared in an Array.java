@@ -1,6 +1,7 @@
 // Easy
 // Array
 // O(n)
+// Similar: 76,567
 
 import java.util.LinkedList;
 import java.util.List;
