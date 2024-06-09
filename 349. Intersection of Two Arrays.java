@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Easy
-// Hash Table, Two Pointers, Array
-// O(n)
+// Hash Table, Array
+// O(m + n)
 
 class Solution {
   public int[] intersection(int[] nums1, int[] nums2) {
