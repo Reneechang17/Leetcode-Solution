@@ -4,6 +4,7 @@ import java.util.Map;
 // Easy
 // Hash Table
 // O(n)
+// https://leetcode.com/problems/two-sum/
 
 // Using HashMap to record the nums[i] index and its value
 // and let target - nums[i] to check if the another part in the map
