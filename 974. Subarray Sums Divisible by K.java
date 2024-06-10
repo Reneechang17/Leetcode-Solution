@@ -4,6 +4,7 @@ import java.util.Map;
 // Medium
 // Prefix Sum, Hash Table
 // O(N)
+// Similar: 560
 
 class Solution {
   public int subarraysDivByK(int[] nums, int k) {
