@@ -1,6 +1,7 @@
 // Easy
 // LinkedList, Two Pointers
-// O(n + m)
+// O(m + n)
+// https://leetcode.com/problems/intersection-of-two-linked-lists/
 
 class Solution {
   public class ListNode {
