@@ -1,6 +1,7 @@
 // Easy
 // String
 // O(n)
+// https://leetcode.com/problems/reverse-vowels-of-a-string/
 
 class Solution {
   public String reverseVowels(String s) {
@@ -29,3 +30,9 @@ class Solution {
       return String.valueOf(cs);
   }
 }
+
+/**
+ * 思路：
+ * 先用vowels來遍歷字符串“aeiouAEIOU”，將對應的字符在數組位置設為true
+ * 再用雙指針分別從頭尾向中間遍歷，遇到元音交換
+ **/

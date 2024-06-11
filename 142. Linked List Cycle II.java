@@ -1,7 +1,7 @@
 // Medium
 // LinkedList, Two Pointers
 // O(n)
-// https://leetcode.com/problems/linked-list-cycle-ii/description/
+// https://leetcode.com/problems/linked-list-cycle-ii/
 
 
 class Solution {

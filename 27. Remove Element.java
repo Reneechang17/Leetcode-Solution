@@ -1,7 +1,7 @@
 // Easy
 // Array, Two Pointers
 // O(n)
-// https://leetcode.com/problems/remove-element/description/
+// https://leetcode.com/problems/remove-element/
 
 class Solution {
     public int removeElement(int[] nums, int val) {

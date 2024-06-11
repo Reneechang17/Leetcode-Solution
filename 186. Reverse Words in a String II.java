@@ -1,6 +1,7 @@
 // Medium
 // String, Two Pointers
 // O(n)
+// https://leetcode.com/problems/reverse-words-in-a-string-ii/
 
 class Solution {
   public void reverseWords(char[] s) {
@@ -24,3 +25,9 @@ class Solution {
       }
   }
 }
+
+/**
+ * 思路：
+ * 1. 先用雙指針反轉每一個單詞（當j遍歷到" "時，就是遇到了一個單詞，或是走到結尾
+ * 2. 反轉整個字符串
+ **/

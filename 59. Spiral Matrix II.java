@@ -2,7 +2,7 @@
 // Array, Matrix
 // O(n^2)
 // Similar: 54
-// https://leetcode.com/problems/spiral-matrix-ii/description/
+// https://leetcode.com/problems/spiral-matrix-ii/
 
 class Solution {
     public int[][] generateMatrix(int n) {

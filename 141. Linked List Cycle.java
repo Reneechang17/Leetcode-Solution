@@ -1,7 +1,7 @@
 // Easy
 // Two Pointers, LinkedList
 // O(n)
-// https://leetcode.com/problems/linked-list-cycle/description/
+// https://leetcode.com/problems/linked-list-cycle/
 
 class Solution {
   class ListNode {

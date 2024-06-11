@@ -4,6 +4,7 @@ import java.util.LinkedList;
 // Hard 
 // Deque
 // O(n)
+// https://leetcode.com/problems/sliding-window-maximum/
 
 class Solution {
   public int[] maxSlidingWindow(int[] nums, int k) {
@@ -34,3 +35,11 @@ class Solution {
       return res;
   }
 }
+
+/**
+ * 可以看一下example比較具體
+ * 
+ * 本題是找滑動窗口中的最大值，由於要不斷調整左右的值（也就是一直會有值從左邊出去、右邊加入），所以用雙端隊列。
+ * 雙端隊列能夠從兩端進行插入和刪除插入。此題中，隊列存儲的是數組元素的索引，而索引對應的數組元素是從大到小排序的
+ * 隊列的最左邊（即隊首）為最大值。
+ **/

@@ -1,7 +1,7 @@
 // Easy
 // LinkedList, Two Pointers
 // O(n)
-// https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+// https://leetcode.com/problems/remove-nth-node-from-end-of-list/
 
 class Solution {
     public class ListNode {

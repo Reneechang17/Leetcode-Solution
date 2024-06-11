@@ -1,7 +1,7 @@
 // Hard
 // LinkedList
 // O(n)
-// https://leetcode.com/problems/reverse-nodes-in-k-group/description/
+// https://leetcode.com/problems/reverse-nodes-in-k-group/
 
 class Solution {
     public class ListNode {

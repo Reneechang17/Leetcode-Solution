@@ -1,6 +1,7 @@
 // Easy
 // String
 // O(n)
+// https://leetcode.com/problems/reverse-string/
 
 class Solution {
   public void reverseString(char[] s) {
@@ -14,3 +15,8 @@ class Solution {
       }
   }
 }
+
+/**
+ * 思路：
+ * 定義左右指針，分別從0和結尾處，向中間移動，互相交換（記得設temp）
+ **/

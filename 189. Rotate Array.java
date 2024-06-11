@@ -1,6 +1,7 @@
 // Medium
 // Array
 // O(n)
+// https://leetcode.com/problems/rotate-array/
 
 class Solution {
   public void rotate(int[] nums, int k) {
@@ -18,3 +19,11 @@ class Solution {
       }
   }
 }
+
+/**
+ * 思路：
+ * 1. k先對數組的長度取模，得到實際旋轉的步數
+ * 2. 反轉整個數組
+ * 3. 反轉前k個
+ * 4. 反轉剩下的，即n-k
+ **/

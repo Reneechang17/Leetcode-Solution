@@ -1,6 +1,7 @@
 // Easy
 // Array, Two Pointers
 // O(n)
+// https://leetcode.com/problems/move-zeroes/
 
 class Solution {
   public void moveZeroes(int[] nums) {
@@ -18,3 +19,8 @@ class Solution {
     }
   }
 }
+
+/**
+ * 思路：
+ * j指針遍歷數組，先填入非0的，最後再把0填入
+ **/

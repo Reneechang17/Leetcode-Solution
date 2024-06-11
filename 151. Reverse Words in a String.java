@@ -1,7 +1,7 @@
 // Medium
 // String, Two Pointers
 // O(n)
-// https://leetcode.com/problems/reverse-words-in-a-string/description/
+// https://leetcode.com/problems/reverse-words-in-a-string/
 
 // Python version
 // class Solution:

@@ -1,13 +1,13 @@
 // Medium
-// Array, Sliding Window
+// Sliding Window, Two Pointers
 // O(n)
+// https://leetcode.com/problems/minimum-size-subarray-sum/
 
 class Solution {
     public int minSubArrayLen(int target, int[] nums) {
-        // define the two pointers
         int i = 0;
         int sum = 0;
-        // define a res array
+
         int res = Integer.MAX_VALUE;
         // use j pointer to iterate the array and use to add the element
         for (int j = 0; j < nums.length; j++) {
@@ -25,3 +25,10 @@ class Solution {
 }
 
 // Also can use prefix sum method
+
+/**
+ * 思路：雙指針
+ * ij指針都從0開始，用j來遍歷數組添加元素，擴大窗口，同時紀錄sum
+ * 當sum大於target時，移動i指針來縮小窗口，更新最小res以及sum
+ * Note: res記得初始化
+ **/
