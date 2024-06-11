@@ -1,6 +1,7 @@
 // Easy
-// LinkedList, Two Pointers
+// Two Pointers, LinkedList
 // O(n)
+// https://leetcode.com/problems/linked-list-cycle/description/
 
 class Solution {
   class ListNode {
@@ -25,3 +26,9 @@ class Solution {
     return false;
   }
 }
+
+/**
+ * 環形鏈表：快慢指針
+ * 定義快慢指針從head走，快指針每次走2，慢指針每次走1
+ * 如果相遇就是有環
+ **/

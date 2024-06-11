@@ -1,8 +1,9 @@
 // Medium
 // String, Two Pointers
 // O(n)
+// https://leetcode.com/problems/reverse-words-in-a-string/description/
 
-// use python is more proper
+// Python version
 // class Solution:
 //     def reverseWords(self, s: str) -> str:
 //         s = s.strip()
@@ -12,20 +13,14 @@
         
 
 class Solution {
-  public String reverseWords(String s) {
-      // use char[] to implement what StringBuilder do
-      char[] chars = s.toCharArray();
-      // 1. remove the space at start, end and middle
-      chars = removeSpace(chars);
-      // 2. reverse whole string整個字符串反轉
-      reverse(chars, 0, chars.length - 1);
-      // 3. then reverse the word
-      reverseWord(chars);
-      return new String(chars);
-  }
-  // remove spaces: only left the space for words and words 
-  // fast: to remove the space
-  // slow: add space 
+    public String reverseWords(String s) {
+        char[] chars = s.toCharArray();
+        chars = removeSpace(chars);
+        reverse(chars, 0, chars.length - 1);
+        reverseWord(chars);
+        return new String(chars);
+    }
+  // Remove space
   public char[] removeSpace(char[] chars){
       int slow = 0;
       for(int fast = 0; fast < chars.length; fast++){
@@ -41,7 +36,7 @@ class Solution {
       System.arraycopy(chars, 0, newChars, 0, slow);
       return newChars;
   }
-  // reverse String
+  // Reverse String
   public void reverse(char[] chars, int left, int right){
       // if(right >= chars.length) return;
       while(left < right){
@@ -52,7 +47,7 @@ class Solution {
           right--;
       }
   }
-  // then reverse the words 
+  // Reverse words 
   public void reverseWord(char[] chars){
       int start = 0;
       for(int end = 0; end <= chars.length; end++){
@@ -64,3 +59,10 @@ class Solution {
       }
   }
 }
+
+/**
+ * 思路：
+ * 1. 刪除多餘的空格
+ * 2. 反轉整個字符串
+ * 3. 反轉每一個單詞
+ **/
