@@ -5,6 +5,7 @@ import java.util.Map;
 // Prefix Sum, Hash Table
 // O(N)
 // Similar: 560
+// https://leetcode.com/problems/subarray-sums-divisible-by-k/
 
 class Solution {
   public int subarraysDivByK(int[] nums, int k) {
@@ -26,3 +27,11 @@ class Solution {
       return res;
   }
 }
+
+/**
+ * 思路：前綴和+哈希表
+ * 用哈希表存儲當前餘數出現的次數（key：餘數，vlue：次數），初始化為餘數為0的情況出現1次（默認整個數組是可以被k整除的）
+ * 遍歷數組，累加前綴和，計算餘數
+ * Note：因為sum有可能是負數，所以要把sum % k 再加上k再模k，確保sum為非負數
+ * 通過哈希表獲取當前餘數出現的次數
+ **/

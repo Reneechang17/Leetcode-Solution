@@ -1,6 +1,7 @@
 // Medium
 // Array, Prefix Sum, Hash Table
 // O(n)
+// https://leetcode.com/problems/contiguous-array/
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,3 +24,12 @@ class Solution {
       return maxLen;
   }
 }
+
+/**
+ * 思路：前綴和+哈希表
+ * 用哈希表來紀錄前綴和出現的次數（索引和次數）
+ * 遍歷數組，把零當成-1（這樣0 & 1相加就會是0了）累加前綴和
+ * 如果這個前綴和在哈希表中出現過，代表兩個索引之間的和為0，即裡面0和1的數量是相等的
+ *   接著計算索引的距離，並更新maxLen
+ * 如果這個前綴和沒有出現過，就加入哈希表中
+ **/

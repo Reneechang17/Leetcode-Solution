@@ -1,6 +1,7 @@
 // Easy
 // Array, Two Pointers, Sorting
 // O(n)
+// https://leetcode.com/problems/squares-of-a-sorted-array/
 
 class Solution {
     public int[] sortedSquares(int[] nums) {
@@ -23,3 +24,8 @@ class Solution {
         return res;
     }
 }
+
+/**
+ * edge case：雖然數組是升序的，但考量負數平方完為正，所以使用雙指針分別從頭尾遍歷原數組，k指針從後向前填充res數組
+ * 用ij指針比較，看誰的平方大，就讓k填誰
+ **/

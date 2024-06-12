@@ -1,6 +1,8 @@
 // Medium
 // Array, Binary Search
 // O(log n)
+// Similar: 704
+// https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size/
 
 /**
  * // This is ArrayReader's API interface.
@@ -14,7 +16,6 @@ interface ArrayReader {
     public int get(int index);
 }
 
-// the solution is similar to Leetcode 704
 class Solution {
     public int search(ArrayReader reader, int target) {
         int left = 0, right = 20000;
@@ -29,3 +30,8 @@ class Solution {
         return reader.get(left) == target ? left : -1;
     }
 }
+
+/**
+ * 思路：Binary Search
+ * 解法和704一模一樣
+ **/

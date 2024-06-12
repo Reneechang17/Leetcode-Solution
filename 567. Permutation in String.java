@@ -2,6 +2,7 @@
 // Hash Table, Sliding Window
 // O(m + n)
 // Similar: 76, 438
+// https://leetcode.com/problems/permutation-in-string/
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,3 +51,7 @@ class Solution {
       return false;
   }
 }
+
+/**
+ * 這題代碼思路和438幾乎一模一樣
+ **/

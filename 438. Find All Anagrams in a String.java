@@ -1,11 +1,12 @@
+// Medium
+// Hash Table, Sliding Window
+// O(m + n)
+// https://leetcode.com/problems/find-all-anagrams-in-a-string/
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-// Medium
-// Hash Table, Sliding Window
-// O(m + n)
 
 class Solution {
   public List<Integer> findAnagrams(String s, String p) {
@@ -50,3 +51,11 @@ class Solution {
       return res;
   }
 }
+
+/**
+ * 1. 先遍歷需要的String，用哈希表紀錄每個字符出現的次數
+ * 2. 初始化窗口（左右指針以及合法個數）
+ * 3. 擴大窗口（right++）& 更新窗口
+ * 4. 當窗口大小（right-left）超過p的長度時，收縮窗口 & 更新窗口
+ * Note：需要先看valid是不是等於need的長度
+ **/

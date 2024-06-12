@@ -5,6 +5,7 @@ import java.util.Map;
 // Prefix, Hash Table
 // O(n)
 // Similar: 974
+// https://leetcode.com/problems/subarray-sum-equals-k/
 
 class Solution {
   public int subarraySum(int[] nums, int k) {
@@ -20,3 +21,11 @@ class Solution {
       return res;
   }
 }
+
+/**
+ * Note: 前綴和+哈希表
+ * 用哈希表紀錄當前前綴和出現的次數
+ * 1. 遍歷數組，紀錄當前的前綴和(currentSum)
+ * 2. 計算currentSum-k，並check它在不在哈希表中，如果在，說明數組某個位置到當前位置的子數組和為k
+ * 3. 把currentSum加入哈希表中
+ **/

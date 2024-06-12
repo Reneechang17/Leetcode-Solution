@@ -2,6 +2,7 @@
 // Array
 // O(n)
 // Similar: 76,567
+// https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,3 +26,8 @@ class Solution {
         return res;
     }
 }
+
+/**
+ * 思路：用count數組統計每一個元素數字出現的次數
+ * 再遍歷count，找count[num]=0的
+ **/
