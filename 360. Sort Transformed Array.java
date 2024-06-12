@@ -1,6 +1,7 @@
 // Medium
 // Math, Array, Two Pointers
 // O(n)
+// https://leetcode.com/problems/sort-transformed-array/
 
 class Solution {
     public int[] sortTransformedArray(int[] nums, int a, int b, int c) {
@@ -40,3 +41,13 @@ class Solution {
         return a * x * x + b * x + c;
     }
 }
+
+/**
+ * Note: a可以決定拋物線向上還是向下
+ * 如果拋物線向上開口，就從數組的末尾開始填充，反之亦然
+ * 
+ * 代碼：
+ * 1. 初始化：先開一個sorted數組，定義左右指針（分別指向頭尾），以及index（當a>=0，就從數組結尾填，<0從開頭填）
+ * 2. 用helper function先計算一下左右指針指向的值
+ * 3. 判斷從頭填還是從尾填，如果從尾填的話，先填大的，從頭填的話，先填小的（比較leftVal和rightVal值）
+ **/
