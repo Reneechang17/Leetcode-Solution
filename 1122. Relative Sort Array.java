@@ -1,7 +1,7 @@
 // Easy
 // Hash Table, Sorting
 // O(m + n)
-// https://leetcode.com/problems/relative-sort-array/description
+// https://leetcode.com/problems/relative-sort-array/
 
 import java.util.Arrays;
 import java.util.HashMap;

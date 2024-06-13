@@ -1,6 +1,7 @@
 // Easy
 // Array, Binary Search
 // O(m + n)
+// https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/
 
 class Solution {
   public int countNegatives(int[][] grid) {
