@@ -1,6 +1,7 @@
 // Medium
 // LinkedList, Two Pointers
 // O(n)
+// https://leetcode.com/problems/maximum-twin-sum-of-a-linked-list/
 
 class Solution {
   public class ListNode {
@@ -54,3 +55,9 @@ class Solution {
     return pre;
   }
 }
+
+/**
+ * 1. 先找鏈表的中點（這題已經說鏈表長度為偶數了所以快走2慢走1就可以）
+ * 2. 反轉slow後的後半部鏈表
+ * 3. 同時遍歷兩個鏈表，並更新最大值
+ **/

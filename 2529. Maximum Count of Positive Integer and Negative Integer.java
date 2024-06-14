@@ -1,6 +1,7 @@
 // Easy
 // Array
 // O(n)
+// https://leetcode.com/problems/maximum-count-of-positive-integer-and-negative-integer/
 
 class Solution {
   public int maximumCount(int[] nums) {
@@ -18,3 +19,5 @@ class Solution {
     return Math.max(pos, neg);
   }
 }
+
+// 直接計算pos和neg的個數，用Math的max直接比較大小

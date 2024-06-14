@@ -1,6 +1,7 @@
 // Medium
 // LinkedList, Two Pointers
 // O(n)
+// https://leetcode.com/problems/delete-the-middle-node-of-a-linked-list/
 
 class Solution {
   public class ListNode {
@@ -31,3 +32,8 @@ class Solution {
     return dummy.next;
   }
 }
+
+/**
+ * 快慢指針，快指針一次走兩步，慢指針一次走一步
+ * 快指針初始在實際頭節點，慢指針初始在dummy，讓慢指針停留在middle的前一個節點，方便做刪除操作
+ **/

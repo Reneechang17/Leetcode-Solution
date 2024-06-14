@@ -1,6 +1,7 @@
 // Easy
 // Array, Two Pointers
 // O(n)
+// https://leetcode.com/problems/apply-operations-to-an-array/
 
 class Solution {
   public int[] applyOperations(int[] nums) {
@@ -27,3 +28,8 @@ class Solution {
     return nums;
   }
 }
+
+/**
+ * 1. 先按照要求對數組進行操作
+ * 2. 將0移到末尾（先填非零的，再把0填完到數組結尾）
+ **/
