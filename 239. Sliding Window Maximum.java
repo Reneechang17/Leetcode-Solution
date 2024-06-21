@@ -1,10 +1,10 @@
-import java.util.Deque;
-import java.util.LinkedList;
-
 // Hard 
 // Deque
 // O(n)
 // https://leetcode.com/problems/sliding-window-maximum/
+
+import java.util.Deque;
+import java.util.LinkedList;
 
 class Solution {
   public int[] maxSlidingWindow(int[] nums, int k) {
