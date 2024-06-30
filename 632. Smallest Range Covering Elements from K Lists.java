@@ -1,12 +1,12 @@
-import java.util.List;
-import java.util.PriorityQueue;
-
 // Hard 
 // Priority Queue
 // O(N * log k)
 // N: the elements in lists
 // k: the number of lists
 // https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/
+
+import java.util.List;
+import java.util.PriorityQueue;
 
 class Solution {
     public int[] smallestRange(List<List<Integer>> nums) {
