@@ -1,13 +1,13 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
 // Medium
 // Hash Table, Array, String
 // O(N * K)
 // N: number of String
 // K: the average length of String
 // https://leetcode.com/problems/group-anagrams/
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 class Solution {
     public List<List<String>> groupAnagrams(String[] strs) {
