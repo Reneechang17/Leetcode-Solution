@@ -1,3 +1,8 @@
+// Medium
+// Array, Hash Table
+// O(n^2)
+// https://leetcode.com/problems/minimum-area-rectangle/
+
 import java.util.HashSet;
 import java.util.Set;
 
