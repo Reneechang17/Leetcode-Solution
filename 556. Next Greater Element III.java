@@ -5,34 +5,40 @@
 
 class Solution {
   public int nextGreaterElement(int n) {
-      char[] number = (n + "").toCharArray();
+    char[] number = (n + "").toCharArray();
 
-      int i, j;
-      for (i = number.length - 2; i >= 0; i--) {
-          if (number[i] < number[i + 1]) {
-              break;
-          }
-      }
-      if (i == -1) {
-          return -1;
-      }
+    int i, j;
 
-      for (j = number.length - 1; j > 1; j--) {
-          if (number[j] > number[i]) {
-              break;
-          }
+    // 從右往左找到第一個不是遞增的數字
+    for (i = number.length - 2; i >= 0; i--) {
+      if (number[i] < number[i + 1]) {
+        break;
       }
+    }
+    if (i == -1) {
+      return -1;
+    }
 
-      swap(number, i, j);
-      reverse(number, i + 1);
-
-      try {
-          return Integer.parseInt(new String(number));
-      } catch (Exception e) {
-          return -1;
+    // 在從右往左找到第一個比這個數字大的數字
+    for (j = number.length - 1; j > 1; j--) {
+      if (number[j] > number[i]) {
+        break;
       }
+    }
+
+    // 交換一二步找到的兩個數字：使得當前數字局部變大
+    swap(number, i, j);
+
+    // 反轉步驟1找到的位置右邊的所有數字：使得這部分數字為最小可能值，確保得到的新數字盡可能小
+    reverse(number, i + 1);
+
+    try {
+      return Integer.parseInt(new String(number));
+    } catch (Exception e) {
+      return -1;
+    }
   }
-
+  
   private void swap (char[] number, int i, int j) {
       char tmp = number[i];
       number[i] = number[j]; 
