@@ -1,85 +1,49 @@
 package codesignal;
 
-import java.util.HashMap;
-import java.util.HashSet;
-
 class Solution {
-  int[] solution(int[] houses, int[] queries) {
-    class UnionFind {
-      private HashMap<Integer, Integer> map;
-      public int[] res;
+  int solution(int[][] matrix, int radius) {
+    int maxSum = 0; // 初始化最大和
+    int n = matrix.length;
 
-      public UnionFind(int[] houses, int[] queries) {
-        int n = queries.length;
-        HashSet<Integer> set = new HashSet<>();
-        for (int house : houses) {
-          set.add(house);
-        }
-        for (int house : queries) {
-          set.remove(house);
-        }
+    // 遍歷矩陣中的每一個元素，作為可能的中心點
+    // i表示選擇中心點的x座標（行），j表示選擇中心點的y座標（列）
+    for (int i = radius - 1; i + radius - 1 < n; i++) {
+      for (int j = radius - 1; j + radius - 1 < matrix[0].length; j++) {
+        int sum = 0; // 初始化當前菱形的元素和
 
-        map = new HashMap<>();
-        int num = 0;
-        res = new int[n];
-        for (int house : set) {
-          map.put(house, house);
-          num += 1;
-          if (map.containsKey(house - 1)) {
-            num -= union(house, house - 1);
-          }
-          if (map.containsKey(house + 1)) {
-            num -= union(house, house + 1);
-          }
-        }
+        // 對每個中心點擴展出菱形區域，計算菱形區域的元素和
+        // left表示從中心點向左右擴展
+        for (int left = -radius; left <= radius; left++) {
+          if (i + left < 0 || i + left >= n) // 檢查是否越界
+            continue;
+          // right表示從中心點向上下擴展
+          for (int right = -radius; right <= radius; right++) {
+            // 檢查是否越界
+            if (j + right < 0 || j + right >= matrix[0].length)
+              continue;
 
-        for (int i = n - 1; i >= 0; i--) {
-          res[i] = num;
-          num += 1;
-          map.put(queries[i], queries[i]);
-          int house = queries[i];
-          if (map.containsKey(house - 1)) {
-            num -= union(house, house - 1);
-          }
-          if (map.containsKey(house + 1)) {
-            num -= union(house, house + 1);
+            // 確保選擇的元素在菱形區域內
+            if (Math.abs(left) + Math.abs(right) + 1 <= radius) {
+              sum += matrix[i + left][j + right];
+            }
           }
         }
-      }
-
-      public int find(int index) {
-        if (map.get(index) != index) {
-          int fa = find(map.get(index));
-          map.put(index, fa);
-        }
-        return map.get(index);
-      }
-
-      public int union(int left, int right) {
-        left = find(left);
-        right = find(right);
-        if (left == right) {
-          return 0;
-        } else {
-          map.put(left, right);
-          return 1;
+        // 更新最大和
+        if (maxSum < sum) {
+          maxSum = sum;
         }
       }
     }
-    UnionFind uf = new UnionFind(houses, queries);
-    return uf.res;
+    return maxSum; 
   }
 }
 
 /**
- * 問題總結：一個動態的房屋分佈，一開始有一些房屋，這些房屋按照一個線性排列
- * 給定房屋的位置和一系列要被摧毀的房屋的位置，每次摧毀一個房屋，則其左右相鄰的房屋會連接在一起，要求返回每次摧毀一個房屋後，剩餘的獨立區域數量
+ * 問題總結：給定一個矩陣和一個整數radius，找出以每個可能的矩陣元素作為中心，其菱形區域的元素和的最大值
+ * 每個菱形的大小是radius，也就是從中心向四個方向（上下左右）的最大步數。只考慮完全位於矩陣內的菱形區域
  * 
- * 思路：這題用並查集會非常高效，在這個問題中，房屋的摧毀會影響房屋區域的連續性，使用並查集可以快速地合併相鄰的房屋區域並查詢當前的連續區域數量
- * 具體做法：
- * 1. 初始化：使用hashset來存儲所有房屋的位置，對於每個即將被摧毀的房屋，從hashset中刪除
- * 2. 初始化並查集，每個房屋最開始都是自己的父節點，遍歷所有剩餘的房屋，嘗試將每個房屋與其左右相鄰的房屋合併，如果合併成功，則區域數量減1
- * 3. 從最後一個查詢開始向前處理，因為我們要逆向模擬房屋摧毀的過程，實際上就是逐步添加房屋。在並查集中添加房屋，嘗試將新添加的房屋與其左右鄰居合併，更新區域數量
+ * 思路：比較暴力，就是遍歷每一個可能的中心點元素，然後擴展出菱形區域，計算菱形區域的元素和，更新最大和
+ * 沒有用到什麼特殊的DSA，主要就是枚舉找所有可能
  * 
- * 時間複雜度：O(n+q)
+ * 時間複雜度：O((n*m)*r^2)
  **/
