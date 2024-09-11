@@ -37,7 +37,7 @@ class MinStack {
  * 最小棧，要求在常數時間內查找最小元素
  * 支持push、pop、top、getMin操作
  * 
- * 可以用兩個棧來實現，一個棧存儲數據，一個棧存當前棧中的最小值，初始化s2為Integer.MAX_VALUE
+ * 可以用兩個棧來實現，一個棧存儲當前數據，一個棧存當前棧中的最小值，初始化s2為Integer.MAX_VALUE
  * 
  * push:將val壓入s1，並將val和s2的頂部元素中的最小值壓入s2
  * pop:將s1和s2的頂部元素彈出
