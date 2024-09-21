@@ -22,6 +22,7 @@ class Node {
   public Node right;
   public Node next;
   public List<Node> children;
+  public Node parent;
 
   public Node() {}
   
