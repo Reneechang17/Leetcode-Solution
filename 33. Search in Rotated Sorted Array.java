@@ -1,6 +1,6 @@
 // Medium
 // Binary Search
-// O(logn
+// O(logn）
 // https://leetcode.com/problems/search-in-rotated-sorted-array/
 
 class Solution {

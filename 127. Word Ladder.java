@@ -1,13 +1,12 @@
 // Hard
-// BFS, HashSet, Array
+// BFS, HashSet
 // O(m * n)
-// https://leetcode.com/problems/word-ladder/
+// https://leetcode.cn/problems/word-ladder/
 
 import java.util.*;
 
 class Solution {
   public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-      // 將字典轉換成集合比較好遍歷
       Set<String> set = new HashSet<>(wordList);
       // 如果這個字典沒有target word：endWord，直接返回0
       if (!set.contains(endWord)) {

@@ -1,47 +1,44 @@
 // Medium
 // Tree
 // O(n)
-// https://leetcode.com/problems/binary-tree-level-order-traversal/
+// https://leetcode.cn/problems/binary-tree-level-order-traversal/
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 class Solution {
-  public List<List<Integer>> resList = new ArrayList<List<Integer>>();
+    public List<List<Integer>> res = new ArrayList<List<Integer>>();
 
-  public List<List<Integer>> levelOrder(TreeNode root) {
-      checkFunc(root);
-      return resList;
-  }
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        bfs(root);
+        return res;
+    }
 
-  public void checkFunc (TreeNode node) {
-      if (node == null) return;
+    public void bfs(TreeNode node) {
+        if (node == null) return;
 
-      Queue<TreeNode> que = new LinkedList<TreeNode>();
-      que.offer(node);
+        Queue<TreeNode> que = new LinkedList<>();
+        que.offer(node);
 
-      while (!que.isEmpty()) {
-          List<Integer> itemList = new ArrayList<Integer>();
-          int len = que.size();
+        while (!que.isEmpty()) {
+            List<Integer> list = new ArrayList<Integer>();
+            int n = que.size();
 
-          while (len > 0) {
-              TreeNode tempNode = que.poll();
-              itemList.add(tempNode.val);
+            while (n > 0) {
+                TreeNode tempNode = que.poll();
+                list.add(tempNode.val);
 
-              if (tempNode.left != null) {
-                  que.offer(tempNode.left);
-              }
+                if (tempNode.left != null) {
+                    que.offer(tempNode.left);
+                }
 
-              if (tempNode.right != null) {
-                  que.offer(tempNode.right);
-              }
-              len--;
-          }
-          resList.add(itemList);
-      }
-  }
+                if (tempNode.right != null) {
+                    que.offer(tempNode.right);
+                }
+                n--;
+            }
+            res.add(list);
+        }
+    }
 }
 
 /**
