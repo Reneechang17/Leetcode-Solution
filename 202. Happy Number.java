@@ -1,21 +1,22 @@
-import java.util.HashSet;
-import java.util.Set;
-
 // Easy
 // Hash Table, Math
 // O(logn)
-// https://leetcode.com/problems/happy-number/
+// https://leetcode.cn/problems/happy-number/
+
+import java.util.*;
 
 class Solution {
     public boolean isHappy(int n) {
-        Set<Integer> record = new HashSet<>();
-        while (n != 1 && !record.contains(n)) {
-            record.add(n);
+        // 需要注意如果遇到重複的數組，會陷入循環，所以要對遇到的數字去重
+        Set<Integer> set = new HashSet<>();
+
+        while (n != 1 && !set.contains(n)) {
+            set.add(n);
             int res = 0;
             while (n > 0) {
                 int digit = n % 10;
                 res += digit * digit;
-                n = n / 10;
+                n /= 10;
             }
             n = res;
         }

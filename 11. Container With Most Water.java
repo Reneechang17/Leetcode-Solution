@@ -1,7 +1,7 @@
 // Medium
 // Two Pointers
 // O(n)
-// https://leetcode.com/problems/container-with-most-water/
+// https://leetcode.cn/problems/container-with-most-water/
 
 class Solution {
   public int maxArea(int[] height) {

@@ -1,40 +1,42 @@
 // Easy
-// Hash Table, Array
+// Array
 // O(m + n)
-// https://leetcode.com/problems/intersection-of-two-arrays/
+// https://leetcode.cn/problems/intersection-of-two-arrays/
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-  public int[] intersection(int[] nums1, int[] nums2) {
-      int[] hash1 = new int[1001];
-      int[] hash2 = new int[1001];
-      for(int i : nums1){
-          hash1[i]++;
-      }
-      for(int i : nums2){
-          hash2[i]++;
-      }
-      List<Integer> res = new ArrayList<>();
-      for(int i = 0; i < 1001; i++){
-          if(hash1[i] > 0 && hash2[i] > 0){
-              res.add(i);
-          }
-      }
-      int idx = 0;
-      int[] resList = new int[res.size()];
-      for(int i : res){
-          resList[idx] = i;
-          idx++;
-      }
-      return resList;
-  }
+    public int[] intersection(int[] nums1, int[] nums2) {
+        int[] count1 = new int[1001];
+        int[] count2 = new int[1001];
+
+        for (int num : nums1) {
+            count1[num]++;
+        }
+        for (int num : nums2) {
+            count2[num]++;
+        }
+
+        List<Integer> intersections = new ArrayList<>();
+        for (int i = 0; i < 1001; i++) {
+            if (count1[i] > 0 && count2[i] > 0) {
+                intersections.add(i);
+            }
+        }
+
+        int index = 0;
+        int[] res = new int[intersections.size()];
+        for (int i : intersections) {
+            res[index] = i;
+            index++;
+        }
+        return res;
+    }
 }
 
 /**
  * 思路：
- * 1. 遍歷nums1 和 nums2，統計每個元素出現的次數（哈希表）
- * 2. 如果同一個數字在兩個數組中都至少出現一次，就加入res
- * 3. 定義最終resList，遍歷res，將遍歷到的i賦值到resList的index中
+ * 1. 遍歷nums1 和 nums2，統計每個元素出現的次數
+ * 2. 如果同一個數字在兩個數組中都至少出現一次，就加入列表中
+ * 3. 定義最終res數組，遍歷res，將遍歷到的i賦值到res數組的index中
  **/

@@ -1,48 +1,50 @@
-import java.util.HashMap;
-import java.util.Map;
-
 // Hard 
 // Sliding Window, Hash Table, Array
 // O(n)
 // Similar: 438, 567
-// https://leetcode.com/problems/minimum-window-substring/
+// https://leetcode.cn/problems/minimum-window-substring/
+
+import java.util.*;
 
 class Solution {
     public String minWindow(String s, String t) {
-        if (s == null || t == null || s.length() == 0 || t.length() == 0)
-            return "";
+        if (s == null || t == null || s.length() == 0 || t.length() == 0) return "";
 
-        Map<Character, Integer> need = new HashMap<>();
+        Map<Character, Integer> tmap = new HashMap<>();
         Map<Character, Integer> window = new HashMap<>();
 
         for (char c : t.toCharArray()) {
-            need.put(c, need.getOrDefault(c, 0) + 1);
+            tmap.put(c, tmap.getOrDefault(c, 0) + 1);
         }
+
 
         int left = 0, right = 0;
         int valid = 0;
         int start = 0, len = Integer.MAX_VALUE;
 
         while (right < s.length()) {
+            // 右指針把元素加進來
             char incoming = s.charAt(right);
             right++;
 
-            if (need.containsKey(incoming)) {
+            if (tmap.containsKey(incoming)) {
                 window.put(incoming, window.getOrDefault(incoming, 0) + 1);
-                if (window.get(incoming).equals(need.get(incoming))) {
+                if (window.get(incoming).equals(tmap.get(incoming))) {
                     valid++;
                 }
             }
 
-            while (valid == need.size()) {
+            // 判斷左側要不要收縮
+            while (valid == tmap.size()) {
                 if (right - left < len) {
                     start = left;
                     len = right - left;
                 }
+
                 char drop = s.charAt(left);
                 left++;
-                if (need.containsKey(drop)) {
-                    if (window.get(drop).equals(need.get(drop))) {
+                if (tmap.containsKey(drop)) {
+                    if (window.get(drop).equals(tmap.get(drop))) {
                         valid--;
                     }
                     window.put(drop, window.get(drop) - 1);
@@ -54,15 +56,13 @@ class Solution {
 }
 
 /**
- * 思路：哈希表+滑動窗口
- * base case: 返回空字符串的情況
+ * 最小覆蓋子串：給定一個字符串s和一個字符串t，在s中找到包含t所有字符的最小子串
  * 
- * 定義兩個哈希表：need紀錄t出現的次數，window紀錄滑動窗口中每個字符出現的次數
- * 
- * 先用增強for遍歷t（t用toCharArray處理一下），紀錄每個字符出現的次數
+ * 思路：哈希表+滑動窗口，雙指針維護窗口邊界，尋找滿足條件的最小子串
+ * 右指針擴展窗口，左指針收縮窗口，每次收縮窗口時更新最小子串
+ * 並用哈希表need紀錄t出現的次數，window紀錄滑動窗口中每個字符出現的次數
  * 
  * 定義左右雙指針、valid紀錄窗口中滿足need條件的字符數量、start和len紀錄最小覆蓋子串的起始索引和長度
- * 
  * 遍歷s：
  * 擴大窗口：incoming（移動right）
  *  （1）如果need中有incoming，更新window的數據

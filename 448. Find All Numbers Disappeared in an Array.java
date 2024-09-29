@@ -2,21 +2,19 @@
 // Array
 // O(n)
 // Similar: 76,567
-// https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/
+// https://leetcode.cn/problems/find-all-numbers-disappeared-in-an-array/
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
     public List<Integer> findDisappearedNumbers(int[] nums) {
         int len = nums.length;
-        // calculate the times of each number in nums
         int[] count = new int[len + 1];
+
         for (int num : nums) {
             count[num]++;
         }
-        // iterate the count array, if the number in count exist 0 time, means it no
-        // exist and add it to res
+
         List<Integer> res = new LinkedList<>();
         for (int num = 1; num <= len; num++) {
             if (count[num] == 0) {
@@ -29,5 +27,5 @@ class Solution {
 
 /**
  * 思路：用count數組統計每一個元素數字出現的次數
- * 再遍歷count，找count[num]=0的
+ * 再遍歷count，找count[num]=0的，表示這個元素沒有出現過
  **/
