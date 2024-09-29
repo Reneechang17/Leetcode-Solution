@@ -1,7 +1,7 @@
 // Medium
 // DP
 // O(m * n)
-// https://leetcode.com/problems/unique-paths/
+// https://leetcode.cn/problems/unique-paths/
 
 class Solution {
   public int uniquePaths(int m, int n) {

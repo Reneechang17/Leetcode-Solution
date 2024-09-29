@@ -2,34 +2,35 @@
 // DP
 // O(n^2)
 // Similar：646
-// https://leetcode.com/problems/longest-increasing-subsequence/
+// https://leetcode.cn/problems/longest-increasing-subsequence/
 
 import java.util.Arrays;
 
 class Solution {
-  public int lengthOfLIS(int[] nums) {
-      // dp數組：表示以nums[i]作為結尾的最長遞增子序列
-      int[] dp = new int[nums.length];
-      int res = 1; // 第一個元素自己就是一個
+    public int lengthOfLIS(int[] nums) {
+        int[] dp = new int[nums.length];
+        int res = 1;
 
-      Arrays.fill(dp, 1); // 初始化假設dp數組所有的長度初始都是1
+        Arrays.fill(dp, 1);
 
-      for (int i = 1; i < dp.length; i++) {
-          for (int j = 0; j < i; j++) {
-              if (nums[i] > nums[j]) {
-                  dp[i] = Math.max(dp[i], dp[j] + 1);
-              }
-          }
-          res = Math.max(res, dp[i]);
-      }
-      return res;
-  }
+        // dp數組表示以i結尾最長遞增子序列的長度
+        for (int i = 1; i < dp.length; i++) {
+            // 對於每個i，我們要找到他之前的所有元素j
+            // 判斷nums[i]是否大於nums[j]，如果大於的話，則可以接在j之後
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    // 可以選擇要不要選擇當前i
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
 }
 
 /**
  * 最長遞增子序列
- * 
- * 這種最長的肯定會想到貪心是吧？？nono～這題其實用dp哦～
  * 子序列means由數組派生而來的，刪除or不刪除數組的元素都不改變其餘元素的順序
  * 
  * dp數組表示的是，以nums[i]結尾最長的遞增子序列的長度！！！（Keep in Mind！！）

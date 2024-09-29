@@ -1,7 +1,7 @@
 // Medium
 // DP
 // O(n * amount)
-// https://leetcode.com/problems/coin-change/
+// https://leetcode.cn/problems/coin-change/
 
 class Solution {
   public int coinChange(int[] coins, int amount) {
@@ -26,9 +26,8 @@ class Solution {
 }
 
 /**
- * 找最少硬幣數量，使得硬幣總和等於給定的總金額amount，並且每個硬幣的數量都是無限的
+ * 找最少硬幣數量，使得硬幣總和等於給定的總金額amount，並且每個硬幣的數量都是無限的 =>背包問題
  * 
- * 這題是經典背包問題
  * dp[j]表示湊出金額為j的所需硬幣最少個數為dp[j]
  * 狀態轉移：可以選擇加coins[i]或是不加，因為我們要找最少硬幣數量，所以取其小的
  * 

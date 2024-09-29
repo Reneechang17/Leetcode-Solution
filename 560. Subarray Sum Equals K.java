@@ -1,22 +1,21 @@
-import java.util.HashMap;
-import java.util.Map;
-
 // Medium
 // Prefix, Hash Table
 // O(n)
 // Similar: 974
-// https://leetcode.com/problems/subarray-sum-equals-k/
+// https://leetcode.cn/problems/subarray-sum-equals-k/
+
+import java.util.*;
 
 class Solution {
   public int subarraySum(int[] nums, int k) {
-      Map<Integer, Integer> count = new HashMap<>();
-      count.put(0, 1);
+      Map<Integer, Integer> count = new HashMap<>(); // [前綴和， 出現的次數]
+      count.put(0, 1); // 子數組和為0的情況有一個，就是一個元素都不取
 
-      int currentSum = 0, res = 0;
-      for(int num : nums){
-          currentSum += num;
-          res += count.getOrDefault(currentSum - k, 0);
-          count.put(currentSum, count.getOrDefault(currentSum, 0) + 1);
+      int curSum = 0, res = 0;
+      for (int num : nums) {
+          curSum += num;
+          res += count.getOrDefault(curSum - k, 0);
+          count.put(curSum, count.getOrDefault(curSum, 0) + 1);
       }
       return res;
   }
