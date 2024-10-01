@@ -1,40 +1,23 @@
 // Medium
-// LinkedList, Recursion
+// LinkedList
 // O(n)
-// https://leetcode.com/problems/swap-nodes-in-pairs/
+// https://leetcode.cn/problems/swap-nodes-in-pairs/
 
 class Solution {
-    public class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode() {
-        }
-
-        ListNode(int val) {
-            this.val = val;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-    }
-
     public ListNode swapPairs(ListNode head) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
         ListNode cur = dummy;
-        ListNode temp;
-        ListNode firstNode, secondNode;
+        ListNode temp, firstNode, secondNode;
+
         while (cur.next != null && cur.next.next != null) {
             temp = cur.next.next.next;
             firstNode = cur.next;
             secondNode = cur.next.next;
-            cur.next = secondNode; // Step1: dummy point to the second node
-            secondNode.next = firstNode; // Step2: second node point to the first node
-            firstNode.next = temp; // Step3: first node point to the temp
-            cur = firstNode; // move forward cur to do the recursion
+            cur.next = secondNode;
+            secondNode.next = firstNode;
+            firstNode.next = temp;
+            cur = firstNode;
         }
         return dummy.next;
     }

@@ -1,21 +1,22 @@
 // Easy
 // Array
 // O(n)
-// https://leetcode.com/problems/majority-element/
+// https://leetcode.cn/problems/majority-element/
 
 class Solution {
-  public int majorityElement(int[] nums) {
-      int candidate = nums[0];
-      int count = 0;
+    public int majorityElement(int[] nums) {
+        int candidate = nums[0];
+        int count = 0;
 
-      for (int num : nums) {
-          if (count == 0) {
-              candidate = num;
-          }
-          count += (num == candidate) ? 1 : -1;
-      }
-      return candidate;
-  }
+        for (int num : nums) {
+            if (count == 0) {
+                candidate = num;
+            }
+
+            count += (num == candidate) ? 1 : -1;
+        }
+        return candidate;
+    }
 }
 
 /**

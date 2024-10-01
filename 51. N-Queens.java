@@ -1,11 +1,9 @@
 // Hard
-// Array, Backtracking
+// Backtracking
 // O(n * n)
-// https://leetcode.com/problems/n-queens/
+// https://leetcode.cn/problems/n-queens/
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class Solution {
   List<List<String>> res = new ArrayList<>();
@@ -19,7 +17,7 @@ class Solution {
       return res;
   }
 
-  public void backtracking(int n, int row, char[][] chessboard) {
+public void backtracking(int n, int row, char[][] chessboard) {
       if (row == n) {
           res.add(Array2List(chessboard));
           return;

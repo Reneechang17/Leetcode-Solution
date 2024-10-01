@@ -8,13 +8,15 @@ import java.util.Arrays;
 class Solution {
     public int findMinArrowShots(int[][] points) {
         Arrays.sort(points, (a, b) -> Integer.compare(a[0], b[0]));
-
         int count = 1;
 
         for (int i = 1; i < points.length; i++) {
+            // 如果當前的start大於前一個的end，則需要多一支箭
             if (points[i][0] > points[i - 1][1]) {
                 count++;
             } else {
+                // 如果兩個氣球不重疊，則選擇當前和前一個中end小的
+                // 這樣可以最大限度的射爆更多氣球
                 points[i][1] = Math.min(points[i][1], points[i - 1][1]);
             }
         }

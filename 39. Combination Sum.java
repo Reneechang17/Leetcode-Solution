@@ -2,33 +2,35 @@
 // Backtracking
 // O(2^n)
 // Similar: 77
-// https://leetcode.com/problems/combination-sum/
+// https://leetcode.cn/problems/combination-sum/
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-  public List<List<Integer>> combinationSum(int[] candidates, int target) {
-      List<List<Integer>> res = new ArrayList<>();
-      Arrays.sort(candidates);
+    List<List<Integer>> res = new ArrayList<>();
+    LinkedList<Integer> path = new LinkedList<>();
 
-      backtracking(res, new ArrayList<>(), candidates, target, 0, 0);
-      return res;
-  }
-  public void backtracking(List<List<Integer>> res, List<Integer> path, int[] candidates, int target, int sum, int start) {
-      if (sum == target) {
-          res.add(new ArrayList<>(path));
-          return;
-      }
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        
+        backtracking(res, path, candidates, target, 0, 0);
+        return res;
+    }
 
-      for (int i = start; i < candidates.length; i++) {
-          if (sum + candidates[i] > target) break; // 剪枝
-          path.add(candidates[i]);
-          backtracking(res, path, candidates, target, sum + candidates[i], i);
-          path.removeLast();
-      }
-  }
+    public void backtracking(List<List<Integer>> res, LinkedList<Integer> path, int[] candidates, int target, int sum, int start) {
+        if (sum == target) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = start; i < candidates.length; i++) {
+            if (sum + candidates[i] > target) break;
+            path.add(candidates[i]);
+            // 回溯傳入的還是當前的i因為這個數字可以重複使用
+            backtracking(res, path, candidates, target, sum + candidates[i], i);
+            path.removeLast();
+        }
+    }
 }
 
 /**

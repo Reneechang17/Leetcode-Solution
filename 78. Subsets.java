@@ -1,32 +1,34 @@
 // Medium
 // Backtracking
 // O(2^n)
-// https://leetcode.com/problems/subsets/
+// https://leetcode.cn/problems/subsets/
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-  List<List<Integer>> res = new ArrayList<>();
-  LinkedList<Integer> path = new LinkedList<>();
+    List<List<Integer>> res = new ArrayList<>();
+    LinkedList<Integer> path = new LinkedList<>();
 
-  public List<List<Integer>> subsets(int[] nums) {
-      subsetCheck (nums, 0);
-      return res;
-  }
-  public void subsetCheck(int[] nums, int start) {
-      res.add(new ArrayList<>(path));
-      if (start >= nums.length) {
-          return;
-      }
+    public List<List<Integer>> subsets(int[] nums) {
+        subsetsHelper(nums, 0);
+        return res;
+    }
 
-      for (int i = start; i < nums.length; i++) {
-          path.add(nums[i]);
-          subsetCheck(nums, i + 1);
-          path.removeLast();
-      }
-  }
+    // 傳入start是確保每次遞歸都會從不同起點開始，避免重複計算並保持順序
+    // 即不會出現[2, 1]，只會有[1, 2]
+    public void subsetsHelper(int[] nums, int start) {
+        res.add(new ArrayList<>(path));
+
+        if (start > nums.length) {
+            return;
+        }
+
+        for (int i = start; i < nums.length; i++) {
+            path.add(nums[i]);
+            subsetsHelper(nums, i + 1);
+            path.removeLast();
+        }
+    }
 }
 
 /**

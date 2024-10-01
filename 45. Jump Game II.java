@@ -1,7 +1,7 @@
 // Medium
 // Greedy
 // O(n)
-// https://leetcode.com/problems/jump-game-ii/
+// https://leetcode.cn/problems/jump-game-ii/
 
 class Solution {
   public int jump(int[] nums) {

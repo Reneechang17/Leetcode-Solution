@@ -1,11 +1,9 @@
 // Medium
 // Greedy
 // O(nlogn)
-// https://leetcode.com/problems/merge-intervals/
+// https://leetcode.cn/problems/merge-intervals/
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
   public int[][] merge(int[][] intervals) {

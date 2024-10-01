@@ -1,5 +1,5 @@
 // Medium
-// Binary Search
+// Binary Search, backtracking
 // O(logn)
 // https://leetcode.cn/problems/word-search/
 

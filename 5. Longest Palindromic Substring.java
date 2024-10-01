@@ -1,35 +1,36 @@
 // Medium
 // Two Pointers
 // O(n^2)
-// https://leetcode.com/problems/longest-palindromic-substring/
+// https://leetcode.cn/problems/longest-palindromic-substring/
 
 class Solution {
   public String longestPalindrome(String s) {
-    if (s == null || s.length() < 1)
-      return "";
+      if (s == null || s.length() < 1) return "";
+      
+      int start = 0, end = 0;
+      for (int i = 0; i < s.length(); i++) {
+          int oddString = f(s, i, i);
+          int evenString = f(s, i, i + 1);
+          int len = Math.max(oddString, evenString);
 
-    int start = 0, end = 0;
-    for (int i = 0; i < s.length(); i++) {
-      // odd string
-      int len1 = f(s, i, i);
-      // even string
-      int len2 = f(s, i, i + 1);
-      int len = Math.max(len1, len2);
-
-      if (len > end - start) {
-        start = i - (len - 1) / 2;
-        end = i + len / 2;
+          // end - start是當前找到的最長的回文子串的長度
+          if (len > end - start) {
+              // (len - 1) / 2是回文子串的左半部長度
+              start = i - (len - 1) / 2;
+              // len / 2是右半部分長度
+              end = i + len / 2;
+          }
       }
-    }
-    return s.substring(start, end + 1);
+      return s.substring(start, end + 1);
   }
 
-  private int f(String s, int left, int right) {
-    while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
-      left--;
-      right++;
-    }
-    return right - left - 1;
+  private int f (String s, int left, int right) {
+      while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+          // expand the window
+          left--;
+          right++;
+      }
+      return right - left - 1;
   }
 }
 
