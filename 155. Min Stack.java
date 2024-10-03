@@ -1,10 +1,9 @@
 // Medium
 // Stack, Design
 // O(1)
-// https://leetcode.com/problems/min-stack/
+// https://leetcode.cn/problems/min-stack/
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 class MinStack {
   private Deque<Integer> s1 = new ArrayDeque<>();

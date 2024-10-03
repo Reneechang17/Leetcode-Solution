@@ -1,19 +1,9 @@
 // Easy
 // Two Pointers, LinkedList
 // O(n)
-// https://leetcode.com/problems/linked-list-cycle/
+// https://leetcode.cn/problems/linked-list-cycle/
 
 class Solution {
-  class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-      val = x;
-      next = null;
-    }
-  }
-
   public boolean hasCycle(ListNode head) {
     ListNode slow = head, fast = head;
     while (fast != null && fast.next != null) {

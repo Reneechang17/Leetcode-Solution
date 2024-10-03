@@ -1,7 +1,7 @@
 // Easy
 // Stack
 // O(n)
-// https://leetcode.com/problems/valid-parentheses/
+// https://leetcode.cn/problems/valid-parentheses/
 
 import java.util.Stack;
 

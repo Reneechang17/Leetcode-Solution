@@ -1,7 +1,7 @@
 // Easy
 // PriorityQueue, Heap
 // O(log k)
-// https://leetcode.com/problems/kth-largest-element-in-a-stream/
+// https://leetcode.cn/problems/kth-largest-element-in-a-stream/
 
 import java.util.PriorityQueue;
 

@@ -1,9 +1,8 @@
 // Easy
 // Queue, Design
-// https://leetcode.com/problems/implement-stack-using-queues/
+// https://leetcode.cn/problems/implement-stack-using-queues/
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class MyStack {
   Queue<Integer> q1;
