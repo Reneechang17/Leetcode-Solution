@@ -23,6 +23,8 @@ class Node {
   public Node next;
   public List<Node> children;
   public Node parent;
+  public Node prev;
+  public Node child;
 
   public Node() {}
   
