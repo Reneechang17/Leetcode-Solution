@@ -2,19 +2,21 @@
 // Array
 // O(n)
 // Similar: 997
-// https://leetcode.com/problems/find-the-celebrity/
+// https://leetcode.cn/problems/find-the-celebrity/
 
 /* The knows API is defined in the parent class Relation.
       boolean knows(int a, int b); */
 
     //   public class Solution extends Relation {
     //     public int findCelebrity(int n) {
+    //         // 名人的定義是所有人都認識他，但是他不認識所有人
     //         int candidate = 0;
     //         for (int i = 1; i < n; i++) {
     //             if (knows(candidate, i)) {
     //                 candidate = i;
     //             }
     //         }
+    
     //         for (int i = 0; i < n; i++) {
     //             if (i != candidate && (knows(candidate, i) || !knows(i, candidate))) {
     //                 return -1;

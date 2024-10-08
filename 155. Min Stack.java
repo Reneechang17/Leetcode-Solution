@@ -6,40 +6,39 @@
 import java.util.*;
 
 class MinStack {
-  private Deque<Integer> s1 = new ArrayDeque<>();
-  private Deque<Integer> s2 = new ArrayDeque<>();
+    // 最小棧，需要完成正常棧操作：push, pop, top
+    // O(1)返回棧中最小的元素 -> 需要借助額外的棧完成
 
-  public MinStack() {
-      s2.push(Integer.MAX_VALUE);
-  }
-  
-  public void push(int val) {
-      s1.push(val);
-      s2.push(Math.min(val, s2.peek()));
-  }
-  
-  public void pop() {
-      s1.pop();
-      s2.pop();
-  }
-  
-  public int top() {
-      return s1.peek();
-  }
-  
-  public int getMin() {
-      return s2.peek();
-  }
+    // s1處理當前棧中的數據
+    private Deque<Integer> s1 = new ArrayDeque<>();
+    // s2存儲當前棧中的最小值
+    private Deque<Integer> s2 = new ArrayDeque<>();
+
+    public MinStack() {
+        // 初始化s2時，先放置最大值避免空棧
+        s2.push(Integer.MAX_VALUE);
+    }
+    
+    // 將元素入棧
+    public void push(int val) {
+        s1.push(val);
+        // 比較當前元素和s2棧頂元素，將小的壓入s2
+        s2.push(Math.min(val, s2.peek()));
+    }
+    
+    // 元素出棧
+    public void pop() {
+        s1.pop();
+        s2.pop();
+    }
+    
+    // 返回棧頂元素
+    public int top() {
+        return s1.peek();
+    }
+    
+    // 獲取最小值
+    public int getMin() {
+        return s2.peek();
+    }
 }
-
-/**
- * 最小棧，要求在常數時間內查找最小元素
- * 支持push、pop、top、getMin操作
- * 
- * 可以用兩個棧來實現，一個棧存儲當前數據，一個棧存當前棧中的最小值，初始化s2為Integer.MAX_VALUE
- * 
- * push:將val壓入s1，並將val和s2的頂部元素中的最小值壓入s2
- * pop:將s1和s2的頂部元素彈出
- * top:返回s1的頂部元素
- * getMin:返回s2的頂部元素
- **/

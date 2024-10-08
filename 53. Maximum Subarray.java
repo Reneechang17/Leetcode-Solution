@@ -37,7 +37,6 @@ class Solution {
  * 當發現累積和變為0或是負數時，就從下一個元素開始重新計算，尋找新的可能的最大子數組和
  **/
 
-
  class Solution2 {
     public int maxSubArray(int[] nums) {
         return findHelper(nums, 0, nums.length - 1);
