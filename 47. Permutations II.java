@@ -2,42 +2,46 @@
 // Backtracking
 // O(n!)
 // similar: 46, 90
-// https://leetcode.com/problems/permutations-ii/
+// https://leetcode.cn/problems/permutations-ii/
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-  List<List<Integer>> res = new ArrayList<>();
-  List<Integer> path = new ArrayList<>();
-  boolean[] used;
+    List<List<Integer>> res = new ArrayList<>();
+    LinkedList<Integer> path = new LinkedList<>();
+    boolean[] used;
 
-  public List<List<Integer>> permuteUnique(int[] nums) {
-      used = new boolean[nums.length];
-      Arrays.sort(nums);
-      backtracking (nums, used);
-      return res;
-  }
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        used = new boolean[nums.length];
+        // 方便處理重複的元素
+        Arrays.sort(nums); 
+        // used數組傳入因為我們要追蹤在同一層已經使用過的元素
+        permuteCheck(nums, used);
+        return res;
+    }
 
-  public void backtracking(int[] nums, boolean[] used) {
-      if (path.size() == nums.length) {
-          res.add(new ArrayList<>(path));
-          return;
-      }
-      for (int i = 0; i < nums.length; i++) {
-          if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
-              continue;
-          }
-          if (used[i] == false) {
-              used[i] = true;
-              path.add(nums[i]);
-              backtracking(nums, used);
-              path.removeLast();
-              used[i] = false;
-          }
-      }
-  }
+    private void permuteCheck(int[] nums, boolean[] used) {
+        if (path.size() == nums.length) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            // 對同一層去重
+            // i > 0 確保不會越界，確保i-1還有東西可以比
+            // !used[i - 1] 確保在同一層遞歸中，如果前一個相同元素沒有被使用，那後面的相同元素也不能被使用
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
+                continue;
+            }
+            if (used[i] == false) {
+                used[i] = true;
+                path.add(nums[i]);
+                permuteCheck(nums, used);
+                path.removeLast();
+                used[i] = false;
+            }
+        }
+    }
 }
 
 /**

@@ -1,51 +1,46 @@
 // Medium
-// Array, Binary Search
+// Binary Search
 // O(logn)
-// https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
+// https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/
 
 class Solution {
-  public int[] searchRange(int[] nums, int target) {
-      int[] res = {-1, -1};
-      res[0] = findFirst(nums, target);
-      res[1] = findLast(nums, target);
-      return res;
-  }
+    public int[] searchRange(int[] nums, int target) {
+        // O(logn) -> binary search
+        int[] res = new int[]{-1, -1};
+        res[0] = findFirst(nums, target);
+        res[1] = findLast(nums, target);
+        return res;
+    }
 
-  private int findFirst(int[] nums, int target) {
-      int index = -1;
-      int left = 0, right = nums.length - 1;
-      while (left <= right) {
-          int mid = left + (right - left) / 2;
-          if (nums[mid] >= target) {
-              if (nums[mid] == target) index = mid;
-              right = mid - 1;
-          } else {
-              left = mid + 1;
-          }
-      }
-      return index;
-  }
+    private int findFirst (int[] nums, int target) {
+        int index = -1, left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] >= target) {
+                // mid==target的條件寫在裡面是因為要找第一個位置 
+                // 要確保搜索區間會繼續向左邊移動
+                if (nums[mid] == target) index = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return index;
+    }
 
-  private int findLast(int[] nums, int target) {
-      int index = -1;
-      int left = 0, right = nums.length - 1;
-      while (left <= right) {
-          int mid = left + (right - left) / 2;
-          if (nums[mid] <= target) {
-              if (nums[mid] == target) index = mid;
-              left = mid + 1;
-          } else {
-              right = mid - 1;
-          }
-      }
-      return index;
-  }
+    private int findLast (int[] nums, int target) {
+        int index = -1, left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = (left + right) >> 1;
+            if (nums[mid] <= target) {
+                // 同理，因為要找最後面的位置，所以mid==target的條件要在裡面判斷
+                // 以確保搜索區間往右邊移動
+                if (nums[mid] == target) index = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return index;
+    }
 }
-
-/**
- * 在已經排序的數組中找給定目標值的起始位置和結束位置的問題
- * 如果數組不存在目標值，返回[-1, -1]
- * 需要實現時間複雜度O(logn)的算法來解決此問題
- * 
- * 既然要logn，可以聯想到二分查找，直接用兩次二分來找左邊界和右邊界即可
- **/
