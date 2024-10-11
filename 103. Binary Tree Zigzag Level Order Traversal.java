@@ -1,54 +1,51 @@
 // Medium
-// Tree
+// BFS
 // O(n)
-// https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/
+// https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-  public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-      List<List<Integer>> res = new ArrayList<>();
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
 
-      if (root == null) {
-          return res;
-      }
+        if (root == null) {
+            return res;
+        }
 
-      Deque<TreeNode> que = new ArrayDeque<>();
-      que.offer(root);
-      boolean left = true;
+        Queue<TreeNode> que = new LinkedList<>();
+        que.offer(root);
+        boolean left = true; // true -> left to right; false -> right to left
 
-      while (!que.isEmpty()) {
-          List<Integer> itemList = new ArrayList<>();
-          for (int n = que.size(); n > 0; n--) {
-              TreeNode node = que.poll();
-              itemList.add(node.val);
-              if (node.left != null) {
-                  que.offer(node.left);
-              }
-              if (node.right != null) {
-                  que.offer(node.right);
-              }
-          }
-          if (!left) {
-              Collections.reverse(itemList);
-          }
-          res.add(itemList);
-          left = !left;
-      }
-      return res;
-  }
+        while (!que.isEmpty()) {
+            List<Integer> list = new ArrayList<>();
+            int n = que.size();
+
+            while (n > 0) {
+                TreeNode temp = que.poll();
+                list.add(temp.val);
+                if (temp.left != null) {
+                    que.offer(temp.left);
+                }
+
+                if (temp.right != null) {
+                    que.offer(temp.right);
+                }
+                n--;
+            }
+
+            if (!left) {
+                Collections.reverse(list); // right -> left
+            }
+
+            res.add(list);
+            left = !left;
+        }
+        return res;
+    }
 }
 
 /**
  * 對於ZIGZAG，需要在層序遍歷的基礎上加上一個標誌flag，用於標記當前遍歷層遍歷的順序（true為左到右，false為右到左）
- * 
- * 核心遍歷邏輯：先check根節點是否為空，如果不為空則將根節點加入隊列中
- * 使用while循環處理隊列中的每一層，並初始化一個列表itemList存儲當前層的節點值
- * 
- * 處理完當前層後，先檢查left標誌，如果left為false，則將當前層的itemList反轉
- * 再更新left
+ * BFS的過程也要check一下遍歷的順序，如果是從右到左，則需要對list進行reverse操作
  **/

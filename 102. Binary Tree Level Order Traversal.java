@@ -7,7 +7,7 @@ import java.util.*;
 
 class Solution {
     public List<List<Integer>> res = new ArrayList<List<Integer>>();
-
+    
     public List<List<Integer>> levelOrder(TreeNode root) {
         bfs(root);
         return res;
@@ -20,19 +20,19 @@ class Solution {
         que.offer(node);
 
         while (!que.isEmpty()) {
-            List<Integer> list = new ArrayList<Integer>();
+            List<Integer> list = new ArrayList<>();
             int n = que.size();
 
             while (n > 0) {
-                TreeNode tempNode = que.poll();
-                list.add(tempNode.val);
+                TreeNode temp = que.poll();
+                list.add(temp.val);
 
-                if (tempNode.left != null) {
-                    que.offer(tempNode.left);
+                if (temp.left != null) {
+                    que.offer(temp.left);
                 }
 
-                if (tempNode.right != null) {
-                    que.offer(tempNode.right);
+                if (temp.right != null) {
+                    que.offer(temp.right);
                 }
                 n--;
             }
@@ -42,8 +42,5 @@ class Solution {
 }
 
 /**
- * 這題是二叉樹的層序遍歷
- * 
- * review：層序遍歷是一種BFS，可以用隊列輔助完成（棧比較適合用於DFS）
- * 對於BFS，我們可以先遍歷根節點，再遍歷根節點的子節點，接著遍歷這些子節點的子節點
+ * 這題是二叉樹的層序遍歷，可以用BFS來完成
  **/

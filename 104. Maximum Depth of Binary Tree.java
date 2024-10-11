@@ -12,13 +12,20 @@ class Solution {
         Queue<TreeNode> que = new LinkedList<>();
         que.offer(root);
         int depth = 0;
+
         while (!que.isEmpty()) {
-            int len = que.size();
-            while (len > 0) {
-                TreeNode node = que.poll();
-                if (node.left != null) que.offer(node.left);
-                if (node.right != null) que.offer(node.right);
-                len--;
+            int n = que.size();
+
+            while (n > 0) {
+                TreeNode temp = que.poll();
+                if (temp.left != null) {
+                    que.offer(temp.left);
+                }
+
+                if (temp.right != null) {
+                    que.offer(temp.right);
+                }
+                n--;
             }
             depth++;
         }
@@ -28,7 +35,5 @@ class Solution {
 
 /**
  * 二叉樹的最大深度
- * 
- * 思路：這題的BFS比較直觀，透過一層一層遍歷記錄可以找到從根節點到葉子節點最深的層數
- * 也可以用DFS
+ * BFS的過程紀錄深度，最後返回深度即可，DFS也可以做
  **/
