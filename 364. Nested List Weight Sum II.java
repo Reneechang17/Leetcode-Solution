@@ -7,34 +7,34 @@
 import java.util.*;
 
 class Solution {
-  public int depthSumInverse(List<NestedInteger> nestedList) {
-      // stack存元素的值以及其深度
-      Deque<int[]> stack = new LinkedList<>();
-      int maxDepth = getDepth(nestedList, 1, stack);
+    public int depthSumInverse(List<NestedInteger> nestedList) {
+        // 相似：339，越深權重越大 -> DFS
+        // 這題由於權重是反向的，並且也不知道列表的深度，DFS難以實現 -> 棧
+        Stack<int[]> stack = new Stack<>();
+        // 可以用一个方法來找最大深度，如果找到就紀錄他的值和深度
+        int maxDepth = getDepth(nestedList, 1, stack);
 
-      int sum = 0;
-      while (!stack.isEmpty()) {
-          int[] cur = stack.pop();
-          int val = cur[0];
-          int depth = cur[1];
-          sum += val * (maxDepth - depth + 1); // 反向加權，因為深度越深，權重越小
-      }
-      return sum;
-  }
+        int sum = 0;
+        while (!stack.isEmpty()) {
+            int[] cur = stack.pop();
+            int val = cur[0];
+            int depth = cur[1];
+            sum += val * (maxDepth - depth + 1);
+        }
+        return sum;
+    }
 
-  private int getDepth(List<NestedInteger> nestedList, int depth, Deque<int[]> stack) {
-      int maxDepth = depth;
-      for (NestedInteger ni : nestedList) {
-          // 將整數以及其深度放入棧
-          if (ni.isInteger()) {
-              stack.push(new int[]{ni.getInteger(), depth});
-              // 檢查列表是否為空
-          } else if (!ni.getList().isEmpty()) {
-              maxDepth = Math.max(maxDepth, getDepth(ni.getList(), depth + 1, stack));
-          }
-      } 
-      return maxDepth;
-  }
+    private int getDepth(List<NestedInteger> nestedList, int depth, Stack<int[]> stack) {
+        int maxDepth = depth;
+        for (NestedInteger ni : nestedList) {
+            if (ni.isInteger()) {
+                stack.push(new int[]{ni.getInteger(), depth});
+            } else if (!ni.getList().isEmpty()) {
+                maxDepth = Math.max(maxDepth, getDepth(ni.getList(), depth + 1, stack));
+            }
+        }
+        return maxDepth;
+    }
 }
 
 /**
