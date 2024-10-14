@@ -27,7 +27,7 @@ class MaxStack {
         int val = dll.pop();
         List<Node> list = map.get(val); // 獲取這個值在TreeMap中對應的節點列表
         list.remove(list.size() - 1); // 移除最後一個節點
-        if (list.isEmpty()) map.remove(val); // 如果這個值在列表中是空的，直接在TreeMap中移除這個值
+        if (list.isEmpty()) map.remove(val); // 如果這個值所在的列表中是空的，直接在TreeMap中移除這個值
         return val;
     }
     

@@ -1,35 +1,33 @@
 // Medium
 // Two Pointers
-// O(len^2)
-// https://leetcode.com/problems/palindromic-substrings/
+// O(n^2)
+// https://leetcode.cn/problems/palindromic-substrings/
 
 class Solution {
-  public int countSubstrings(String s) {
-      int len = s.length();
-      int res = 0;
+    public int countSubstrings(String s) {
+        // 中央擴散法，以中間的字符為中心，向左右擴展，知道不是回文子串
+        // 但是要分為字符串長度為奇數/偶數的情況
+        int n = s.length(), count = 0;
 
-      for (int cen = 0; cen < 2 * len - 1; cen++) {
-          int left = cen / 2;
-          int right = left + cen % 2;
+        for (int i = 0; i < n; i++) {
+            // 以i為center，擴展奇數長度的回文子串
+            count += helper(s, i, i);
+            // 以i & i+1為center，擴展偶數長度的回文子串
+            count += helper(s, i, i + 1);
+        }
+        return count;
+    }
 
-          while (left >= 0 && right < len && s.charAt(left) == s.charAt(right)) {
-              res++;
-              left--;
-              right++;
-          }
-      }
-      return res;
-  }
+    private int helper(String s, int left, int right) {
+        int count = 0;
+
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            count++;
+            left--;
+            right++;
+        }
+        return count;
+    }
 }
 
-/**
- * 回文子串：給定一個字符串s，統計這個字符串中有多少個回文子串
- * 
- * 這題可以用中心擴展法，遍歷每一個字符，然後以這個字符為中心，向左右擴展，直到不是回文串為止
- * 
- * left = cen / 2表示中心點的左邊，因為cen從0開始，範圍是2*len-1，所以left = cen / 2
- * 如果cen是0，1，2，3， 則left是0，0，1，1
- * 
- * right = left + cen % 2表示中心點的右邊，因為cen是0，1，2，3，所以cen % 2是0，1，0，1
- * 當為0時，表示cen是偶數，則right = left，當為1時，表示cen是奇數，則right = left + 1
- **/
+// followe up: 也可以用DP做，dp[i][j]表示s[i:j]是否是回文子串

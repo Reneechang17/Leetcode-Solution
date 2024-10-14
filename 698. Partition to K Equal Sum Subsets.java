@@ -1,58 +1,58 @@
 // Medium
-// DP, Backtracking
+// Backtracking
 // O(k^n)
 // https://leetcode.cn/problems/partition-to-k-equal-sum-subsets/
 
 import java.util.Arrays;
 
 class Solution {
-  private int[] nums;
-  private int[] subsetSums;
-  private int targetSum;
+    private int[] nums;
+    private int[] subsetSums;
+    private int targetSum;
 
-  public boolean canPartitionKSubsets(int[] nums, int k) {
-      int sum = 0;
-      for (int num : nums) {
-          sum += num;
-      }
-      if (sum % k != 0) return false;
-      targetSum = sum / k;
-      subsetSums = new int[k]; // 用來記錄每個子集的和
-      
-      Arrays.sort(nums);
-      this.nums = nums;
-      // 從最大的數字開始DFS，可以有限先處理可能的錯誤
-      return dfs(nums.length - 1);
-  }
+    public boolean canPartitionKSubsets(int[] nums, int k) {
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum % k != 0) return false;
+        targetSum = sum / k;
+        subsetSums = new int[k]; // 用来紀錄每個子集的和
 
-  private boolean dfs (int index) {
-      if (index < 0) {
-          for (int sum : subsetSums) {
-              if (sum != targetSum) {
-                  return false;
-              }
-          }
-          return true;
-      }
+        Arrays.sort(nums); // 可以先對數組排序，從大的數字開始遞歸，儘早查出不合法的子集
+        this.nums = nums;
+        return dfs(nums.length - 1);
+    }
 
-      int curNum = nums[index];
-      for (int j = 0; j < subsetSums.length; j++) {
-        // 如果當前和前一個相同，則跳過
-          if (j > 0 && subsetSums[j] == subsetSums[j - 1]) {
-              continue;
-          }
+    private boolean dfs(int index) {
+        if (index < 0) {
+            for (int sum : subsetSums) {
+                if (sum != targetSum) {
+                    return false;
+                }
+            }
+            return true;
+        }
 
-          if (subsetSums[j] + curNum <= targetSum) {
-            subsetSums[j] += curNum;
-              // 如果放入當前數字後，可以達到目標和，則繼續放入下一個數字
-              if (dfs(index - 1)) {
-                  return true;
-              }
-              subsetSums[j] -= curNum; // 撤銷
-          }
-      }
-      return false;
-  }
+        int curNum = nums[index];
+        for (int j = 0; j < subsetSums.length; j++) {
+            // 如果當前元素和前一個相同的話就跳過
+            if (j > 0 && subsetSums[j] == subsetSums[j - 1]) {
+                continue;
+            }
+
+            if (subsetSums[j] + curNum <= targetSum) {
+                subsetSums[j] += curNum;
+
+                // 遞歸處理數組下一個元素，繼續將數字分配到不同子集中
+                if (dfs(index - 1)) {
+                    return true;
+                }
+                subsetSums[j] -= curNum;
+            } 
+        }
+        return false;
+    }
 }
 
 /**
