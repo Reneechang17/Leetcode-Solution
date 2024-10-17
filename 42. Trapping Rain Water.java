@@ -1,9 +1,10 @@
 // Hard
-// Two Pointers, Monotonic Stack
+// Two Pointers, Stack
 // O(n) -> Two Pointers
 // O(n) -> Monotonic Stack
-// https://leetcode.com/problems/trapping-rain-water/
+// https://leetcode.cn/problems/trapping-rain-water/
 
+import java.util.Stack;
 
 class Solution {
   public int trap(int[] height) {
@@ -39,27 +40,27 @@ class Solution {
  * 最後返回結果
  **/
 
-//  class Solution {
-//   public int trap(int[] height) {
-//       Stack<Integer> stack = new Stack<>();
-//       int res = 0, cur = 0;
+ class Solution2 {
+  public int trap(int[] height) {
+      Stack<Integer> stack = new Stack<>();
+      int res = 0, cur = 0;
 
-//       while (cur < height.length) {
-//           while (!stack.isEmpty() && height[cur] > height[stack.peek()]) {
-//               int top = stack.pop();
-//               if (stack.isEmpty()) {
-//                   break;
-//               }
-//               int distance = cur - stack.peek() - 1;
-//               int bounded_height = Math.min(height[cur], height[stack.peek()]) - height[top];
-//               res += distance * bounded_height;
-//           }
-//           stack.push(cur);
-//           cur++;
-//       }
-//       return res;
-//   }
-// }
+      while (cur < height.length) {
+          while (!stack.isEmpty() && height[cur] > height[stack.peek()]) {
+              int top = stack.pop();
+              if (stack.isEmpty()) {
+                  break;
+              }
+              int distance = cur - stack.peek() - 1;
+              int bounded_height = Math.min(height[cur], height[stack.peek()]) - height[top];
+              res += distance * bounded_height;
+          }
+          stack.push(cur);
+          cur++;
+      }
+      return res;
+  }
+}
 
 /**
  * 接雨水

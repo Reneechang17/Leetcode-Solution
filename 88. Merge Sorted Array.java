@@ -5,8 +5,8 @@
 
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int i = m - 1, j = n - 1;
-        int p = m + n - 1;
+        // 可以直接用一個指針往nums1填充，定義雙指針從後面往前遍歷填充
+        int i = m - 1, j = n - 1, p = m + n - 1;
 
         while (i >= 0 && j >= 0) {
             if (nums1[i] > nums2[j]) {
@@ -18,7 +18,7 @@ class Solution {
             }
             p--;
         }
-
+        // 避免nums1走完，nums2沒走完的情況
         while (j >= 0) {
             nums1[p] = nums2[j];
             j--;

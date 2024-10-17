@@ -5,35 +5,33 @@
 
 class Solution {
   public Node flatten(Node head) {
-    if (head == null)
-      return head;
+      if (head == null) {
+          return head;
+      }
 
-    // 偽節點作為新的頭節點的前一個節點
-    Node dummy = new Node();
-    dummy.next = head;
+      Node dummy = new Node();
+      dummy.next = head;
 
-    dfs(dummy, head);
+      dfs(dummy, head);
 
-    // remove偽節點
-    dummy.next.prev = null;
-    return dummy.next;
+      dummy.next.prev = null;
+      return dummy.next;
   }
 
   private Node dfs(Node pre, Node cur) {
-    if (cur == null)
-      return pre;
+      if (cur == null) {
+          return pre;
+      }
 
-    cur.prev = pre;
-    pre.next = cur;
+      cur.prev = pre;
+      pre.next = cur;
 
-    Node tempNext = cur.next; // 先保存當前節點的next指針
+      Node temp = cur.next;
 
-    // 如果當前節點有子節點，則遞歸處理子節點
-    Node tail = dfs(cur, cur.child);
-    cur.child = null; // 扁平化後要將child指針置空
+      Node tail = dfs(cur, cur.child);
+      cur.child = null; // 將child指針置空
 
-    // 遞歸處理當前節點的next節點
-    return dfs(tail, tempNext);
+      return dfs(tail, temp);
   }
 }
 

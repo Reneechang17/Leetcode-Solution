@@ -1,47 +1,47 @@
 // Medium
-// Array, Two Pointers, Sorting
+// Two Pointers, Sorting
 // O(n^2)
-// https://leetcode.com/problems/3sum/
+// https://leetcode.cn/problems/3sum/
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class Solution {
+  // 可以用雙指針+排序，首先將數組排序，如果第一個元素大於0的話可以直接返回
+  // 三個指針分別指向i = 0， left = i + 1， right = nums.length - 1
   public List<List<Integer>> threeSum(int[] nums) {
-    List<List<Integer>> res = new ArrayList<>();
-
-    Arrays.sort(nums);
-
-    for (int i = 0; i < nums.length; i++) {
-      if (nums[i] > 0)
-        return res;
-
-      if (i > 0 && nums[i] == nums[i - 1])
-        continue;
-
-      int left = i + 1, right = nums.length - 1;
-
-      while (right > left) {
-        int sum = nums[i] + nums[left] + nums[right];
-        if (sum > 0) {
-          right--;
-        } else if (sum < 0) {
-          left++;
-        } else {
-          res.add(Arrays.asList(nums[i], nums[left], nums[right]));
-          while (right > left && nums[right] == nums[right - 1]) {
-            right--;
+      List<List<Integer>> res = new ArrayList<>();
+      Arrays.sort(nums);
+      
+      for (int i = 0; i < nums.length; i++) {
+          if (nums[i] > 0) {
+              return res;
           }
-          while (right > left && nums[left] == nums[left + 1]) {
-            left++;
+
+          // 對i去重
+          if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+          int left = i + 1, right = nums.length - 1;
+          while (left < right) {
+              int sum = nums[i] + nums[left] + nums[right];
+              if (sum > 0) {
+                  right--; // 用小一點的數字
+              } else if (sum < 0) {
+                  left++; // 用大一點的數字
+              } else {
+                  res.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                  // 對左右指針去重
+                  while (left < right && nums[right] == nums[right - 1]) {
+                      right--;
+                  }
+                  while (left < right && nums[left] == nums[left + 1]) {
+                      left++;
+                  }
+                  right--;
+                  left++;
+              }
           }
-          right--;
-          left++;
-        }
       }
-    }
-    return res;
+      return res;
   }
 }
 
