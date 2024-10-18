@@ -1,10 +1,10 @@
 // Medium
 // Tree
 // O(n)
-// https://leetcode.com/problems/validate-binary-search-tree/
+// https://leetcode.cn/problems/validate-binary-search-tree/
 
 class Solution {
-  TreeNode max;
+  TreeNode prev; // 遍歷中序遍歷的前一個遍歷的節點
   public boolean isValidBST(TreeNode root) {
       if (root == null) return true;
 
@@ -12,9 +12,9 @@ class Solution {
       boolean left = isValidBST(root.left);
       if (!left) return false;
 
-      // 檢查當前是否小於前一個節點，如果小於，返回false
-      if (max != null && root.val <= max.val) return false;
-      max = root;
+      // 檢查當前是否小於前一個節點，因為BST的中序遍歷是有序的
+      if (prev != null && root.val <= prev.val) return false;
+      prev = root;
 
       // 驗證右子樹
       boolean right = isValidBST(root.right);

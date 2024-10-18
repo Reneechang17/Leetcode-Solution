@@ -1,10 +1,9 @@
-import java.util.ArrayList;
-import java.util.List;
-
 // Medium
 // Array, Matrix
 // O(n)
-// https://leetcode.com/problems/spiral-matrix/
+// https://leetcode.cn/problems/spiral-matrix/
+
+import java.util.*;
 
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {

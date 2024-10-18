@@ -4,6 +4,8 @@
 // https://leetcode.cn/problems/find-peak-element/
 
 class Solution {
+    // 找峰值+O(logn) -> 二分
+    // 峰值的特徵是他會比左右兩邊的元素都大
     public int findPeakElement(int[] nums) {
         int left = 0, right = nums.length - 1;
 
@@ -18,8 +20,3 @@ class Solution {
         return left;
     }
 }
-
-/**
- * 找數組中的峰值，用二分查找
- * 峰值會比他左右兩側的值都大 即nums[i] > nums[i - 1] && nums[i] > nums[i + 1]
- **/

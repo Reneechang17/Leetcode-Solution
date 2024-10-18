@@ -1,7 +1,7 @@
 // Easy
-// Array, Two Pointers
+// Two Pointers
 // O(n)
-// https://leetcode.com/problems/remove-duplicates-from-sorted-array/
+// https://leetcode.cn/problems/remove-duplicates-from-sorted-array/
 
 class Solution {
     public int removeDuplicates(int[] nums) {
@@ -17,5 +17,3 @@ class Solution {
         return j + 1;
     }
 }
-
-// 思路：快慢指針解決

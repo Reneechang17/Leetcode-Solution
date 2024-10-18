@@ -3,8 +3,7 @@
 // O(n)
 // https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class Solution {
   public Node connect(Node root) {
