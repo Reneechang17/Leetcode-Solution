@@ -1,6 +1,6 @@
 // Medium
 // Semaphore, Design, Queue
-// https://leetcode.com/problems/design-bounded-blocking-queue/
+// https://leetcode.cn/problems/design-bounded-blocking-queue/
 
 import java.util.*;
 import java.util.concurrent.Semaphore;

@@ -17,15 +17,16 @@ class Solution {
         }
         if (sum % k != 0) return false;
         targetSum = sum / k;
-        subsetSums = new int[k]; // 用来紀錄每個子集的和
+        subsetSums = new int[k];
 
-        Arrays.sort(nums); // 可以先對數組排序，從大的數字開始遞歸，儘早查出不合法的子集
+        // 先排序，從最大的數字開始dfs，可以儘早查出不合法的子集
+        Arrays.sort(nums); 
         this.nums = nums;
         return dfs(nums.length - 1);
     }
 
-    private boolean dfs(int index) {
-        if (index < 0) {
+    private boolean dfs(int i) {
+        if (i < 0) {
             for (int sum : subsetSums) {
                 if (sum != targetSum) {
                     return false;
@@ -34,22 +35,23 @@ class Solution {
             return true;
         }
 
-        int curNum = nums[index];
+        int curNum = nums[i];
         for (int j = 0; j < subsetSums.length; j++) {
-            // 如果當前元素和前一個相同的話就跳過
+            // 去重，如果當前元素和前一個元素相同的話就skip
             if (j > 0 && subsetSums[j] == subsetSums[j - 1]) {
                 continue;
             }
-
+            
+            // 如果放入當前的數字不會超過目標和，就繼續嘗試放入下一個數字
             if (subsetSums[j] + curNum <= targetSum) {
                 subsetSums[j] += curNum;
 
-                // 遞歸處理數組下一個元素，繼續將數字分配到不同子集中
-                if (dfs(index - 1)) {
+                // dfs to next element
+                if (dfs(i - 1)) {
                     return true;
                 }
-                subsetSums[j] -= curNum;
-            } 
+                subsetSums[j] -= curNum; // 撤銷
+            }
         }
         return false;
     }

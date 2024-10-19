@@ -4,22 +4,26 @@
 // https://leetcode.cn/problems/kth-largest-element-in-an-array/
 
 class Solution {
+    // 找第k個大的元素 -> 找第n-k個小的元素
+    // 快排：將數組分成兩部分，一部分都比pivot大，一部分都比pivot小
+    // 透過遞歸縮小搜索範圍
     public int findKthLargest(int[] nums, int k) {
         int n = nums.length;
-        // 找第k個大的元素，相當於是找第n-k個小的元素
         return quickSelect(nums, 0, n - 1, n - k);
     }
 
     private int quickSelect(int[] nums, int left, int right, int k) {
-        int splitIndex = (left + right) >> 1;
-        int split = nums[splitIndex];
+        int pivot = nums[(left + right) >> 1];
         int i = left, j = right;
 
+        // 將數組分成兩個部分
         while (i <= j) {
-            while (nums[i] < split) {
+            // 移動i，找到第一個大於等於pivot的值
+            while (nums[i] < pivot) {
                 i++;
             }
-            while (nums[j] > split) {
+            // 移動j，找到第一個小於等於pivot的值
+            while (nums[j] > pivot) {
                 j--;
             }
             if (i <= j) {
@@ -29,10 +33,11 @@ class Solution {
             }
         }
 
-        // 遞歸
+        // 縮小遞歸的範圍，如果k在左邊
         if (k <= j) {
             return quickSelect(nums, left, j, k);
         }
+        // 如果k在右邊
         if (k >= i) {
             return quickSelect(nums, i, right, k);
         }

@@ -12,16 +12,12 @@ class Solution {
           int mid = (left + right) >> 1;
 
           if (letters[mid] > target) {
-              right = mid - 1;
+              right = mid - 1; // 優先更新右邊界是避免我們錯過更小符合條件的字符
           } else {
-              left = mid + 1;
+              left = mid + 1; // 如果先處理這個條件，可以會錯過一些符合條件的字符
           }
       }
+      // 如果最後left超出了數組的長度，則返回數組的第一個字母letters[0],通過left對數組長度取模來實現
       return letters[left % letters.length];
   }
 }
-
-/**
- * 尋找比目標字母大的最小字母
- * Note：如果最後left超出了數組的長度，則返回數組的第一個字母letters[0],通過left對數組長度取模來實現
- **/

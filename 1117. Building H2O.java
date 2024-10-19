@@ -1,6 +1,6 @@
 // Medium
 // Concurrency, Semaphore
-// https://leetcode.com/problems/building-h2o/
+// https://leetcode.cn/problems/building-h2o/
 
 import java.util.concurrent.Semaphore;
 
