@@ -2,21 +2,27 @@
 // Sorting, Partition, Heap(PriorityQueue)
 // O(n) -> Partition, O(nlogn) -> Sorting, O(nlogk) -> Heap
 // Similar: 215
-// https://leetcode.com/problems/k-closest-points-to-origin/
+// https://leetcode.cn/problems/k-closest-points-to-origin/
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.stream.IntStream;
 
 class Solution {
+  // 找二維座標平面上距離原點最近的k個點
+  // 最簡單的方法是用排序計算每個點到原點的距離平方，將平方從小到大排序，返回前k個點
+  // 但因為平方根的關係在比較時是單調遞增的，所以可以比較x^2+y^2而不是實際的距離
   public int[][] kClosest(int[][] points, int k) {
     Arrays.sort(points, (a, b) -> {
-      int distanceA = a[0] * a[0] + a[1] * a[1];
-      int distanceB = b[0] * b[0] + b[1] * b[1];
-      return Integer.compare(distanceA, distanceB);
+      return (a[0] * a[0] + a[1] * a[1]) - (b[0] * b[0] + b[1] * b[1]);
     });
+
     return Arrays.copyOfRange(points, 0, k);
   }
 }
+
+// followup，因為題目強調返回的點可以是任意順序，所以可以用分區結合快排做
+// 將所有點按照與原點的距離分區，然後找到第k個點，這個點左邊的點就是答案
+// 這個在k的值比較小的時候會比較高效，但是代碼實現比較複雜
 
 class Solution2 {
   public int[][] kClosest(int[][] points, int k) {

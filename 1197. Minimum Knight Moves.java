@@ -1,65 +1,57 @@
 // Medium
 // BFS
 // O(n)
-// https://leetcode.com/problems/minimum-knight-moves/
+// https://leetcode.cn/problems/minimum-knight-moves/
 
 import java.util.*;
 
 class Solution {
-  private static final int[][] DIRECTIONS = {
-          {2, 1}, {2, -1}, {-2, 1}, {-2, -1},
-          {1, 2}, {1, -2}, {-1, 2}, {-1, -2}
-  };
-  public int minKnightMoves(int x, int y) {
-      x = Math.abs(x);
-      y = Math.abs(y);
+    // 求從原點走到(x,y)的最少步數 -> 最短距離 -> BFS
+    // BFS -> Queue保存當前訪問的座標，並用一個vis來紀錄是否訪問，避免重複
+    // 每次訪問都從隊列poll一個座標和(x,y)比較，如果不是的話就擴展繼續找
 
-      Queue<int[]> que = new LinkedList<>();
-      Set<String> visited = new HashSet<>();
+    private static final int[][] DIRECTIONS = {
+        {2,1}, {2,-1}, {-2,1}, {-2,-1},
+        {1,2}, {1,-2},{-1,2},{-1,-2}
+    };
 
-      que.offer(new int[] {0, 0});
-      visited.add("0, 0");
+    public int minKnightMoves(int x, int y) {
+        // 因為棋盤是對稱的，可以把目標限制在第一象限，也就是x&y都大於零的情況 -> 絕對值
+        x = Math.abs(x);
+        y = Math.abs(y);
 
-      int ans = 0;
+        Queue<int[]> que = new LinkedList<>();
+        // 用String是一種簡化，為了方便存儲和檢查座標是否訪問過，簡單的將二維座標轉化爲一個唯一標識符
+        // 也可以存成int[], 但是要自己實現equals和hashCode方法
+        Set<String> vis = new HashSet<>();
 
-      while (!que.isEmpty()) {
-          int n = que.size();
+        que.offer(new int[]{0, 0});
+        vis.add("0, 0");
+        int ans = 0;
 
-          for (int i = 0; i < n; i++) {
-              int[] cur = que.poll();
-              int curX = cur[0], curY = cur[1];
+        while(!que.isEmpty()) {
+            int n = que.size();
 
-              // 如果找到目標點，直接返回
-              if (curX == x && curY == y) {
-                  return ans;
-              }
+            for (int i = 0; i < n; i++) {
+                int[] cur = que.poll();
+                int curX = cur[0], curY = cur[1];
 
-              // 繼續擴展下一個訪問點
-              for (int[] direction : DIRECTIONS) {
-                  int nextX = curX + direction[0], nextY = curY + direction[1];
+                if (curX == x && curY == y) {
+                    return ans;
+                }
 
-                  String nextPos = nextX + "," + nextY;
+                for (int[] d : DIRECTIONS) {
+                    int nextX = curX + d[0], nextY = curY + d[1];
+                    String nextPos = nextX + "," + nextY;
 
-                  // 只有當這個路徑沒有被訪問過時加入
-                  if (!visited.contains(nextPos) && nextX >= -2 && nextY >= -2) {
-                      que.offer(new int[]{nextX, nextY});
-                      visited.add(nextPos);
-                  }
-              }
-          }
-          ans++;
-      }
-      return -1;
-  }
+                    if (!vis.contains(nextPos) && nextX >= -1 && nextY >= -1) {
+                        que.offer(new int[]{nextX, nextY});
+                        vis.add(nextPos);
+                    }
+                }
+            }
+            ans++;
+        }
+        return -1;
+    }
 }
-
-/**
- * 到達終點的最少移動次數：這題的核心在於求從原點(0,0)走到(x,y)的最少步數
- * 
- * 思路：這題是在所有的可能性中找最少的步數，可以用BFS來找，他能夠返回最少步數的解
- * 剪枝：由於棋盤是對稱的，我們看可以把目標點限制在第一象限，即x>=0, y>=0，這樣可以減少搜索範圍 => 用絕對值來處理
- * 
- * 用隊列來保存當前可以訪問到的座標，並用visited來紀錄是否訪問過，避免重複訪問
- * 每次都從隊列中去取出一個座標，檢查是不是目標點，如果是直接返回；如果不是就繼續擴展下一個訪問點（從DIRECTIONS中選擇）
- * 將沒有訪問過的新座標加入隊列，並標記為已訪問
- **/

@@ -1,5 +1,5 @@
 // Easy
-// Prefix Sum, Math
+// Math
 // O(n)
 // https://leetcode.cn/problems/sum-of-all-odd-length-subarrays/
 
