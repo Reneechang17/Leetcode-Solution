@@ -4,22 +4,27 @@
 // https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/
 
 class Solution {
-  public int[] twoSum(int[] numbers, int target) {
-      for (int i = 0; i < numbers.length; i++) {
-          int left = i + 1, right = numbers.length - 1, x = target - numbers[i];
-          while (left <= right) {
-              int mid = (left + right) >> 1;
-              if (numbers[mid] == x) {
-                  return new int[] {i + 1, mid + 1};
-              } else if (numbers[mid] < x) {
-                  left = mid + 1;
-              } else {
-                  right = mid - 1;
-              }
-          }
-      }
-      return new int[] {};
-  }
+    // 題目重要的info：已排序 -> 可以考慮用二分
+    // 遍歷numbers，對於每個遍歷到的元素，用target-numbers[i]，找當前元素的配對值
+    public int[] twoSum(int[] numbers, int target) {
+        for (int i = 0; i < numbers.length; i++) {
+            int left = i + 1, right = numbers.length - 1, x = target - numbers[i];
+
+            // 不是left<right，是確保最後一個元素會被檢查到
+            while (left <= right) {
+                int mid = (left + right) >> 1;
+                if (numbers[mid] == x) {
+                    // 加1是因為題目是1-indexed，而java數組是0-indexed
+                    return new int[] {i + 1, mid + 1};
+                } else if (numbers[mid] < x) {
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            }
+        }
+        return new int[] {};
+    }
 }
 
 /**
@@ -30,6 +35,7 @@ class Solution {
  **/
 
 // 另一種解法：雙指針
+// 不推薦，1不是最優解，2題目有強調數組是排序的，所以應該利用這個特點
 // O(n)
 // class Solution {
 //   public int[] twoSum(int[] numbers, int target) {

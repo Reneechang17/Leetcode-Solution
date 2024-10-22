@@ -1,5 +1,5 @@
 // Easy
-// Tree
+// DFS
 // O(n)
 // Similar: 100
 // https://leetcode.cn/problems/symmetric-tree/
@@ -11,9 +11,9 @@ class Solution {
 
   private boolean compare(TreeNode left, TreeNode right) {
       // base case
-      if (left == null && right != null) return false;
-      if (left != null && right == null) return false;
       if (left == null && right == null) return true;
+      if (left == null || right == null) return false;
+
       if (left.val != right.val) return false;
 
       boolean compareOutside = compare(left.left, right.right);
