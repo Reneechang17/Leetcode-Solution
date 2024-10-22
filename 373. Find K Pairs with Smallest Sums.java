@@ -1,44 +1,40 @@
 // Medium
-// Priority Queue, Heap
+// Priority Queue
 // O(klogk)
-// https://leetcode.com/problems/find-k-pairs-with-smallest-sums/
+// https://leetcode.cn/problems/find-k-pairs-with-smallest-sums/
 
 import java.util.*;
 
 class Solution {
   public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-    List<List<Integer>> res = new ArrayList<>();
-    if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0 || k == 0) {
-      return res;
-    }
+      List<List<Integer>> res = new ArrayList<>();
 
-    // 最小堆存放[nums1[i], nums2[j]]以及其索引i，j
-    PriorityQueue<int[]> minHeap = new PriorityQueue<>(
-        (a, b) -> (nums1[a[0]] + nums2[a[1]]) - (nums1[b[0]] + nums2[b[1]]));
-
-    // 初始化，放入nums1的每個元素nums2的第一個元素配對
-    for (int i = 0; i < nums1.length && i < k; i++) {
-      // 存入[nums1[i], nums2[j]]，j=0
-      minHeap.offer(new int[] { i, 0 }); // 放入索引
-    }
-
-    // 不斷從最小對中取出最小的數對，並加入新的數對
-    while (k-- > 0 && !minHeap.isEmpty()) {
-      int[] cur = minHeap.poll();
-      int i = cur[0], j = cur[1];
-      res.add(List.of(nums1[i], nums2[j]));
-
-      // 如果nums2還有下一個元素，則將[nums1[i], nums2[j+1]]放入最小堆
-      if (j + 1 < nums2.length) {
-        minHeap.offer(new int[] { i, j + 1 });
+      // base
+      if (nums1 == null || nums1.length == 0 || nums2 == null || nums2.length == 0 || k == 0) {
+          return res;
       }
-    }
-    return res;
+
+      // 最小堆中存儲的是[sum, i, j]
+      PriorityQueue<int[]> minHeap = new PriorityQueue<>((a, b) -> a[0] - b[0]);
+
+      // 初始化堆，加入nums1[0]和nums[j]的組合
+      for (int j = 0; j < nums2.length && j < k; j++) {
+          minHeap.offer(new int[]{nums1[0] + nums2[j], 0, j});
+      }
+
+      // 取前k個最小的組合
+      while (k > 0 && !minHeap.isEmpty()) {
+          int[] top = minHeap.poll();
+          int i = top[1], j = top[2];
+
+          res.add(Arrays.asList(nums1[i], nums2[j])); // 將當前組合加進去
+
+          // 如果nums1中還有下一個元素
+          if (i + 1 < nums1.length) {
+              minHeap.offer(new int[]{nums1[i + 1] + nums2[j], i + 1, j});
+          }
+          k--;
+      }
+      return res;
   }
 }
-
-/**
- * 找到最小的k個數對
- * 
- * 利用最小堆來解決這個問題，需要維護一個最小堆。每次從堆中彈出和最小的數對，再將與該數對相關的新數對加入堆中，直到找到了 k 個數對
- **/

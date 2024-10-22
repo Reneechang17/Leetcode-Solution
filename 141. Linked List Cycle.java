@@ -1,24 +1,21 @@
 // Easy
-// Two Pointers, LinkedList
+// Two Pointers
 // O(n)
 // https://leetcode.cn/problems/linked-list-cycle/
 
 class Solution {
+  // Two pointers -> fast go 2 steps, slow go 1 steps
+  // If there is a cycle, they will meet at some point
   public boolean hasCycle(ListNode head) {
-    ListNode slow = head, fast = head;
-    while (fast != null && fast.next != null) {
-      slow = slow.next;
-      fast = fast.next.next;
-      if (slow == fast) {
-        return true;
+      ListNode slow = head, fast = head;
+      while (fast != null && fast.next != null) {
+          slow = slow.next;
+          fast = fast.next.next;
+          
+          if (slow == fast) {
+              return true;
+          }
       }
-    }
-    return false;
+      return false;
   }
 }
-
-/**
- * 環形鏈表：快慢指針
- * 定義快慢指針從head走，快指針每次走2，慢指針每次走1
- * 如果相遇就是有環
- **/
