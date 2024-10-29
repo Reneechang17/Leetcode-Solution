@@ -5,7 +5,7 @@
 
 class Solution {
     public boolean canPlaceFlowers(int[] flowerbed, int n) {
-        // 需要種n朵花，但是不能有相鄰的 -> 直接遍歷檢查i==0左右兩側&邊界
+        // 需要種n朵花，但是不能有相鄰的 -> 遍歷檢查可以種花的位置（i==0）的左右兩側&邊界
         if (n == 0) return true;
 
         int len = flowerbed.length;

@@ -4,16 +4,16 @@
 // https://leetcode.cn/problems/number-of-islands/
 
 class Solution {
-    // 這題可以看作是一個圖，這題找的就是圖的連通分量（即島嶼）
-    // BFS from one island and search its four directions 
+    // iterate each pos, if cur is 1, then we dfs it
+    // dfs to check the four directions of the cur pos
     public int numIslands(char[][] grid) {
+        // basecase
         if (grid == null || grid.length == 0) {
             return 0;
         }
-        int num = 0;
-        int rows = grid.length;
-        int cols = grid[0].length;
 
+        int num = 0;
+        int rows = grid.length, cols = grid[1].length;
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (grid[i][j] == '1') {
@@ -25,16 +25,16 @@ class Solution {
         return num;
     }
 
-    // search for four directions
     private void dfs(char[][] grid, int i, int j) {
-        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] == '0') {
+        // validate the cur pos
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[1].length || grid[i][j] == '0') {
             return;
         }
-        grid[i][j] = '0'; // mark as 0 means has visited already
 
-        dfs(grid, i - 1, j); // up
-        dfs(grid, i + 1, j); // down
-        dfs(grid, i, j - 1); // left
-        dfs(grid, i, j + 1); // right
+        grid[i][j] = '0'; // means we has already visited
+        dfs(grid, i - 1, j);
+        dfs(grid, i + 1, j);
+        dfs(grid, i, j - 1);
+        dfs(grid, i, j + 1);
     }
 }

@@ -7,13 +7,16 @@
 import java.util.*;
 
 class Solution {
-    // 組合總和問題：candidates中的數字可以無限重複選擇 -> 回溯
+    // Backtracking, we need to find all possibilities
+    // when we do backtrack, we can send the start -> can choose unlimited times
+    // if the sum of cur path == target, add to res
+    // if not, keep try sum + candidates[i]
     List<List<Integer>> res = new ArrayList<>();
     LinkedList<Integer> path = new LinkedList<>();
 
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         Arrays.sort(candidates);
-        backtracking(res, path, candidates, target, 0, 0); // 0 are sum and start
+        backtracking(res, path, candidates, target, 0, 0); // sum / start
         return res;
     }
 
@@ -25,7 +28,6 @@ class Solution {
         for (int i = start; i < candidates.length; i++) {
             if (sum + candidates[i] > target) break;
             path.add(candidates[i]);
-            // 回溯傳入的還是當前i，因為這個數字可以重複使用
             backtracking(res, path, candidates, target, sum + candidates[i], i);
             path.removeLast();
         }

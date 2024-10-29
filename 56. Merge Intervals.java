@@ -6,27 +6,30 @@
 import java.util.*;
 
 class Solution {
-  public int[][] merge(int[][] intervals) {
-      // 當前的start不能大於前一個的end
-      List<int[]> res = new ArrayList<>();
-      Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+    // if the cur's start < prev's end -> merge
+    // if they can be merge, we can modified the intervals with[prev'start, cur'end]
+    public int[][] merge(int[][] intervals) {
+        List<int[]> res = new ArrayList<>();
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
-      int start = intervals[0][0];
-      int right = intervals[0][1];
+        // first one
+        int start = intervals[0][0];
+        int end = intervals[0][1];
 
-      for (int i = 1; i < intervals.length; i++) {
-          // 如果沒有重疊
-          if (intervals[i][0] > right) {
-              res.add(new int[]{start, right});
+        for (int i = 1; i < intervals.length; i++) {
+            // no conflict
+            if (intervals[i][0] > end) {
+                res.add(new int[] {start, end});
 
-              // 更新start和right
-              start = intervals[i][0];
-              right = intervals[i][1];
-          } else {
-              right = Math.max(right, intervals[i][1]);
-          }
-      }
-      res.add(new int[]{start, right});
-      return res.toArray(new int[res.size()][]);
-  }
+                // update the new start and end with cur's 
+                start = intervals[i][0];
+                end = intervals[i][1];
+                // conflict
+            } else {
+                end = Math.max(end, intervals[i][1]);
+            }
+        }
+        res.add(new int[] {start, end});
+        return res.toArray(new int[res.size()][]);
+    }
 }

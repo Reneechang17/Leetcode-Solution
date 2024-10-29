@@ -6,25 +6,29 @@
 import java.util.*;
 
 class Solution {
-  public int minMeetingRooms(int[][] intervals) {
-      if (intervals == null || intervals.length == 0) {
-          return 0;
-      }
+    // sort the start time
+    // for the every cur one, we need to compare the start time is bigger than the prev's end time
+    // the prev we store in the queue
+    // if no conflict, we no need for new meeting room; if conflict, we need a new one
+    public int minMeetingRooms(int[][] intervals) {
+        // base case 
+        if (intervals == null || intervals.length == 0) {
+            return 0;
+        }
 
-      Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-      PriorityQueue<Integer> heap = new PriorityQueue<>();
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        // queue to store the prev's end time
+        PriorityQueue<Integer> heap = new PriorityQueue<>(); 
 
-      heap.add(intervals[0][1]); // 把第一個會議的結束時間放入最小堆中
+        heap.add(intervals[0][1]); // Initialize the heap with first meeting's end time
 
-      // 遍歷剩餘的會議
-      for (int i = 1; i < intervals.length; i++) {
-          // 如果當前時間的開始時間大於等於堆中最早結束的會議，則不需要新的會議室，因為時間不衝突
-          if (intervals[i][0] >= heap.peek()) {
-              heap.poll(); // 移除已經結束的會議
-          }
-          // 如果時間衝突，則將當前會議的結束時間放入推中，需要新開會議室
-          heap.add(intervals[i][1]);
-      }
-      return heap.size();
-  }
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] >= heap.peek()) {
+                heap.poll(); // poll the prev ended meeting
+            }
+            // if conflict, we add the cur's end time to queue
+            heap.add(intervals[i][1]);
+        }
+        return heap.size();
+    }
 }

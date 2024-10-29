@@ -1,7 +1,7 @@
 // Easy
-// Hash Table, Design, Array
+// Hash Table, Array
 // O(1)
-// https://leetcode.com/problems/design-hashmap/
+// https://leetcode.cn/problems/design-hashmap/
 
 import java.util.Arrays;
 

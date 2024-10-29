@@ -22,7 +22,6 @@ class Solution {
         return res;
     }
 
-    // 對字符串做編碼，返回編碼後的字符串
     private String encode(String s) {
         char[] count = new char[26];
         for (char c : s.toCharArray()) {
