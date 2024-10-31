@@ -1,33 +1,32 @@
 // Medium
 // Binary Search
 // O(n logm)
-// https://leetcode.com/problems/koko-eating-bananas/
+// https://leetcode.cn/problems/koko-eating-bananas/
 
 class Solution {
-  public int minEatingSpeed(int[] piles, int h) {
-      int left = 1, right = (int)1e9; // left要從1開始，避免mid為0，mid不能作為除數
+    // 找到最小速度k，使得koko可以在h小时内吃完piles堆的香蕉
+    // 因为这个piles的范围很大，到10^9，线性搜索不高效 -> 可以考虑用二分
+    // 二分的是速度，最小为1，因为速度为0不合理
+    // 最大为1e9，假设极端情况下每小时吃下一整堆
+    public int minEatingSpeed(int[] piles, int h) {
+        int left = 1, right = (int)1e9;
 
-      while (left < right) {
-          int mid = (left + right) >> 1;
-          int sum = 0; 
-          for (int x : piles) {
-              sum += (x + mid - 1) / mid; // 向上取整
-          }
-          if (sum <= h) {
-              right = mid;
-          } else {
-              left = mid + 1;
-          }
-      }
-      return left;
-  }
+        while (left < right) {
+            // mid是假设当前吃香蕉的速度
+            int mid = (left + right) >> 1; 
+            // 在速度为mid的时候，吃完piles堆香蕉的所需时间
+            int hours = 0;
+            for (int x : piles) {
+                hours += (x + mid - 1) / mid; // 向上取整
+            }
+
+            // 如果在mid速度下可以完成，那就继续尝试更小的速度
+            if (hours <= h) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
 }
-
-/**
- * 愛吃香蕉的可可：有N堆香蕉，第i堆有piles[i]根香蕉，現在可可可以每個小時吃K根香蕉，如果不夠一小時吃完，則會留到下一小時再吃，而守衛會在h小時後回來
- * 求最小的K值，使得可可在h小時內吃完所有香蕉
- * 
- * 思路：首先這題要找最小值，並且piles[i]的數據量很大，也就是可可可以一小時吃很多很多香蕉，用常規O(n)的方法會超時
- * 這裡可以想到二分查找，每次檢查在mid的情況下，可可能不能吃完所有香蕉，如果可以吃完，則往左邊找，否則往右邊找
- * 每次計算小時的sum時，可以用(x + mid - 1) / mid來計算向上取整
- **/

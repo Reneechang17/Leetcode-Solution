@@ -13,19 +13,21 @@ class Solution {
     public List<String> letterCombinations(String digits) {
         if (digits.length() == 0 || digits == null) return res;
         String[] numList = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        backtracking(digits, numList, 0); // 0表示從digits的第一個數字開始處理
+
+        // 0 means start from the first char of the digits
+        backtracking(digits, numList, 0); 
         return res;
     }
 
     StringBuilder sb = new StringBuilder();
+
     private void backtracking(String digits, String[] numList, int num) {
         if (num == digits.length()) {
             res.add(sb.toString());
             return;
         }
 
-        String matchNum = numList[digits.charAt(num) - '0']; // 找到這個數字對應的單詞字符串
-        // 用回溯一個一個嘗試
+        String matchNum = numList[digits.charAt(num) - '0'];
         for (int i = 0; i < matchNum.length(); i++) {
             sb.append(matchNum.charAt(i));
             backtracking(digits, numList, num + 1);

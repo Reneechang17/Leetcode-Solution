@@ -21,6 +21,10 @@ class Solution {
         }
     }
 
+    // 定义快慢指针，初始都从dummy节点开始，先让快指针走n步
+    // 再让快慢指针一起走，指导快指针走到null
+    // 这时候慢指针停的位置，就是要删除节点的前一个，可以直接让这个节点的next指针，指向下下一个
+    // 从而删除了目标节点
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
@@ -39,10 +43,3 @@ class Solution {
         return dummy.next;
     }
 }
-
-/**
- * 思路：讓快慢指針中間有n個距離,通過確定相對位置來定位刪除節點的前一個節點
- * 1. 先讓快指針走到n+1的位置
- * 2. 慢指針加入，當快指針走到結尾，慢指針此時指向要刪除前的一個節點
- * 3. 將慢指針指向next.next達成刪除節點
- **/

@@ -5,29 +5,25 @@
 
 class Solution {
   public void sortColors(int[] nums) {
-      // i 維護紅色的左邊界，j 維護藍色的右邊界，k指針遍歷數組
       int i = 0, j = nums.length - 1, k = 0;
+
       while (k <= j) {
-          switch (nums[k]) {
-              case 0:
-                swap(nums, i, k);
-                i++;
-                k++;
-                  break;
-              case 1:
-                  k++;
-                  break;
-                case 2:
-                  swap(nums, k, j);
-                  // 交換後的nums[k]不知道是什麼顏色，所以k不動
-                // 需要再判斷一次nums[k]
-                j--;
-                  break;
+          if (nums[k] == 0) {
+              swap(nums, i, k);
+              i++;
+              k++;
+          } else if (nums[k] == 1) {
+              k++;
+          } else {
+              swap(nums, k, j);
+              j--;
+              // we no need to move k
+              // since we don't know what's color of the nums[k]
           }
       }
   }
 
-  private void swap (int[] nums, int i, int j) {
+  private void swap(int[] nums, int i, int j) {
       int t = nums[i];
       nums[i] = nums[j];
       nums[j] = t;
