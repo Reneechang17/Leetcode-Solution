@@ -29,7 +29,7 @@ class Solution {
                 end = Math.max(end, intervals[i][1]);
             }
         }
-        res.add(new int[] {start, end});
+        res.add(new int[] {start, end}); // make sure the last one is added
         return res.toArray(new int[res.size()][]);
     }
 }

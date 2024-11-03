@@ -1,12 +1,18 @@
 // Easy
-// DP, Math
+// DP
 // O(n)
 // Similar: 509
 // https://leetcode.cn/problems/climbing-stairs/
 
 class Solution {
+  // dp
+  // when n is smaller then 2, like 1, so only 1 way, if 2, there are 2 ways
+  // for base, a = 1, and b means if there are n steps, we have b ways
+  // and we iterate from 3, since the case 0,1,2 we have already covered.
   public int climbStairs(int n) {
-      if (n <= 2) return n;
+      if (n <= 2) {
+          return n;
+      }
 
       int a = 1, b = 2, sum = 0;
       for (int i = 3; i <= n; i++) {
@@ -14,7 +20,7 @@ class Solution {
           a = b;
           b = sum;
       }
-      return b; // b當前保存的就是第n階台階的爬法數
+      return b; // b表示爬到第n階的方法數
   }
 }
 

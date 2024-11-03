@@ -9,6 +9,7 @@ class Solution {
     // substring -> Sliding Window
     // Check the repeating char -> HashMap -> store the char and its index
     public int lengthOfLongestSubstring(String s) {
+        // map: store the char and its index
         Map<Character, Integer> map = new HashMap<>();
         int res = 0, left = 0;
 

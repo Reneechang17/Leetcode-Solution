@@ -1,30 +1,29 @@
 // Easy
-// Tree
+// DFS
 // O(n)
-// https://leetcode.com/problems/path-sum/
+// https://leetcode.cn/problems/path-sum/
 
 class Solution {
-  public boolean hasPathSum(TreeNode root, int targetSum) {
-      if (root == null) return false;
+    // we can use DFS to go through the tree and check 
+    // everytime we dfs, can we minus the root.val from targetSum
+    public boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) return false;
 
-      targetSum -= root.val;
-      if (root.left == null && root.right == null) return targetSum == 0;
-      
-      if (root.left != null) {
-          boolean left = hasPathSum(root.left, targetSum);
-          if (left) return true;
-      }
+        targetSum -= root.val;
 
-      if (root.right != null) {
-          boolean right = hasPathSum(root.right, targetSum);
-          if (right) return true;
-      }
-      return false;
-  }
+        // if the root's left and right are null
+        // we can check is the target is minus to zero, if yes, we find a valid path
+        if (root.left == null && root.right == null) return targetSum == 0;
+
+        if (root.left != null) {
+            boolean left = hasPathSum(root.left, targetSum);
+            if (left) return true;
+        }
+
+        if (root.right != null) {
+            boolean right = hasPathSum(root.right, targetSum);
+            if (right) return true;
+        }
+        return false;
+    }
 }
-
-/**
- * 題目給定一顆二叉樹和一個目標值，判斷是否有從根節點到葉子節點的路徑和給定的目標值是相等的
- * 
- * 遞歸遍歷二叉樹，每次將目標值遞減當前節點值，一旦找到就返回true
- **/

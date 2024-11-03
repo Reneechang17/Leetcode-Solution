@@ -6,23 +6,26 @@
 import java.util.Stack;
 
 class Solution {
+  // we can use stack to solve this
+  // when we occur ({[, push the )}] to stack
+  // or we check the cur element is equal to the element to the stack.pop()
   public boolean isValid(String s) {
-    Stack<Character> stack = new Stack<>();
+      Stack<Character> stack = new Stack<>();
 
-    for (char c : s.toCharArray()) {
-      if (c == '(') {
-        stack.push(')');
-      } else if (c == '{') {
-        stack.push('}');
-      } else if (c == '[') {
-        stack.push(']');
-      } else {
-        if (stack.isEmpty() || stack.pop() != c) {
-          return false;
-        }
+      for (char c : s.toCharArray()) {
+          if (c == '(') {
+              stack.push(')');
+          } else if (c == '{') {
+              stack.push('}');
+          } else if (c == '[') {
+              stack.push(']');
+          } else {
+              if (stack.isEmpty() || c != stack.pop()) {
+                  return false;
+              }
+          }
       }
-    }
-    return stack.isEmpty();
+      return stack.isEmpty();
   }
 }
 

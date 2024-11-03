@@ -4,11 +4,12 @@
 // https://leetcode.cn/problems/move-zeroes/
 
 class Solution {
-    // goal: 把所有0挪到數組最後，並且保持非零元素的相對順序
-    // 不能用copy -> Two pointers: 用一個指針填充非零元素，剩下的位置補0
+    // two pointer, i pointer start from 0
+    // and j pointer to go through the array, if the cur is not zero
+    // then we let nums[i] = nums[j]
+    // by the end, the remain position are 0, then fill them
     public void moveZeroes(int[] nums) {
         int i = 0;
-
         for (int j = 0; j < nums.length; j++) {
             if (nums[j] != 0) {
                 nums[i] = nums[j];
