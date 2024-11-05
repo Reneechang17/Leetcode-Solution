@@ -1,25 +1,21 @@
 // Easy
-// Array, Two Pointers
+// Two Pointers
 // O(n)
-// https://leetcode.com/problems/remove-element/
+// https://leetcode.cn/problems/remove-element/
 
 class Solution {
+    // return the number of element that not equal to val
+    // we can use two pointers, one is go through the array, and check if it is equal to val
+    // if not equal to val, then we fill it with another pointer
     public int removeElement(int[] nums, int val) {
-        int slowIndex = 0;
+        int slow = 0;
 
-        for (int fastIndex = 0; fastIndex < nums.length; fastIndex++) {
-            if (nums[fastIndex] != val) {
-                nums[slowIndex] = nums[fastIndex];
-                slowIndex++;
-            }
+        for (int fast = 0; fast < nums.length; fast++) {
+            if (nums[fast] != val) {
+                nums[slow] = nums[fast];
+                slow++;
+            } 
         }
-        return slowIndex;
+        return slow;
     }
 }
-
-/**
- * 思路：快慢指針解決
- * 都從數組的開頭位置出發，用快指針去遍歷數組
- * 如果快指針沒有遇到val，則將快指針的值賦值給慢指針，慢指針++
- * 如果遇到，就直接走，最後返回慢指針
- **/

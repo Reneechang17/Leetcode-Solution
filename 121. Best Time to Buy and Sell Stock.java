@@ -1,5 +1,5 @@
 // Easy
-// Array, Greedy
+// Greedy
 // O(n)
 // https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/
 
