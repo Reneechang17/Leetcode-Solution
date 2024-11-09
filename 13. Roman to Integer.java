@@ -7,7 +7,7 @@ import java.util.*;
 
 class Solution {
     public int romanToInt(String s) {
-        // 創建map
+        // we can use map to store the symbols and its value
         Map<Character, Integer> map = new HashMap<>();
         map.put('I', 1);
         map.put('V', 5);
@@ -22,7 +22,7 @@ class Solution {
         for (int i = 0; i < n; i++) {
             int value = map.get(s.charAt(i));
 
-            // 判斷是否需要做減法: 如果當前的值小於它後面的字符值 ex IV = 4, IX = 9
+            // check if we need to do the subtraction
             if (i < n - 1 && value < map.get(s.charAt(i + 1))) {
                 res -= value;
             } else {
