@@ -1,22 +1,27 @@
 // Medium
-// Binary Search
+// Binary Search, Two Pointers
 // O(n logn)
 // https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/
 
 class Solution {
-    // 題目重要的info：已排序 -> 可以考慮用二分
-    // 遍歷numbers，對於每個遍歷到的元素，用target-numbers[i]，找當前元素的配對值
+    // important info: sorted array, 1-indexted array
+    // -> binary search, for each element in numbers, we need to find the
+    // our goal is use bs to find target - numbers[i]
     public int[] twoSum(int[] numbers, int target) {
+        // iterate the numbers
         for (int i = 0; i < numbers.length; i++) {
-            int left = i + 1, right = numbers.length - 1, x = target - numbers[i];
+            int left = i + 1, right = numbers.length - 1;
+            int x = target - numbers[i];
 
-            // 不是left<right，是確保最後一個元素會被檢查到
+            // why <=? since we need to check the last element
             while (left <= right) {
                 int mid = (left + right) >> 1;
                 if (numbers[mid] == x) {
-                    // 加1是因為題目是1-indexed，而java數組是0-indexed
+                    // why +1? since this is 1-indexed array
+                    // but java start index from 0
                     return new int[] {i + 1, mid + 1};
                 } else if (numbers[mid] < x) {
+                    // find the right side
                     left = mid + 1;
                 } else {
                     right = mid - 1;

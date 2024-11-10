@@ -6,20 +6,23 @@
 import java.util.*;
 
 class Solution {
-    // substring -> Sliding Window
-    // Check the repeating char -> HashMap -> store the char and its index
+    // find substring -> sliding window, check repeating -> HashMap
     public int lengthOfLongestSubstring(String s) {
-        // map: store the char and its index
+        // use HashMap to store the char and its index
         Map<Character, Integer> map = new HashMap<>();
-        int res = 0, left = 0;
+        int left = 0, res = 0;
 
-        for(int right = 0; right < s.length(); right++) {
-            // check if the cur char has already in map
+        // iterate the string
+        for (int right = 0; right < s.length(); right++) {
             char cur = s.charAt(right);
+            
+            // if the map have cur char, means we occur the repeating char
+            // so we need to move the start of window to the next of this char
             if (map.containsKey(cur)) {
-                // move the left pointer to the next of the cur one
                 left = Math.max(left, map.get(cur) + 1);
             }
+
+            // or we put the char in map and calculate the substring
             map.put(cur, right);
             res = Math.max(res, right - left + 1);
         }
