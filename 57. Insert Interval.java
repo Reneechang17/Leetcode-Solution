@@ -1,16 +1,16 @@
 // Medium
-// Array
+// Intervals
 // O(n)
 // https://leetcode.cn/problems/insert-interval/
 
 import java.util.*;
 
 class Solution {
+    // there are three possible of the newInterval:
+    // 1. after the prev one, so the cur' end < new' start -> no conflict
+    // 2. before the prev one, so the cur' start > new' end -> no conflict
+    // 3. conflict -> update the new start and end
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        // 有三種可能的情況
-        // 1. 當前的區間在新區間之前 -> 不衝突 -> 當前的end小於新區間的start
-        // 2. 當前的區間在新區間之後 -> 不衝突 -> 當前的start大於新區間的end
-        // 3. 新區間和當前區間衝突
         List<int[]> res = new ArrayList<>();
         int start = newInterval[0];
         int end = newInterval[1];
@@ -20,6 +20,7 @@ class Solution {
                 res.add(interval);
             } else if (interval[0] > end) {
                 res.add(new int[]{start, end});
+                // update the start and end
                 start = interval[0];
                 end = interval[1];
             } else {
@@ -27,6 +28,7 @@ class Solution {
                 end = Math.max(end, interval[1]);
             }
         }
+        // add last one 
         res.add(new int[]{start, end});
         return res.toArray(new int[res.size()][]);
     }

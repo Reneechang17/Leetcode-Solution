@@ -6,12 +6,15 @@
 import java.util.*;
 
 class Solution {
+    // we can operate by stack, when we occur number, then push to stack
+    // and occur symbool, we pop two peek element and calculate it
+    // finally push the res to stack
     public int evalRPN(String[] tokens) {
-        // 用棧操作：遇到數字入棧，遇到符號就出棧頂的兩個做操作，然後再將結果壓入棧
-        // 可以用Stack或是Deque做，Deque可作為棧也可以作為隊列，適合頻繁操作出入棧的操作
         Stack<Integer> stack = new Stack<>();
 
         for (String t : tokens) {
+            // which can ensure that no matter the number is negative or positive
+            // or the number is more than one digit, can be parsed
             if (t.length() > 1 || Character.isDigit(t.charAt(0))) {
                 stack.push(Integer.parseInt(t));
             } else {

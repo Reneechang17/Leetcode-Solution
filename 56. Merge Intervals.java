@@ -1,5 +1,5 @@
 // Medium
-// Greedy
+// Greedy, Intervals
 // O(nlogn)
 // https://leetcode.cn/problems/merge-intervals/
 
@@ -17,19 +17,19 @@ class Solution {
         int end = intervals[0][1];
 
         for (int i = 1; i < intervals.length; i++) {
-            // no conflict
+            // cur' start > prev's end -> no conflict
             if (intervals[i][0] > end) {
                 res.add(new int[] {start, end});
 
-                // update the new start and end with cur's 
+                // update start and end
                 start = intervals[i][0];
                 end = intervals[i][1];
-                // conflict
             } else {
+                // have conflict, need to merge
                 end = Math.max(end, intervals[i][1]);
             }
         }
-        res.add(new int[] {start, end}); // make sure the last one is added
+        res.add(new int[] {start, end}); // add last one
         return res.toArray(new int[res.size()][]);
     }
 }

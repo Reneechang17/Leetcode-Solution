@@ -1,55 +1,56 @@
 // Hard
-// Stack, Math
+// Stack
 // O(n)
-// https://leetcode.com/problems/basic-calculator/
+// https://leetcode.cn/problems/basic-calculator/
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 class Solution {
-  public int calculate(String s) {
-      Deque<Integer> stack = new ArrayDeque<>();
-      int res = 0, number = 0, sign = 1;
+    public int calculate(String s) {
+        Stack<Integer> stack = new Stack<>();
+        int res = 0, number = 0, sign = 1;
 
-      for (int i = 0; i < s.length(); i++) {
-          char c = s.charAt(i);
-          if (Character.isDigit(c)) {
-              number = number * 10 + (c - '0');
-          } else if (c == '+') {
-              res += sign * number;
-              number = 0;
-              sign = 1;
-          } else if (c == '-') {
-              res += sign * number;
-              number = 0; 
-              sign = -1;
-          } else if (c == '(') {
-              stack.push(res);
-              stack.push(sign);
-              res = 0; 
-              sign = 1;
-          } else if (c == ')') {
-              res += sign * number;
-              number = 0; 
-              res *= stack.pop();
-              res += stack.pop();
-          }
-      }
-      if(number != 0) {
-          res += sign * number;
-      }
-      return res;
-  }
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (Character.isDigit(c)) {
+                number = number * 10 + (c - '0');
+            } else if (c == '+') {
+                res += sign * number;
+                number = 0;
+                sign = 1;
+            } else if (c == '-') {
+                res += sign * number;
+                number = 0;
+                sign = -1;
+            } else if (c == '(') {
+                stack.push(res);
+                stack.push(sign);
+                res = 0;
+                sign = 1;
+            } else if (c == ')') {
+                res += sign * number;
+                number = 0;
+                res *= stack.pop();
+                res += stack.pop();
+            }
+        }
+        if (number != 0) {
+            res += sign * number;
+        }
+        return res;
+    }
 }
 
 /**
- * 這題是在不能使用內置函數的前提下實現一個基礎計算器，處理題目給定的String
+ * 在不能使用內置函數的前提下實現一個基礎計算器，處理題目給定的String
  * String中只會有數字，+-符號以及（）
  * 
- * 補充：一般這種計算器，括號匹配都可以使用棧的思維處理
+ * 補充：一般這種計算器，括號匹配都可以使用棧處理
  * 
- * 可以開一個雙向隊列來表示棧，初始化res和number（當前解析的數字）以及用sign來表示正負號（1/-1）
- * 用for循環對String s左到右遍歷
+ * 初始化res和number（當前解析的數字）以及用sign來表示正負號（1/-1）
+ * 
+ * for遍歷s
  * 對遍歷到的每個字符做對應的操作：
  * 1. 如果當前為數字，則需要做解析操作：用number * 10加上當前字符
  *      ex.如果遍歷234，第一個拿到2，用number初始化為0，也就是0*10+2 = 2，再賦值給number；
