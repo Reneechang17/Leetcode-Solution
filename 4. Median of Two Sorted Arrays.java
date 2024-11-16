@@ -4,36 +4,35 @@
 // https://leetcode.com/problems/median-of-two-sorted-arrays/
 
 class Solution {
+  // 如果两个数组的总长度为奇数，则中位数是合并后排序数组的第(tot / 2 + 1) 个元素
+  // 如果总长度为偶数，则中位数为第 (tot / 2) 和 (tot / 2 + 1) 个元素的平均值
+  // 用递归find(int[] nums1, int i, int[] nums2, int j, int k) 用来找到 nums1 和 nums2 中第 k 小的元素
+  // nums1 和 nums2 都是有序数组，i 和 j 分别是当前在 nums1 和 nums2 中的起始位置
   public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-    int len = nums1.length + nums2.length;
-
-    if (len % 2 == 1) {
-      return f(nums1, 0, nums2, 0, len / 2 + 1);
-    } else {
-      return (f(nums1, 0, nums2, 0, len / 2) + f(nums1, 0, nums2, 0, len / 2 + 1)) / 2.0;
-    }
+      int tot = nums1.length + nums2.length;
+      // 关键点 找到合并后第k个元素
+      if (tot % 2 == 0) {
+          int left = find(nums1, 0, nums2, 0, tot / 2);
+          int right = find(nums1, 0, nums2, 0, tot / 2 + 1);
+          return (left + right) / 2.0;
+      } else {
+          return find(nums1, 0, nums2, 0, tot / 2 + 1);
+      }
   }
 
-  private int f(int[] A, int aStart, int[] B, int bStart, int k) {
-    // base case: if one of the nums is null, then k will be in another one
-    if (aStart >= A.length)
-      return B[bStart + k - 1];
-    if (bStart >= B.length)
-      return A[aStart + k - 1];
-    if (k == 1)
-      return Math.min(A[aStart], B[bStart]);
-
-    int aMid = Integer.MAX_VALUE, bMid = Integer.MAX_VALUE;
-    if (aStart + k / 2 - 1 < A.length)
-      aMid = A[aStart + k / 2 - 1];
-    if (bStart + k / 2 - 1 < B.length)
-      bMid = B[bStart + k / 2 - 1];
-
-    if (aMid < bMid) {
-      return f(A, aStart + k / 2, B, bStart, k - k / 2);
-    } else {
-      return f(A, aStart, B, bStart + k / 2, k - k / 2);
-    }
+  private int find(int[] nums1, int i, int[] nums2, int j, int k) {
+      if (nums1.length - i > nums2.length - j) return find(nums2, j, nums1, i, k);
+      if (k == 1) {
+          if (i == nums1.length) return nums2[j];
+          else return Math.min(nums1[i], nums2[j]);
+      }
+      if (i == nums1.length) return nums2[j + k - 1];
+      int si = Math.min(nums1.length, i + k / 2), sj = j + (k - k / 2);
+      if (nums1[si - 1] < nums2[sj - 1]) {
+          return find(nums1, si, nums2, j, k - (si - i));
+      } else {
+          return find(nums1, i, nums2, sj, k - (sj - j));
+      }
   }
 }
 
