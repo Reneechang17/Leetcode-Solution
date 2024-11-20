@@ -1,48 +1,35 @@
 // Medium
 // LinkedList
-// O(n)
-// https://leetcode.com/problems/reverse-linked-list-ii/
+// Time: O(n), Space: O(1)
+// https://leetcode.cn/problems/reverse-linked-list-ii/
 
 class Solution {
-  public class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode() {
-    }
-
-    ListNode(int val) {
-      this.val = val;
-    }
-
-    ListNode(int val, ListNode next) {
-      this.val = val;
-      this.next = next;
-    }
-  }
-
+  // 1.找到left的前一个节点 2.反转left～right的区间 3.连接反转部分的头和尾
   public ListNode reverseBetween(ListNode head, int left, int right) {
-    if (head == null)
-      return null;
+      // basecase
+      if (head == null) {
+           return null;
+      }
 
-    ListNode dummy = new ListNode(0);
-    dummy.next = head;
-    ListNode pre = dummy;
+      ListNode dummy = new ListNode(0);
+      dummy.next = head;
+      ListNode pre = dummy;
 
-    for (int i = 0; i < left - 1; i++) {
-      pre = pre.next;
-    }
+      // 找left前一个节点
+      for (int i = 0; i < left - 1; i++) {
+          pre = pre.next;
+      }
 
-    ListNode first = pre.next;
-    ListNode two = first.next;
-
-    for (int i = 0; i < right - left; i++) {
-      first.next = two.next;
-      two.next = pre.next;
-      pre.next = two;
-      two = first.next;
-    }
-    return dummy.next;
+      ListNode first = pre.next, second = first.next;
+      // 反转left～right区间
+      for (int i = 0; i < right - left; i++) {
+          // pre - first - second - third -> pre - third - second - first
+          first.next = second.next; // first - third // 2roound: first - 
+          second.next = pre.next; // second - first // 2round: third - second
+          pre.next = second; // pre - second - first - third(new sec) //2round: pre - third
+          second = first.next; // pre - third - second - first
+      }
+      return dummy.next;
   }
 }
 
