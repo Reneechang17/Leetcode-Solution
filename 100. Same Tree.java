@@ -1,30 +1,32 @@
 // Easy
 // DFS
-// O(n)
-// Similar: 101
+// Time:O(n), Space:O(n)->worse case:a skewed tree, O(logn)->balanced tree
 // https://leetcode.cn/problems/same-tree/
 
 class Solution {
-  //  可以用DFS來比較
-  public boolean isSameTree(TreeNode p, TreeNode q) {
-      return compare(p, q);
-  }
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        // use DFS to search two tree
+        return compare(p, q);
+    }
 
-  private boolean compare(TreeNode p, TreeNode q) {
-      // 先檢查是否為空節點，再比較值
-      if (p == null && q == null) {
-          return true;
-      }
-      if (p == null || q == null) {
-          return false;
-      }
+    private boolean compare(TreeNode p, TreeNode q) {
+        // check null condition, if both are null -> True
+        // if one of them is null -> False
+        if (p == null && q == null) {
+            return true;
+        }
 
-      if (p.val != q.val) {
-          return false;
-      }
+        if (p == null || q == null) {
+            return false;
+        } 
 
-      boolean compareLeft = compare(p.left, q.left);
-      boolean compareRight = compare(p.right, q.right);
-      return compareLeft && compareRight;
-  }
+        // check value
+        if (p.val != q.val) {
+            return false;
+        }
+
+        boolean compareLeft = compare(p.left, q.left);
+        boolean compareRight = compare(p.right, q.right);
+        return compareLeft && compareRight;
+    }
 }

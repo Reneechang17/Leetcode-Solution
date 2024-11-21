@@ -29,10 +29,3 @@ class BSTIterator {
         }
     }
 }
-
-/**
- * 實現一個中序遍歷的二叉搜索樹迭代器類
- * 1. BSTIterator(TreeNode root)：初始化一個BSTIterator類的對象。根節點會作為構造函數的一個部分。指針的初始化為一個不存在BST中的數字，且該數字小於BST中任何元素
- * 2. boolean hasNext()：如果指針向右遍歷還存在數字，則返回true（也就是他還沒reach到盡頭時）
- * 3. int next()：將指針向右移動，返回指針處的數字
- **/

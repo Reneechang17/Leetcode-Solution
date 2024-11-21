@@ -1,6 +1,6 @@
 // Easy
 // BFS
-// O(n)
+// Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/maximum-depth-of-binary-tree/
 
 import java.util.*;
@@ -37,3 +37,10 @@ class Solution {
         return depth;
     }
 }
+
+// que = [3], depth = 0
+// first level: tmp = 3, que = [9, 20], depth = 1
+// second level: tmp = 9, que = []
+//               tmp = 20, que = [15, 7], depth = 2
+// third level: tmp = 15, que = []
+//              tmp = 7, que = [], depth = 3  

@@ -1,29 +1,27 @@
 // Hard
 // LinkedList
-// O(n)
-// https://leetcode.com/problems/reverse-nodes-in-k-group/
+// Time:O(n), Space:O(n/k)
+// https://leetcode.cn/problems/reverse-nodes-in-k-group/
 
-class Solution {
+class Solution{
     public ListNode reverseKGroup(ListNode head, int k) {
-        if (head == null)
-            return null;
+        if (head == null) return null;
+
+        // 找区间
         ListNode start = head, end = head;
-        // find the k group
         for (int i = 0; i < k; i++) {
-            // base case: if not enough
-            if (end == null)
-                return head;
+            if (end == null) return head;
             end = end.next;
         }
 
-        // reverse the k group with helper function
+        // 反转区间: 返回反转后的头节点
         ListNode newHead = reverse(start, end);
-
-        // connect
+        
+        // 和原本的接上：原本的结尾和前一段的最后一个接上
         start.next = reverseKGroup(end, k);
         return newHead;
     }
-
+    
     private ListNode reverse(ListNode start, ListNode end) {
         ListNode pre, cur, next;
         pre = null;
@@ -31,18 +29,10 @@ class Solution {
         next = start;
         while (cur != end) {
             next = cur.next;
-            cur.next = pre;
+            cur.next = pre; // 反转当前节点的指针
             pre = cur;
             cur = next;
         }
         return pre;
     }
 }
-
-/**
- * 思路：
- * 1. 遍歷先找區間
- * Note:注意不夠k的情況
- * 2. Helper Function 反轉區間
- * 3. 新的頭（舊的尾）和鏈表繼續（start的next）接上（難點）
- **/

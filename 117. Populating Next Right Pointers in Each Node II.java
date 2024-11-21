@@ -1,42 +1,54 @@
 // Medium
-// Tree, BFS
-// O(n)
-// https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
+// BFS
+// Time:O(n), Space:O(n)
+// https://leetcode.cn/problems/populating-next-right-pointers-in-each-node-ii/
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class Solution {
-  public Node connect(Node root) {
-      Queue<Node> que = new LinkedList<>();
-      if (root != null) que.add(root);
+    // BFS to traverse each level
+    public Node connect(Node root) {
+        // basecase
+        if (root == null) return null;
 
-      while (!que.isEmpty()) {
-          int len = que.size();
-          Node curNode = null;
-          Node preNode = null;
+        Queue<Node> que = new LinkedList<>();
+        que.offer(root);
 
-          for (int i = 0; i < len; i++) {
-              if (i == 0) {
-                  preNode = que.poll();
-                  curNode = preNode;
-              } else {
-                  curNode = que.poll();
-                  preNode.next = curNode;
-                  preNode = preNode.next;
-              }
+        while (!que.isEmpty()) {
+            int n = que.size();
+            Node prev = null;
 
-              if (curNode.left != null) que.add(curNode.left);
-              if (curNode.right != null) que.add(curNode.right);
-          }
-          preNode.next = null;
-      }
-      return root;
-  }
+            for (int i = 0; i < n; i++) {
+                Node cur = que.poll();
+
+                // Link the prev node to cur node
+                if (prev != null) {
+                    prev.next = cur;
+                }
+                prev = cur;
+
+                // add the child of cur node to que
+                if (cur.left != null) {
+                    que.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    que.offer(cur.right);
+                }
+            }
+            // the last node of each level should point to null
+            prev.next = null;
+        }
+        return root;
+    }
 }
 
-/**
- * 這題和前一題116類似，但不同的是處理的是一個普通的二叉樹，其節點數是任意的，子節點的數量也不受限制（0/1/2）
- * 由於樹結構可能不完整，處理next指針時需要檢查當前節點的next指針，以確定當前節點的子節點的next指針應該指向哪裡
- * 通過追蹤前一個節點preNode並在適當設置next指針，以及確定每一層最後一個節點指向null
- **/
+// Initialize add root node to que = [1]
+// Level 1: process node 1
+//          prev = null(initially), set prev = 1
+//          Add left and right child to que = [2, 3], set prev.next = null => 1 -> #
+// Level 2: process node 2, set prev = 2, add left and right child to que = [3, 4, 5] 
+//          process node 3, link prev.next = 3, add child to que = [4, 5, 7], set null => 2 -> 3 -> #
+// Level 3: process node 4, set prev = 4, no child add to que
+//          process node 5, link prev.next = 5, prev = 5, no child add to que
+//          process node 7, link prev.next = 7, prev = 7, no child add to que
+//          set null => 4 -> 5 -> 7 -> #

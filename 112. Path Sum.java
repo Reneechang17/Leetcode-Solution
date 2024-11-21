@@ -1,6 +1,6 @@
 // Easy
 // DFS
-// O(n)
+// Time:O(n), Space:O(h)->h is the height of the tree
 // https://leetcode.cn/problems/path-sum/
 
 class Solution {

@@ -1,13 +1,15 @@
 // Medium
 // LinkedList, Hash table
-// O(1)
+// Time:O(1), Space:O(n) n is the capacity
 // https://leetcode.cn/problems/lru-cache/
 
-import java.util.HashMap;
+import java.util.*;
 
 class LRUCache {
     private int capacity;
-    private HashMap<Integer, Node> map;
+    // map use to find the corresponding value through key -> O(1)
+    private Map<Integer, Node> map;
+    // record the cache in order to solve the update 
     private Node head, tail;
 
     public LRUCache(int capacity) {
@@ -18,9 +20,9 @@ class LRUCache {
         head.next = tail;
         tail.prev = head;
     }
-    
-    // 如果存在key，就返回相應的val
-    // 每次訪問都需要將訪問的key-value標記成最新使用
+
+    // if key exist, return the corresponding value
+    // every time we visit the key-value, we need to update it(move to head)
     public int get(int key) {
         if (!map.containsKey(key)) {
             return -1;
@@ -30,21 +32,22 @@ class LRUCache {
         return node.value;
     }
     
-    // 如果存在key，更新值
-    // 如果不存在，插入新的並且檢查緩存是否滿了，滿了就刪除最近使用最少的key-value
+    // if key exist, update the value
+    // if not, add new one and check if the LRU exceed the capacity
+    // if fill up, remove the least recently used key
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             Node node = map.get(key);
             node.value = value;
-            moveToHead(node);
+            moveToHead(node); 
         } else {
             Node newNode = new Node(key, value);
             map.put(key, newNode);
             addToHead(newNode);
-            
-            if (map.size() > capacity) {
-                Node tailNode = removeTail();
-                map.remove(tailNode.key);
+
+            if(map.size() > capacity) {
+                Node tail = removeTail();
+                map.remove(tail.key);
             }
         }
     }
@@ -59,19 +62,21 @@ class LRUCache {
         }
     }
 
+    // some support methods...
     private void moveToHead(Node node) {
         removeNode(node);
         addToHead(node);
     }
 
-    private void removeNode(Node node) {
-        // node.prev - node - node.next
+    private void removeNode(Node node){
+        // orig: node.prev - node - node.next
+        // goal: node.prev - node.next
         node.prev.next = node.next;
         node.next.prev = node.prev;
     }
 
     private void addToHead(Node node) {
-        // head(dummy) - node - head.next
+        // goal: head(dummy) - node - head.next
         node.prev = head;
         node.next = head.next;
         head.next.prev = node;
@@ -79,7 +84,7 @@ class LRUCache {
     }
 
     private Node removeTail() {
-        // RemoveNode - tail(dummy)
+        // goal: removeNode - tail(dummy)
         Node node = tail.prev;
         removeNode(node);
         return node;
