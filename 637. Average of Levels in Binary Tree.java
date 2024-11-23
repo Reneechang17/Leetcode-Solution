@@ -1,41 +1,38 @@
 // Easy
-// Tree, BFS
-// O(N)
-// Similar: 429
-// https://leetcode.com/problems/average-of-levels-in-binary-tree/
+// BFS
+// Time:O(n), Space:O(n)
+// https://leetcode.cn/problems/average-of-levels-in-binary-tree/
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-  public List<Double> averageOfLevels(TreeNode root) {
-      List<Double> res = new ArrayList<>();
-      Deque<TreeNode> que = new LinkedList<>();
+    // BFS
+    public List<Double> averageOfLevels(TreeNode root) {
+        List<Double> res = new ArrayList<>();
+        // basecase
+        if (root == null) return res;
 
-      if (root == null) return res;
+        Queue<TreeNode> que = new LinkedList<>();
+        que.offer(root);
+        
+        while (!que.isEmpty()) {
+            int n = que.size();
+            double sum = 0.0;
 
-      que.offer(root);
-      while (!que.isEmpty()) { 
-          int len = que.size();
-          double sum = 0.0;
-          for (int i = 0; i < len; i++) {
-              TreeNode node = que.poll();
-              sum += node.val;
-              if (node.left != null) {
-                  que.add(node.left);
-              }
-              if (node.right != null) {
-                  que.add(node.right);
-              }
-          }
-          res.add(sum / len);
-      }
-      return res;
-  }
+            for (int i = 0; i < n; i++) {
+                TreeNode node = que.poll();
+                sum += node.val;
+
+                if (node.left != null) {
+                    que.add(node.left);
+                }
+
+                if (node.right != null) {
+                    que.add(node.right);
+                }
+            }
+            res.add(sum / n);
+        }
+        return res;
+    }
 }
-
-/**
- * 這題用BFS搜索二叉樹的每一層，並計算每一層節點的平均值即可
- **/

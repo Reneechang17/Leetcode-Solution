@@ -1,24 +1,46 @@
 // Easy
 // Tree, Recursion
-// O(n)
-// https://leetcode.com/problems/count-complete-tree-nodes/
+// Time:O(log^2n), Space:O(logn)
+// https://leetcode.cn/problems/count-complete-tree-nodes/
 
 class Solution {
+  // 未优化, 遍历所有节点
+  // Time: O(n), Space: O(h)
   public int countNodes(TreeNode root) {
-    if (root == null) {
-      return 0;
-    }
-    return countNodes(root.left) + countNodes(root.right) + 1;
+      // basecase 
+      if (root == null) return 0;
+
+      return countNodes(root.left) + countNodes(root.right) + 1;
   }
 }
 
-/**
- * 這題是統計完全二叉樹的節點個數
- * 可以用遞歸和迭代做
- * 
- * 補充：完全二叉樹
- * 定義：除了最底層節點可能沒填滿以外，其餘每層節點數都達到最大值，並且最下層的節點都集中在該層最左邊的若干位置。若對底層為第h層，則該層包含1~ 2^(h-1) 個節點
- * 
- * 完全二叉樹的兩種節點情況 1. 滿二叉樹：2^樹深度 - 1  
- * 2. 最後一層葉子節點沒有滿：分別遞歸左孩子和右孩子，遞歸到某一個深度一定會有左孩子或是右孩子為滿二叉樹
- **/
+// 优化：因为给定是一颗完全二叉树，其每层除了最后一层都是满的，并且最后一层节点从左到右连续排列
+// 如果树是满的，节点总数就是= 2^h - 1; 如果不是满的，可以递归处理左右子树
+// Time:O(log^2n), Space:O(logn)
+class Solution2 {
+  public int countNodes(TreeNode root) {
+      if (root == null) return 0;
+
+      // 计算左右子树的高度
+      int leftHeight = getHeight(root.left);
+      int rightHeight = getHeight(root.right);
+
+      if (leftHeight == rightHeight) {
+          // 左右高度相等，即树是满的
+          return (int) Math.pow(2, leftHeight) + countNodes(root.right);
+      } else {
+          // 左右高度不相等，则递归计算
+          return (int) Math.pow(2, rightHeight) + countNodes(root.left);
+      }
+
+  }
+
+  private int getHeight(TreeNode node) {
+      int h = 0;
+      while (node != null) {
+          h++;
+          node = node.left; // 完全二叉树只需要沿着左边遍历
+      }
+      return h;
+  }
+}

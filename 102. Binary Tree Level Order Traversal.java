@@ -1,13 +1,13 @@
 // Medium
-// Tree
-// O(n)
+// BFS
+// Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/binary-tree-level-order-traversal/
 
 import java.util.*;
 
 class Solution {
     public List<List<Integer>> res = new ArrayList<List<Integer>>();
-    
+
     public List<List<Integer>> levelOrder(TreeNode root) {
         bfs(root);
         return res;
@@ -20,10 +20,10 @@ class Solution {
         que.offer(node);
 
         while (!que.isEmpty()) {
-            List<Integer> list = new ArrayList<>();
             int n = que.size();
+            List<Integer> list = new ArrayList<>();
 
-            while (n > 0) {
+            for (int i = 0; i < n; i++) {
                 TreeNode temp = que.poll();
                 list.add(temp.val);
 
@@ -34,13 +34,8 @@ class Solution {
                 if (temp.right != null) {
                     que.offer(temp.right);
                 }
-                n--;
             }
             res.add(list);
         }
     }
 }
-
-/**
- * 這題是二叉樹的層序遍歷，可以用BFS來完成
- **/

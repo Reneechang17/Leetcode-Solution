@@ -1,9 +1,9 @@
 """
-  The problem give us an Integer Array, which includes number from 1 to 9, 
-  but some of the numbers are replaced with 0, return the missing numbers.
+  Give an Integer Array, which includes number from 1 to 9, 
+  but some numbers are replaced with 0, return the missing numbers.
 
-  1. convert the input array to a set, range from 1 to 9, which can achieve O(1) lookup
-  2. iterate from 1 to 9, find the missing number and add it to the result list
+  1. turn array to a set, range from 1 to 9, which can achieve O(1) lookup
+  2. iterate from 1 to 9, if the num is not found in set, that is the missing value
 
 """
 
@@ -16,5 +16,5 @@ def missing(nums):
       ans.append(i)
     return ans
 
-# Time: O(n), we turn the array to set, and n is the length of the nums
-# Space: O(n), we use a set to store the numbers
+# Time:O(9)=>O(1), n only has 9 numbers
+# Space:O(9)=>O(1), set only store 9 numbers, the duplicate will be filtered out

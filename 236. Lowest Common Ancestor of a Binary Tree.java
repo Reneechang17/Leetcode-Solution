@@ -1,16 +1,15 @@
 // Medium
-// Tree
-// O(n)
-// Similar: 235
+// Recursion
+// Time:O(n), Space:O(h)
 // https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/
 
 class Solution {
+    // three possible situation: 1. p in left and q in right 2.p in right and q in left
+    // 3. node itself
+    // start from root and recursion to check if left and right has p or q
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        // 根據題目，有三種LCA的情況 1. 左子樹有p，右子樹有q 2. 左子樹有q，右子樹有p
-        // 3. pq自己就是LCA
-        // 用後序遍歷 -> left-right-root，從下往上找
-
         if (root == null || root == p || root == q) return root;
+
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
 
