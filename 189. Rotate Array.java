@@ -1,6 +1,6 @@
 // Medium
 // Array
-// O(n)
+// Time:O(n), Space:O(1)
 // https://leetcode.cn/problems/rotate-array/
 
 class Solution {

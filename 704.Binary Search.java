@@ -1,7 +1,7 @@
 // Easy
 // Binary Search
-// Time: O(log n), Space: O(1)
-// https://leetcode.com/problems/binary-search/
+// Time:O(log n), Space:O(1)
+// https://leetcode.cn/problems/binary-search/
 
 class Solution {
   public int search(int[] nums, int target) {

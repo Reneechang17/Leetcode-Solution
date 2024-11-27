@@ -1,21 +1,21 @@
 // Medium
 // Two Pointers, Sorting
-// O(n^2)
+// Time:O(n^2), Space:O(n^2)
 // https://leetcode.cn/problems/3sum/
 
 import java.util.*;
 
 class Solution {
     // two pointers + sorting, if the first element in array is bigger than one -> return
-    // use i pointer to iterate the nums, and use left and right pointers to adjust the element
-    // if the sum of three pointers too big, we can adjust right pointer, otherwise adjust left
-    // keep to check the duplicate number 
+    // use fixed pointer to iterate the nums, and use two pointers to adjust the element
+    // if the sum of three pointers too big -> adjust right pointer, otherwise adjust left
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
         Arrays.sort(nums);
 
         for (int i = 0; i < nums.length; i++) {
             // check if the first one is bigger than 0
+            // since the array is sorted, if the first one is bigger than 0, the sum must bigger than 0
             if (nums[i] > 0) {
                 return res;
             }

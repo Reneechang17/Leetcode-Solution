@@ -1,15 +1,14 @@
 // Medium
 // Array, Two Pointers
-// O(n)
+// Time:O(n), Space:O(1)
 // https://leetcode.cn/problems/next-permutation/
 
 class Solution {
-    // 下一個排列，這題有三步
-    // 1. 從後向前遍歷找第一組nums[i]<nums[i+1] -> nums[i+1]-nums[n-1]是降序的
-    // 2. 如果找到i，再從後向前找第一個大於nums[i]的數nums[j]，交換他們
-    // 3. 將nums[i+1]-nums[n-1]反轉，這樣可以保證得到的新序列是所有大於原序列的排列中最小的
+    // 1. From end to start, find the first nums[i]<nums[i+1]->nums[i+1]-nums[n-1] is in descending order
+    // 2. If find i, find the first num nums[j] greater than nums[i] from the back to the front, and swap them
+    // 3. Reverse nums[i+1]-nums[n-1], so that the new sequence obtained is the smallest of all permutations greater than the original sequence
     public void nextPermutation(int[] nums) {
-        // 因為要比較nums[i]和nums[i+1]，i從倒數第二個遍歷
+        // Since we need to compare nums[i] and nums[i+1], i iterates from the second last
         int i = nums.length - 2;
         while (i >= 0 && nums[i] >= nums[i + 1]) {
             i--;
@@ -40,9 +39,3 @@ class Solution {
         }
     }
 }
-
-/**
- * 1. 後往前查找，找到第一對連續的數字nums[i]和nums[i+1],其中nums[i]<nums[i+1], 表明序列nums[i+1]到nums[n-1]是降序的
- * 2. 如果找到i，再次從後往前找到第一個比nums[i]大的數nums[j]，因為nums[i+1]到nums[n-1]是降序的，所以j會是這個範圍內最小的一個可以使得排列更大的交換選擇，將nums[i]和nums[j]交換
- * 3. 將nums[i+1]到nums[n-1]的序列反轉，原本是降序，反轉後就會變成升序，保證得到的新序列是所有大於原序列的排列中最小的一個
- **/

@@ -1,6 +1,6 @@
 // Medium
 // Sliding Window, Hash Table
-// O(n)
+// Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/longest-substring-without-repeating-characters/
 
 import java.util.*;
@@ -15,14 +15,12 @@ class Solution {
         // iterate the string
         for (int right = 0; right < s.length(); right++) {
             char cur = s.charAt(right);
-            
-            // if the map have cur char, means we occur the repeating char
-            // so we need to move the start of window to the next of this char
+
+            // left pointer moves forward whenever a repeating character is found
             if (map.containsKey(cur)) {
                 left = Math.max(left, map.get(cur) + 1);
             }
-
-            // or we put the char in map and calculate the substring
+            // or put the char in map and update the substring
             map.put(cur, right);
             res = Math.max(res, right - left + 1);
         }

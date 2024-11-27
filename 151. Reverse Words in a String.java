@@ -1,6 +1,6 @@
 // Medium
-// String, Two Pointers
-// O(n)
+// Two Pointers
+// Time:O(n),Space:O(n)
 // https://leetcode.cn/problems/reverse-words-in-a-string/
 
 // Python version
@@ -11,7 +11,6 @@
 //         s = ' '.join(word[::-1] for word in s.split())
 //         return s
         
-
 class Solution {
     // 1. we need to remove the space 2. reverse the whole string 
     // 3. reverse each word
@@ -20,7 +19,6 @@ class Solution {
         chars = removeSpace(chars);
         reverse(chars, 0, chars.length - 1);
         reverseWord(chars);
-
         return new String(chars);
     }
 
@@ -48,9 +46,6 @@ class Solution {
             char tmp = chars[left];
             chars[left] = chars[right];
             chars[right] = tmp;
-            // chars[left] ^= chars[right];
-            // chars[right] ^= chars[left];
-            // chars[left] ^= chars[right];
             left++;
             right--;
         }

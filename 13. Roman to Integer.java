@@ -1,13 +1,12 @@
 // Easy
 // Hash Table
-// O(n)
+// Time:O(n), Space:O(1) only 7 roman numerals
 // https://leetcode.cn/problems/roman-to-integer/
 
 import java.util.*;
 
 class Solution {
     public int romanToInt(String s) {
-        // we can use map to store the symbols and its value
         Map<Character, Integer> map = new HashMap<>();
         map.put('I', 1);
         map.put('V', 5);
@@ -17,16 +16,14 @@ class Solution {
         map.put('D', 500);
         map.put('M', 1000);
 
-        int res = 0, n = s.length();
-
-        for (int i = 0; i < n; i++) {
-            int value = map.get(s.charAt(i));
-
-            // check if we need to do the subtraction
-            if (i < n - 1 && value < map.get(s.charAt(i + 1))) {
-                res -= value;
+        int res = 0;
+        for (int i = 0; i < s.length(); i++) {
+            int val = map.get(s.charAt(i));
+            // Check if the cur value is less than its next value -> subtraction
+            if (i < s.length() - 1 && val < map.get(s.charAt(i + 1))) {
+                res -= val;
             } else {
-                res += value;
+                res += val;
             }
         }
         return res;

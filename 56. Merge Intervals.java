@@ -1,6 +1,7 @@
 // Medium
-// Greedy, Intervals
-// O(nlogn)
+// Greedy
+// Time:O(nlogn), sorting+iterate the arr 
+// Space:O(n), store the result
 // https://leetcode.cn/problems/merge-intervals/
 
 import java.util.*;
@@ -10,6 +11,7 @@ class Solution {
     // if they can be merge, we can modified the intervals with[prev'start, cur'end]
     public int[][] merge(int[][] intervals) {
         List<int[]> res = new ArrayList<>();
+        // sort by start time
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
         // first one
@@ -25,7 +27,7 @@ class Solution {
                 start = intervals[i][0];
                 end = intervals[i][1];
             } else {
-                // have conflict, need to merge
+                // conflict -> merge
                 end = Math.max(end, intervals[i][1]);
             }
         }

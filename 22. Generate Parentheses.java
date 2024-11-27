@@ -1,39 +1,36 @@
 // Medium
 // Backtracking
-// O(4^n / sqrt(n))
-// https://leetcode.com/problems/generate-parentheses/
+// Time:O(4^n / sqrt(n) * n),Space:O(4^n / sqrt(n) * n)
+// https://leetcode.cn/problems/generate-parentheses/
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-  public List<String> generateParenthesis(int n) {
-      List<String> res = new ArrayList<>();
-      backtracking(res, "", 0, 0, n);
-      return res;
-  }
+    // seems like we need to find all the possible->backtracking
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        // use StringBuilder instead of String to avoid creating new string in each recursion
+        backtracking(res, new StringBuilder(), 0, 0, n);
+        return res;
+    }
 
-  private void backtracking(List<String> res, String current, int open, int close, int max) {
-      if(current.length() == max * 2) {
-          res.add(current);
-          return;
-      }
-
-      if(open < max) {
-          backtracking(res, current + "(", open + 1, close, max);
-      }
-      if(close < open) {
-          backtracking(res, current + ")", open, close + 1, max);
-      }
-  }
+    private void backtracking(List<String> res, StringBuilder cur, int open, int close, int n) {
+        if (cur.length() == 2 * n) {
+            res.add(cur.toString());
+            return;
+        }
+        // try to add open bracket
+        if (open < n) {
+            cur.append("(");
+            backtracking(res, cur, open + 1, close, n);
+            cur.deleteCharAt(cur.length() - 1);
+        }
+        // try to add close bracket
+        // since open bracket must be added before close bracket
+        if (close < open) {
+            cur.append(")");
+            backtracking(res, cur, open, close + 1, n);
+            cur.deleteCharAt(cur.length() - 1);
+        }
+    }
 }
-
-/**
- * 生成n對()的所有排列組合方式
- * 
- * 所以總長度應該是n * 2 -> 剛好匹配到這個長度時，收集到res中
- * 1. 左括號和右括號的數量要相等（只有一個不可以，左括號必須早於右括號出）
- * -> 插入右括號的數量不能多餘當前的左括號
- * 2. 已經使用的左括號的數量小於n的時候，才可以考慮加左括號
- * 3. 當前右括號的數量小於左括號的時候，才可以加右括號
- **/

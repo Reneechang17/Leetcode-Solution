@@ -1,10 +1,9 @@
 // Easy
-// Hash Table, Array
-// O(n)
-// https://leetcode.com/problems/contains-duplicate/
+// Hash Table
+// Time:O(n), Space:O(n)
+// https://leetcode.cn/problems/contains-duplicate/
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 class Solution {
   public boolean containsDuplicate(int[] nums) {
@@ -20,6 +19,16 @@ class Solution {
   }
 }
 
-/**
- * 找重複出現的元素，即出現兩次以上的：用set去重即可
- **/
+// 空间优化：可以先排序，再遍历数组，判断相邻元素是否相等
+// Time:O(nlogn), Space:O(1)
+class Solution2 {
+    public boolean containsDuplicate(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i - 1] == nums[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

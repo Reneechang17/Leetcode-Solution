@@ -1,6 +1,6 @@
 // Medium
 // Priority Queue
-// O(nlogn)
+// Time:O(nlogn),Space:O(n)
 // https://leetcode.cn/problems/meeting-rooms-ii/
 
 import java.util.*;
@@ -11,24 +11,24 @@ class Solution {
     // the prev we store in the queue
     // if no conflict, we no need for new meeting room; if conflict, we need a new one
     public int minMeetingRooms(int[][] intervals) {
-        // base case 
-        if (intervals == null || intervals.length == 0) {
+        // basecase
+        if (intervals.length == 0 || intervals == null) {
             return 0;
         }
-
+        // sort by start time
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-        // queue to store the prev's end time
-        PriorityQueue<Integer> heap = new PriorityQueue<>(); 
 
-        heap.add(intervals[0][1]); // Initialize the heap with first meeting's end time
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        pq.add(intervals[0][1]); // initialize the pq and add the first end time
 
         for (int i = 1; i < intervals.length; i++) {
-            if (intervals[i][0] >= heap.peek()) {
-                heap.poll(); // poll the prev ended meeting
+            // if the cur start time > prev's end time -> no conflict
+            if (intervals[i][0] >= pq.peek()) {
+                pq.poll(); // poll the prev ended meeting
             }
-            // if conflict, we add the cur's end time to queue
-            heap.add(intervals[i][1]);
+            // if conflict, add cur's end time to pq
+            pq.add(intervals[i][1]);
         }
-        return heap.size();
+        return pq.size();
     }
 }

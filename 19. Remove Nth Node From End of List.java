@@ -1,18 +1,17 @@
 // Easy
-// LinkedList, Two Pointers
-// O(n)
+// Two Pointers
+// Time:O(n),Space:O(1)
 // https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
 
 class Solution {
-    // 定义快慢指针，初始都从dummy节点开始，先让快指针走n步
-    // 再让快慢指针一起走，指导快指针走到null
-    // 这时候慢指针停的位置，就是要删除节点的前一个，可以直接让这个节点的next指针，指向下下一个
-    // 从而删除了目标节点
+    // Use two pointers, start from the dummy node, and fast pointer move n steps ahead
+    // Then move both pointers until the fast reaches null
+    // at this time, the slow pointer will locate in the node which just before the target node(need to delete)
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;
-
         ListNode fast = dummy, slow = dummy;
+
         for (int i = 0; i <= n; i++) {
             fast = fast.next;
         }

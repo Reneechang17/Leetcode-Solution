@@ -1,6 +1,6 @@
 // Easy
 // Stack
-// O(n)
+// Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/valid-parentheses/
 
 import java.util.Stack;

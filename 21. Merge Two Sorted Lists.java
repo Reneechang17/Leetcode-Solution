@@ -1,6 +1,6 @@
 // Easy
 // Linked List
-// O(m + n)
+// Time:O(m+n), Space:O(1)
 // https://leetcode.cn/problems/merge-two-sorted-lists/
 
 class Solution {

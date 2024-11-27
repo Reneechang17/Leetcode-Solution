@@ -1,6 +1,7 @@
 // Medium
-// Hash Table, Encoding
-// O(N * K)
+// Hash Table
+// Time:O(nk), Space:O(nk)
+// n is the length of strs, k is the average length of the strings
 // https://leetcode.cn/problems/group-anagrams/
 
 import java.util.*;
@@ -18,9 +19,8 @@ class Solution {
         }
 
         List<List<String>> res = new ArrayList<>();
-        // iterate the value in map
-        for (List<String> v : map.values()) {
-            res.add(v);
+        for (List<String> value : map.values()) {
+            res.add(value);
         }
         return res;
     }
@@ -29,7 +29,7 @@ class Solution {
         char[] count = new char[26];
         for (char c : s.toCharArray()) {
             count[c - 'a']++;
-        } 
+        }
         return new String(count);
     }
 }

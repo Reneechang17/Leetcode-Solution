@@ -1,36 +1,32 @@
 // Easy
 // String, prefix
-// O(n * m)
+// Time:O(n * m), first loop to find the shortest str, second loop to iterate all strings
+// Space:O(m), m is the length of the shortest string
 // https://leetcode.cn/problems/longest-common-prefix/
 
 class Solution {
-  // find the shortest string, since the longest common prefix will not longer than the shortest string
-  // seems the shortest one as LCP, and check if others string can use it as prefix
-  // if not, we can cut the length, if yes, that prefix will be the LCP
-  // O(n * m) -> n is the length of strs, m is the length of shortest string
-  public String longestCommonPrefix(String[] strs) {
-      // basecase
-      if (strs == null || strs.length == 0) {
-          return "";
-      }
+    // First, find the shortest string as the initial prefix since the common prefix cannot exceed its length
+    // Then, iterate all strings, if any word cannot use s as prefix -> shrink it
+    public String longestCommonPrefix(String[] strs) {
+        // basecase
+        if (strs.length == 0 || strs == null) return "";
 
-      String prefix = strs[0];
-      for (String str : strs) {
-          if (str.length() < prefix.length()) {
-              prefix = str;
-          }
-      }
+        String prefix = strs[0];
+        for (String s : strs) {
+            if (s.length() < prefix.length()) {
+                prefix = s;
+            }
+        }
 
-      for (String str : strs) {
-          // 如果任何一个不能用这个prefix前缀，则缩短
-          while (!str.startsWith(prefix)) {
-              prefix = prefix.substring(0, prefix.length() - 1);
-              
-              if (prefix.isEmpty()) {
-                  return "";
-              }
-          }
-      }
-      return prefix;
-  }
+        for (String s : strs) {
+            // If any word cannot use s as prefix -> shrink it
+            while (!s.startsWith(prefix)) {
+                prefix = prefix.substring(0, prefix.length() - 1);
+                if (prefix.isEmpty()) {
+                    return "";
+                }
+            }
+        }
+        return prefix;
+    }
 }
