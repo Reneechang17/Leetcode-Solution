@@ -7,24 +7,23 @@
 import java.util.*;
 
 class Solution {
-    // we need to find a way to encode the words
+    // Find a way to encode the words
     // we can calculate the code with each char, and use Map to store them
     // the key will be the encoded code, the value will be the words
     public List<List<String>> groupAnagrams(String[] strs) {
+        // map store the encode String and all the string has same code
         Map<String, List<String>> map = new HashMap<>();
         for (String s : strs) {
             String code = encode(s);
             map.putIfAbsent(code, new ArrayList<>());
             map.get(code).add(s);
         }
-
         List<List<String>> res = new ArrayList<>();
         for (List<String> value : map.values()) {
             res.add(value);
         }
         return res;
     }
-
     private String encode(String s) {
         char[] count = new char[26];
         for (char c : s.toCharArray()) {

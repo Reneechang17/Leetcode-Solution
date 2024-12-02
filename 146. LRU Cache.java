@@ -20,7 +20,7 @@ class LRUCache {
         head.next = tail;
         tail.prev = head;
     }
-
+    
     // if key exist, return the corresponding value
     // every time we visit the key-value, we need to update it(move to head)
     public int get(int key) {
@@ -28,30 +28,29 @@ class LRUCache {
             return -1;
         }
         Node node = map.get(key);
-        moveToHead(node);
+        moveToHead(node); // update the status
         return node.value;
     }
-    
+
     // if key exist, update the value
     // if not, add new one and check if the LRU exceed the capacity
-    // if fill up, remove the least recently used key
+    // if filled, remove the least recently used key
     public void put(int key, int value) {
         if (map.containsKey(key)) {
             Node node = map.get(key);
             node.value = value;
-            moveToHead(node); 
+            moveToHead(node);
         } else {
             Node newNode = new Node(key, value);
             map.put(key, newNode);
             addToHead(newNode);
 
-            if(map.size() > capacity) {
+            if (map.size() > capacity) {
                 Node tail = removeTail();
                 map.remove(tail.key);
             }
         }
     }
-
     // create the Node class
     private class Node {
         int key, value;
@@ -62,14 +61,15 @@ class LRUCache {
         }
     }
 
-    // some support methods...
     private void moveToHead(Node node) {
+        // 1. remove the node
+        // 2. add it to head
         removeNode(node);
         addToHead(node);
     }
 
-    private void removeNode(Node node){
-        // orig: node.prev - node - node.next
+    private void removeNode(Node node) {
+        // orig: node.prev - removeNode - node.next
         // goal: node.prev - node.next
         node.prev.next = node.next;
         node.next.prev = node.prev;
@@ -84,7 +84,7 @@ class LRUCache {
     }
 
     private Node removeTail() {
-        // goal: removeNode - tail(dummy)
+        // goal: removeNode(tail.prev) - tail(dummy)
         Node node = tail.prev;
         removeNode(node);
         return node;

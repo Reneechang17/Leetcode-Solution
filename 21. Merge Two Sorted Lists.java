@@ -4,12 +4,11 @@
 // https://leetcode.cn/problems/merge-two-sorted-lists/
 
 class Solution {
-    // we can iterate list1 and list2, and compare which is smaller one, and be the next
-    // finally to check which list is not going to end, than add the remain part to tail
+    // Iterate list1 and list2, and compare which is smaller one be the next
+    // finally check which list is not going to end, than add the remain part to tail
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode dummy = new ListNode(-1);
         ListNode cur = dummy;
-
         while (list1 != null && list2 != null) {
             if (list1.val < list2.val) {
                 cur.next = list1;
@@ -20,7 +19,6 @@ class Solution {
             }
             cur = cur.next;
         }
-
         if (list1 != null) {
             cur.next = list1;
         } else {

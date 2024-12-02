@@ -1,6 +1,6 @@
 // Easy
 // Hash Table
-// Time:O(n), Space:O(n)from map
+// Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/two-sum/
 
 import java.util.*;

@@ -4,9 +4,9 @@
 // https://leetcode.cn/problems/remove-nth-node-from-end-of-list/
 
 class Solution {
-    // Use two pointers, start from the dummy node, and fast pointer move n steps ahead
+    // Use two pointers, start from dummy node, and fast pointer move n steps ahead
     // Then move both pointers until the fast reaches null
-    // at this time, the slow pointer will locate in the node which just before the target node(need to delete)
+    // at this time, the slow pointer will locate in the node which before the target node
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(-1);
         dummy.next = head;

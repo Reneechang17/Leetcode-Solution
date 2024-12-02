@@ -1,6 +1,6 @@
 // Medium
 // BFS, Graph
-// O(N+M)
+// Time:O(V+E),Space:O(V+E)
 // https://leetcode.cn/problems/clone-graph/
 
 import java.util.*;
@@ -26,35 +26,35 @@ class Node {
 }
 
 class Solution {
+  // If node is null, return null; clone the start node and store in Map
+  // For each node, clone neighbors if not already cloned and add to queue
+  // Return the cloned start node.
   public Node cloneGraph(Node node) {
-    if (node == null) {
-      return null;
-    }
-      
-    // 標記已經遍歷過的節點（表示已經克隆了）
+      // basecase
+      if (node == null) return null;
+
+      // map to store the node has been visited
       Map<Node, Node> vis = new HashMap<>();
 
-      Node cloneNode = new Node(node.val, new ArrayList<>());
-      vis.put(node, cloneNode);
+      // clone the start node and add it map
+      Node startNode = new Node(node.val, new ArrayList<>());
+      vis.put(node, startNode);
 
       Queue<Node> que = new LinkedList<>();
       que.offer(node);
-
-      // 用BFS遍歷圖，從起點節點開始逐層遍歷所有節點
       while (!que.isEmpty()) {
           Node cur = que.poll();
-
-          // 檢查當前節點的鄰居節點：如果鄰居節點還沒有被克隆，則克隆它，並將其加入vis和隊列中
+          // iterate the neighbor of the cur node
           for (Node neighbor : cur.neighbors) {
-              if (!vis.containsKey(neighbor)) {
+              if(!vis.containsKey(neighbor)) {
                   Node neighborClone = new Node(neighbor.val, new ArrayList<>());
                   vis.put(neighbor, neighborClone);
                   que.offer(neighbor);
               }
-              // 將克隆的鄰居節點加入當前克隆節點的鄰居列表
+              // add the clone neighbor to cur node's neighbor list
               vis.get(cur).neighbors.add(vis.get(neighbor));
           }
       }
-      return cloneNode;
+      return startNode;
   }
 }

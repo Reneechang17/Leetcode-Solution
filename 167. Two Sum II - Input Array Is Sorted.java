@@ -1,6 +1,6 @@
 // Medium
 // Binary Search, Two Pointers
-// O(n logn)
+// O(nlogn)
 // https://leetcode.cn/problems/two-sum-ii-input-array-is-sorted/
 
 class Solution {
@@ -35,26 +35,25 @@ class Solution {
 /**
  * 思路：雙指針
  * 優化：由於數組已經排序，可以用二分查找
- * 
  * 對於每個遍歷到的numbers[i]，用target減去numbers[i]，找他的配對值
  **/
 
 // 另一種解法：雙指針
-// 不推薦，1不是最優解，2題目有強調數組是排序的，所以應該利用這個特點
+// 不推薦，題目有強調數組是排序的，所以應該利用這個特點
 // O(n)
-// class Solution {
-//   public int[] twoSum(int[] numbers, int target) {
-//       int left = 0, right = numbers.length - 1;
-//       while (left < right) {
-//           int sum = numbers[left] + numbers[right];
-//           if (sum == target) {
-//               return new int[] {left + 1, right + 1};
-//           } else if (sum < target){
-//               left++;
-//           } else {
-//                right--;
-//           }
-//       }
-//       return new int[] {};
-//   }
-// }
+class Solution2 {
+  public int[] twoSum(int[] numbers, int target) {
+      int left = 0, right = numbers.length - 1;
+      while (left < right) {
+          int sum = numbers[left] + numbers[right];
+          if (sum == target) {
+              return new int[] {left + 1, right + 1};
+          } else if (sum < target){
+              left++;
+          } else {
+               right--;
+          }
+      }
+      return new int[] {};
+  }
+}

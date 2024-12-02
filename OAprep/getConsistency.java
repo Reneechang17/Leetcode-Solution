@@ -12,34 +12,34 @@ package OAprep;
  * identical values after removing up to k elements.
  **/
 
-class Solution {
-  public int getkConsistency(int[] stockPrices, int k) {
-    int n = stockPrices.length;
-    int res = 0;
+// class Solution {
+//   public int getkConsistency(int[] stockPrices, int k) {
+//     int n = stockPrices.length;
+//     int res = 0;
 
-    for (int i = 0; i < n; i++) {
-      int target = stockPrices[i];
-      int left = 0, right = 0, removeCnt = 0;
+//     for (int i = 0; i < n; i++) {
+//       int target = stockPrices[i];
+//       int left = 0, right = 0, removeCnt = 0;
 
-      // use right to expand the window
-      while (right < n) {
-        if (stockPrices[right] != target) {
-          removeCnt++;
-        }
+//       // use right to expand the window
+//       while (right < n) {
+//         if (stockPrices[right] != target) {
+//           removeCnt++;
+//         }
 
-        // if remove exceed k, we need to move left to shrink the window
-        while (removeCnt > k) {
-          if (stockPrices[left] != target) {
-            removeCnt--;
-          }
-          left++;
-        }
+//         // if remove exceed k, we need to move left to shrink the window
+//         while (removeCnt > k) {
+//           if (stockPrices[left] != target) {
+//             removeCnt--;
+//           }
+//           left++;
+//         }
 
-        // calculate the window size and update the maxConsistency
-        res = Math.max(res, right - left + 1);
-        right++;
-      }
-    }
-    return res;
-  }
-}
+//         // calculate the window size and update the maxConsistency
+//         res = Math.max(res, right - left + 1);
+//         right++;
+//       }
+//     }
+//     return res;
+//   }
+// }

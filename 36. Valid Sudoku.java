@@ -6,7 +6,7 @@
 import java.util.*;
 
 class Solution {
-    // make sure that the num in rows, cols and 3*3 blocks only appear once
+    // make sure that the num in row/cols/subgrid only appear once
     // we can use set to ensure the pos is only appear once and 
     // use String to build it as unique identifier, then store in set
     public boolean isValidSudoku(char[][] board) {

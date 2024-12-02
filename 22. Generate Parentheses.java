@@ -13,20 +13,19 @@ class Solution {
         backtracking(res, new StringBuilder(), 0, 0, n);
         return res;
     }
-
     private void backtracking(List<String> res, StringBuilder cur, int open, int close, int n) {
         if (cur.length() == 2 * n) {
             res.add(cur.toString());
             return;
         }
-        // try to add open bracket
+        // add open bracket
         if (open < n) {
             cur.append("(");
             backtracking(res, cur, open + 1, close, n);
             cur.deleteCharAt(cur.length() - 1);
         }
-        // try to add close bracket
-        // since open bracket must be added before close bracket
+        // add close bracket
+        // close<open since open must be added before close
         if (close < open) {
             cur.append(")");
             backtracking(res, cur, open, close + 1, n);

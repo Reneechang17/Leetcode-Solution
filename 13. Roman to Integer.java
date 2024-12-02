@@ -19,7 +19,7 @@ class Solution {
         int res = 0;
         for (int i = 0; i < s.length(); i++) {
             int val = map.get(s.charAt(i));
-            // Check if the cur value is less than its next value -> subtraction
+            // check if the cur value is less then its next value->subtraction
             if (i < s.length() - 1 && val < map.get(s.charAt(i + 1))) {
                 res -= val;
             } else {

@@ -4,14 +4,13 @@
 // https://leetcode.cn/problems/maximum-subarray/
 
 class Solution {
-    // Iterating the array while maintain a running sum (count)
-    // If the running sum becomes negative, it is reset to 0
-    // Since every negative possible cannot form to max subarray
+    // Iterate the array while maintain a running sum (count)
+    // If the running sum becomes negative, reset to 0
+    // Since every negative possible cannot form the max subarray
     public int maxSubArray(int[] nums) {
         // basecase
         if (nums.length == 1)
             return nums[0];
-
         int max = Integer.MIN_VALUE;
         int count = 0;
         for (int i = 0; i < nums.length; i++) {
@@ -26,7 +25,7 @@ class Solution {
     }
 }
 
-// O(n logn) -> Divide and Conquer
+// O(nlogn) -> Divide and Conquer
  class Solution2 {
     public int maxSubArray(int[] nums) {
         return findHelper(nums, 0, nums.length - 1);

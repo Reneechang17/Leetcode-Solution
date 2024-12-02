@@ -4,7 +4,7 @@
 // https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/
 
 class Solution {
-  // common idea: buy stock with low price, and sell it with high price
+  // common sense: buy stock in low price, and sell in high price
   public int maxProfit(int[] prices) {
       int low = Integer.MAX_VALUE;
       int res = 0;
