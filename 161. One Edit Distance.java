@@ -1,9 +1,51 @@
 // Medium
 // Two Pointers
-// O(n)
-// https://leetcode.com/problems/one-edit-distance/
+// Time:O(n), Space:O(1)
+// https://leetcode.cn/problems/one-edit-distance/
 
 class Solution {
+  public boolean isOneEditDistance(String s, String t) {
+      if (s.equals(t)) return false;
+      int m = s.length(), n = t.length();
+      if (Math.abs(m - n) > 1) return false;
+
+      if (m == n) {
+          // 是否可以替换而相同
+          return canOneReplace(s, t);
+      } else if (m > n) {
+          // 是否可以通过删除一个字符而相同
+          return canOneInsert(t, s);
+      } else {
+          // 是否可以通过插入一个字符而相同
+          return canOneInsert(s, t);
+      }
+  }
+  private boolean canOneReplace(String s, String t) {
+      boolean foundDiff = false;
+      for (int i = 0; i < s.length(); i++) {
+          if (s.charAt(i) != t.charAt(i)) {
+              if (foundDiff) return false;
+              foundDiff = true;
+          }
+      }
+      return true;
+  }
+  private boolean canOneInsert(String shorter, String longer) {
+      int i = 0, j = 0;
+      while (i < shorter.length() && j < longer.length()) {
+          if (shorter.charAt(i) != longer.charAt(j)) {
+              if (i != j) return false; // found mismatch
+              j++; // skip cur element in longer
+          } else {
+              i++;
+              j++;
+          }
+      }
+      return true;
+  }
+}
+
+class Solution2 {
   public boolean isOneEditDistance(String s, String t) {
       int sLen = s.length(), tLen = t.length();
 
@@ -31,13 +73,3 @@ class Solution {
       return (sLen + 1 == tLen);
   }
 }
-
-/**
- * 一次編輯距離:要求判斷兩個字符串是否相差一次編輯距離（插入、刪除、替換）可以變成相同
- * 
- * 屬於編輯距離的變形，只需要判斷是否相差一次編輯距離即可
- * 對於這個問題，可以根據字符串的長度和內容來判斷：
- * 1. 如果字符串的長度差大於1，則返回false，因為不可能通過一次編輯使得兩個長度差大於1的字符串相同
- * 2. 如果長度相等，可以檢查有多少位置不同，如果只有一個位置不同，則返回true
- * 3. 如果長度差為1，可以通過一次插入或是刪除操作使得兩個字符串相同，需要檢查較短的字符串是否可以通過一次插入或是刪除變成較長的字符串
- **/

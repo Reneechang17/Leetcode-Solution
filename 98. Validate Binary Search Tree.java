@@ -4,28 +4,25 @@
 // https://leetcode.cn/problems/validate-binary-search-tree/
 
 class Solution {
-  // use inorder to check if the left's value is smaller than the root.val
-  private TreeNode prev;
+    // use inorder to check if the left's value is smaller than the root.val
+    private TreeNode prev;
 
-  public boolean isValidBST(TreeNode root) {
-      return inorder(root);
-  }
+    public boolean isValidBST(TreeNode root) {
+        return inorder(root);
+    }
 
-  private boolean inorder(TreeNode node) {
-      if (node == null) return true;
+    private boolean inorder(TreeNode node) {
+        if (node == null) return true;
+        boolean left = inorder(node.left);
+        if (!left) return false;
 
-      // keep tracking the left tree
-      boolean left = inorder(node.left);
-      if (!left) return false;
+        if (prev != null && node.val <= prev.val) {
+            return false;
+        }
+        prev = node;
 
-      if (prev != null && node.val <= prev.val) {
-          return false;
-      }
-      prev = node;
-
-      boolean right = inorder(node.right);
-      if (!right) return false;
-
-      return true;
-  }
+        boolean right = inorder(node.right);
+        if (!right) return false;
+        return true;
+    }
 }

@@ -1,16 +1,20 @@
 // Medium
-// Sorting, Partition, Heap(PriorityQueue)
-// O(n) -> Partition, O(nlogn) -> Sorting, O(nlogk) -> Heap
-// Similar: 215
+// Sorting, QuickSelect, Heap
 // https://leetcode.cn/problems/k-closest-points-to-origin/
 
-import java.util.*;
-import java.util.stream.IntStream;
+/**
+ * 最接近原点的k个点
+ * sort: 将所有点按与原点的距离排序，取前k个，适合k接近n的情况
+ * partition: 将所有点按与原点的距离分区，找到第k个点，适合k远小于n的情况
+ * heap: 维护一个大小为k的最大堆，当堆的大小大于k时，就将距离最大的去除，最后堆中剩下的元素就是最小的k个元素
+ * (适用于k比较小的情况，尤其数据量越大时越有效)
+ **/
 
+import java.util.*;
 class Solution {
-  // 找二維座標平面上距離原點最近的k個點
-  // 最簡單的方法是用排序計算每個點到原點的距離平方，將平方從小到大排序，返回前k個點
-  // 但因為平方根的關係在比較時是單調遞增的，所以可以比較x^2+y^2而不是實際的距離
+  // use sort to sort the points by the distance to the origin, then return the first k points
+  // since the square root is monotonically increasing, we can compare x^2+y^2 instead of the actual distance
+  // Time:O(nlogn), Space:O(logn)
   public int[][] kClosest(int[][] points, int k) {
     Arrays.sort(points, (a, b) -> {
       return (a[0] * a[0] + a[1] * a[1]) - (b[0] * b[0] + b[1] * b[1]);
@@ -20,50 +24,83 @@ class Solution {
   }
 }
 
-// followup，因為題目強調返回的點可以是任意順序，所以可以用分區結合快排做
-// 將所有點按照與原點的距離分區，然後找到第k個點，這個點左邊的點就是答案
-// 這個在k的值比較小的時候會比較高效，但是代碼實現比較複雜
-
 class Solution2 {
+  // QuickSelect: divide the array such that points with dis less than or equal to the pivot are on the left
+  // and those greater are on the right
+  // if k=i−left+1 -> means pivot is the k-th closest point
+  // if k=i−left+1 -> the pivot is the k-th closest point, and we terminate
+  // if k<i−left+1 -> in the left partition, so recursively process the left side
+  // Otherwise recursively process the right side
+  // After partitioning, the first k points in the array will be the closest points
+  // Time: O(n), Space: O(logn)
+  Random random = new Random();
+
   public int[][] kClosest(int[][] points, int k) {
-      int n = points.length;
-      // k = n - k;
-      int[][] pts = IntStream.range(0, n).mapToObj(idx -> new int[]{idx, points[idx][0] * points[idx][0] + points[idx][1] * points[idx][1]}).toArray(int[][]::new);
-      partition(pts, k, 0, n - 1);
-      return Arrays.stream(pts).map(p -> points[p[0]]).limit(k).toArray(int[][]::new);
+    int n = points.length;
+    random_select(points, 0, n - 1, k);
+    return Arrays.copyOfRange(points, 0, k);
   }
 
-  void partition(int[][] pts, int k, int start, int end) {
-      if (start >= end) return;
-      
-      int l = start, r = end;
-      int pivot = pts[l + r >> 1][1];
-      while (l <= r) {
-          while (pts[l][1] < pivot) l++;
-          while (pts[r][1] > pivot) r--;
-          if (l <= r) {
-              int[] temp = pts[l];
-              pts[l] = pts[r];
-              pts[r] = temp;
-              l++;
-              r--;
-          }
+  private void random_select(int[][] points, int left, int right, int k) {
+    // randomly select a pivot index
+    int pivotIndex = left + random.nextInt(right - left + 1);
+    // calculate the distance of the pivot point
+    int pivot = points[pivotIndex][0] * points[pivotIndex][0] + points[pivotIndex][1] * points[pivotIndex][1];
+    // swap the pivot point to the rightmost position
+    swap(points, right, pivotIndex);
+
+    // partition the arr, points with dis less than or equal to the pivot are on the left
+    int i = left - 1;
+    for (int j = left; j < right; j++) {
+      int dist = points[j][0] * points[j][0] + points[j][1] * points[j][1];
+      if (dist <= pivot) {
+        i++;
+        swap(points, i, j);
       }
-      if (k <= r) partition(pts, k, start, r);
-      else if (k >= l) partition(pts, k, l, end);
+    }
+    i++;
+
+    // put the pivot point to the correct position
+    swap(points, i, right);
+
+    // check which partition contains the k-th closest point
+    if (k < i - left + 1) {
+      random_select(points, left, i - 1, k);
+    } else if (k > i - left + 1) {
+      random_select(points, i + 1, right, k - (i - left + 1));
+    }
+  }
+
+  private void swap(int[][] points, int i1, int i2) {
+    int[] temp = points[i1];
+    points[i1] = points[i2];
+    points[i2] = temp;
   }
 }
 
-/**
- * 最接近原點的k個點
- * 
- * 思路；這題解法很多，可以用排序，分區，堆等方法
- * 排序：將所有點按照與原點的距離排序，然後取前k個，這是最容易想點的方法
- * 分區：這裡用分區的方法，將所有點按照與原點的距離分區，然後找到第k個點，這個點左邊的點就是答案
- * Note：但是要注意遞歸的終止，當start >= end時，不需要再分區，否則會無限遞歸
- * 優先隊列：維護一個大小為k的最大堆，當堆的大小大於k時，就將距離最大的去除，這樣堆中剩下的元素就是最小的k個元素
- * 
- * 當k接近n的時候，用排序會比較直接有效，但是在k比較小的情況排序整個數組會有點多餘
- * 分區的思想就是Quick Select，在k比較小的時候會很高效，但是代碼實現比較複雜
- * 最大堆也適用於k比較小的情況，尤其數據量越大越有效，實現時會比排序高效但是需要額外的空間
- **/
+class Solution3 {
+  // maxHeap
+  public int[][] kClosest(int[][] points, int k) {
+      PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+          public int compare(int[] arr1, int[] arr2) {
+              return arr2[0] - arr1[0];
+          }
+      });
+      for (int i = 0; i < k; i++) {
+          pq.offer(new int[]{points[i][0] * points[i][0] + points[i][1] * points[i][1], i});
+      }
+      int n = points.length;
+      for (int i = k; i < n; i++) {
+          int dist = points[i][0] * points[i][0] + points[i][1] * points[i][1];
+          if (dist < pq.peek()[0]) {
+              pq.poll();
+              pq.offer(new int[] {dist, i});
+          }
+      }
+      int[][] res = new int[k][2];
+      for (int i = 0; i < k; i++) {
+          res[i] = points[pq.poll()[1]];
+      }
+      return res;
+  }
+}

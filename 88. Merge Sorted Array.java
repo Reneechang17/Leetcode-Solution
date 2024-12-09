@@ -1,12 +1,12 @@
 // Easy
-// Array
-// O(n)
+// Array, Two Pointers
+// Time:O(n), Space:O(1)
 // https://leetcode.cn/problems/merge-sorted-array/
 
 class Solution {
-    // final will store in nums1, so we can use one pointers to fill out the nums1
-    // and use the two pointers to go through the nums1 and nums2
-    // since they are sorted array, we can start from fill out the bigger element
+    // we can finally modify on nums1 using a pointer
+    // and use the two pointers to go through the nums1 and nums2 from the end
+    // since they are sorted array, we can start from fill out the biggest element
     public void merge(int[] nums1, int m, int[] nums2, int n) {
         int i = m - 1,  j = n - 1, p = m + n - 1;
 

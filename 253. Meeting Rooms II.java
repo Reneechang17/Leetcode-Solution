@@ -6,9 +6,8 @@
 import java.util.*;
 
 class Solution {
-    // sort the start time
-    // for the every cur one, we need to compare the start time is bigger than the prev's end time
-    // the prev we store in the queue
+    // sort the start time, and add first end time in pq
+    // for the every cur one, check if the cur start time is bigger than the prev's end time
     // if no conflict, we no need for new meeting room; if conflict, we need a new one
     public int minMeetingRooms(int[][] intervals) {
         // basecase
@@ -26,7 +25,7 @@ class Solution {
             if (intervals[i][0] >= pq.peek()) {
                 pq.poll(); // poll the prev ended meeting
             }
-            // if conflict, add cur's end time to pq
+            // if conflict, add cur end time to pq
             pq.add(intervals[i][1]);
         }
         return pq.size();
