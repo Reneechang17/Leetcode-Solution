@@ -4,7 +4,11 @@
 import java.util.*;
 
 class Solution {
-    // HashMap+PriorityQueue: if pq is up to k, remove the lastest freq one first
+    // Use HashMap to count frequencies and minHeap to track top-k frequent elements
+    // 1. Count the frequency of each element using a HashMap
+    // 2. Use a min-heap (PriorityQueue) to keep the k most frequent elements
+    // 3. If the heap size exceeds k, remove the least frequent element
+    // 4. Extract elements from the heap to form the result
     // Time:O(nlogk),Space:O(N+K)
     // 适用于k相对小，n较大的时候
     public int[] topKFrequent(int[] nums, int k) {
@@ -13,8 +17,6 @@ class Solution {
         for (int num : nums) {
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
-        // use pq to maintain topk freq
-        // 小根堆，优先移除最小频率的元素
         PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>((a, b) -> a.getValue() - b.getValue());
         // put each key-val pairs to pq and check if size > k
         for (Map.Entry<Integer, Integer> e : map.entrySet()) {
@@ -23,7 +25,6 @@ class Solution {
                 pq.poll();
             }
         }
-        // extract the topk from pq
         int[] res = new int[k];
         for (int i = 0; i < k; i++) {
             res[i] = pq.poll().getKey();
