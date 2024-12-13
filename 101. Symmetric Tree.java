@@ -1,17 +1,19 @@
 // Easy
 // DFS
-// Time:O(n), Space:O(n)->worse case:a skewed tree, O(logn)->balanced tree
+// Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/symmetric-tree/
 
 class Solution {
-  // DFS
+  // Use DFS to check if the tree is symmetric
+  // Recursively compare left subtree's left and right subtree's right (outside comparison)
+  // Recursively compare left subtree's right and right subtree's left (inside comparison)
+  // Return false if any mismatch in value or structure
   public boolean isSymmetric(TreeNode root) {
       return compare(root.left, root.right);
   }
 
   private boolean compare(TreeNode left, TreeNode right) {
-      // basecase: if left or right is null -> false
-      // but if both are null -> false
+      // basecases: both null -> symmetric; one null -> not symmetric
       if (left == null && right != null) return false;
       if (left != null && right == null) return false;
       if (left == null && right == null) return true;

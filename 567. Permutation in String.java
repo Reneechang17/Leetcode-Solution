@@ -1,12 +1,9 @@
 // Medium
 // Hash Table, Sliding Window
 // O(m + n)
-// Similar: 76, 438
-// https://leetcode.com/problems/permutation-in-string/
+// https://leetcode.cn/problems/permutation-in-string/
 
-import java.util.HashMap;
-import java.util.Map;
-
+import java.util.*;
 class Solution {
   public boolean checkInclusion(String s1, String s2) {
       // use hashmap to record the times of each char in s1
@@ -51,7 +48,3 @@ class Solution {
       return false;
   }
 }
-
-/**
- * 這題代碼思路和438幾乎一模一樣
- **/

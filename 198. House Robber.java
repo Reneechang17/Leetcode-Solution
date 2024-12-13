@@ -8,8 +8,7 @@ class Solution {
   // if rob the ith house, the max is dp[i - 2] + nums[i]
   // if not rob the ith house, the max is dp[i - 1](from prev)
   public int rob(int[] nums) {
-      // basecase
-      // if (nums.length == 0 || nums == null) return 0;
+      // basecase: if (nums.length == 0 || nums == null) return 0;
       if (nums.length == 1) return nums[0];
       int[] dp = new int[nums.length + 1];
       dp[0] = nums[0];

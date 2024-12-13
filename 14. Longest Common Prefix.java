@@ -8,9 +8,7 @@ class Solution {
     // Find the shortest string as the initial prefix since common prefix can't exceed its length
     // Then, iterate all strings, if any word can't use shortest string as prefix, cut the length
     public String longestCommonPrefix(String[] strs) {
-        // basecase 
         if (strs == null || strs.length == 0) return "";
-
         String prefix = strs[0];
         for (String s : strs) {
             if (s.length() < prefix.length()) {
@@ -18,11 +16,10 @@ class Solution {
             }
         }
         for (String s : strs) {
+            // if any s can't use this prefix as common-> cut it
             while (!s.startsWith(prefix)) {
                 prefix = prefix.substring(0, prefix.length() - 1);
-                if (prefix.isEmpty()) {
-                    return "";
-                }
+                if (prefix.isEmpty()) return "";
             }
         }
         return prefix;

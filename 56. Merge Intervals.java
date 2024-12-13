@@ -7,25 +7,25 @@
 import java.util.*;
 
 class Solution {
-    // if the cur's start < prev's end -> merge
-    // if it can be merge -> modify the intervals with[prev'start, cur'end]
+    // We can first to sort the intervals by start time
+    // Iterate intervals, compare current with previous, so we can get the first interval
+    //   and go through from second interval(i = 1)
+    // If overlapped(cur start > prev end), update end time as bigger one(only sort start time)
+    // If no overlapped, we add prev one in res, and update the cur start and end as cur
     public int[][] merge(int[][] intervals) {
         List<int[]> res = new ArrayList<>();
-        // sort by start time
+        // sorting by start time
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-        // get the first interval
+        // get first interval
         int start = intervals[0][0];
         int end = intervals[0][1];
 
-        for (int i = 0; i < intervals.length; i++) {
-            // if the cur'start > prev'end->no conflict
+        for (int i = 1; i < intervals.length; i++) {
             if (intervals[i][0] > end) {
                 res.add(new int[]{start, end});
-                // update start and end with cur's
                 start = intervals[i][0];
                 end = intervals[i][1];
             } else {
-                // conflict-> merge
                 end = Math.max(end, intervals[i][1]);
             }
         }

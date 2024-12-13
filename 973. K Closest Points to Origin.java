@@ -3,7 +3,6 @@
 // https://leetcode.cn/problems/k-closest-points-to-origin/
 
 /**
- * 最接近原点的k个点
  * sort: 将所有点按与原点的距离排序，取前k个，适合k接近n的情况
  * partition: 将所有点按与原点的距离分区，找到第k个点，适合k远小于n的情况
  * heap: 维护一个大小为k的最大堆，当堆的大小大于k时，就将距离最大的去除，最后堆中剩下的元素就是最小的k个元素
@@ -11,6 +10,38 @@
  **/
 
 import java.util.*;
+
+class Solution2 {
+  // Use maxHeap to maintain k closet point by their distance to origin
+  // Add the first k points to heap, for their remaining points,
+  //  replace the max if a closer point is found
+  // Finally extract k closest points from heap
+  // Time:O(nlogk), Space:O(k)
+  public int[][] kClosest(int[][] points, int k) {
+    PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+      public int compare(int[] arr1, int[] arr2) {
+        return arr2[0] - arr1[0];
+      }
+    });
+    for (int i = 0; i < k; i++) {
+      pq.offer(new int[] { points[i][0] * points[i][0] + points[i][1] * points[i][1], i });
+    }
+    int n = points.length;
+    for (int i = k; i < n; i++) {
+      int dis = points[i][0] * points[i][0] + points[i][1] * points[i][1];
+      if (dis < pq.peek()[0]) {
+        pq.poll();
+        pq.offer(new int[] { dis, i });
+      }
+    }
+    int[][] res = new int[k][2];
+    for (int i = 0; i < k; i++) {
+      res[i] = points[pq.poll()[1]];
+    }
+    return res;
+  }
+}
+
 class Solution {
   // use sort to sort the points by the distance to the origin, then return the first k points
   // since the square root is monotonically increasing, we can compare x^2+y^2 instead of the actual distance
@@ -24,7 +55,7 @@ class Solution {
   }
 }
 
-class Solution2 {
+class Solution3 {
   // QuickSelect: divide the array such that points with dis less than or equal to the pivot are on the left
   // and those greater are on the right
   // if k=i−left+1 -> means pivot is the k-th closest point
@@ -75,32 +106,5 @@ class Solution2 {
     int[] temp = points[i1];
     points[i1] = points[i2];
     points[i2] = temp;
-  }
-}
-
-class Solution3 {
-  // maxHeap
-  public int[][] kClosest(int[][] points, int k) {
-      PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
-          public int compare(int[] arr1, int[] arr2) {
-              return arr2[0] - arr1[0];
-          }
-      });
-      for (int i = 0; i < k; i++) {
-          pq.offer(new int[]{points[i][0] * points[i][0] + points[i][1] * points[i][1], i});
-      }
-      int n = points.length;
-      for (int i = k; i < n; i++) {
-          int dist = points[i][0] * points[i][0] + points[i][1] * points[i][1];
-          if (dist < pq.peek()[0]) {
-              pq.poll();
-              pq.offer(new int[] {dist, i});
-          }
-      }
-      int[][] res = new int[k][2];
-      for (int i = 0; i < k; i++) {
-          res[i] = points[pq.poll()[1]];
-      }
-      return res;
   }
 }

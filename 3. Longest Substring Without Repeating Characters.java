@@ -5,9 +5,11 @@
 
 import java.util.*;
 class Solution {
-    // find substring -> sliding window, check repeating -> HashMap
+    // Use Sliding Window to find substring, and use HashMap to check repeating char
+    // Every time expand the window, check if the cur exist already
+    // If existing, move the left pointer to find the next window
     public int lengthOfLongestSubstring(String s) {
-        // use HashMap to store the cur char and its index
+        // use map to store each char and its index
         Map<Character, Integer> map = new HashMap<>();
         int left = 0, res = 0;
         for (int right = 0; right < s.length(); right++) {

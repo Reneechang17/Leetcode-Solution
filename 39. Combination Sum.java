@@ -1,30 +1,27 @@
 // Medium
 // Backtracking
-// O(2^n)
-// Similar: 77
+// Time:O(T^k) T is the target, k is the average depth of recursion
+// Space:O(k)
 // https://leetcode.cn/problems/combination-sum/
 
 import java.util.*;
-
 class Solution {
-    // Backtracking, we need to find all possibilities
-    // when we do backtrack, we can send the start -> can choose unlimited times
-    // if the sum of cur path == target, add to res
-    // if not, keep try sum + candidates[i]
+    // Use backtracking to find all combinations:
+    // Start from cur index since unlimited reuse of the same candidate
+    // If the cur sum equals the target, add the cur path to res
+    //  - if the cur sum exceeds the target, stop it
     List<List<Integer>> res = new ArrayList<>();
     LinkedList<Integer> path = new LinkedList<>();
-
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        Arrays.sort(candidates);
-        backtracking(res, path, candidates, target, 0, 0); // sum / start
+        Arrays.sort(candidates); // sort to optimize pruning
+        backtracking(res, path, candidates, target, 0, 0); // initialize the sum and start
         return res;
     }
-
-    void backtracking(List<List<Integer>> res, LinkedList<Integer> path, int[] candidates, int target, int sum, int start) {
+    public void backtracking(List<List<Integer>> res, LinkedList<Integer> path, int[] candidates, int target, int sum, int start) {
         if (sum == target) {
             res.add(new ArrayList<>(path));
+            return;
         }
-
         for (int i = start; i < candidates.length; i++) {
             if (sum + candidates[i] > target) break;
             path.add(candidates[i]);

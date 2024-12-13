@@ -1,30 +1,30 @@
 // Hard
-// Greedy
-// O(n)
+// Iteration
+// Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/candy/
 
 class Solution {
-    // 先確定右邊評分比左邊評分大的情況，只要右邊評分比左邊大，右邊孩子的糖果就+1
-    // 再從後向前遍歷，確定左邊評分大於右邊評分的情況
+    // Iterate from left to right: if cur>left, cur candy = left + 1
+    // Iterate from right to left: if cur>right, cur candy = max(cur, right + 1)
+    // Finally sum up all candies
     public int candy(int[] ratings) {
         int n = ratings.length;
         int[] arr = new int[n];
+        // 第一个孩子的糖果数量为1，因为每个孩子最少会有一颗糖
         arr[0] = 1;
-
+        // left to right
         for (int i = 1; i < n; i++) {
-            // 当前比左边大时，当前就是左边的+1，否则就是1
             arr[i] = (ratings[i] > ratings[i - 1] ? arr[i - 1] + 1 : 1);
         }
-
+        // right to left
         for (int i = n - 2; i >= 0; i--) {
             if (ratings[i] > ratings[i + 1]) {
                 arr[i] = Math.max(arr[i], arr[i + 1] + 1);
             }
         }
-
         int ans = 0;
-        for (int num : arr) {
-            ans += num;
+        for (int x : arr) {
+            ans += x;
         }
         return ans;
     }

@@ -4,10 +4,9 @@
 // https://leetcode.cn/problems/valid-anagram/
 
 class Solution {
-    // Means the number of each char in s and t should be same
-    // we can use an array to check, but for s, it will plus, for t, it will minus
-    // finally, we can check if all the char are remain 0, if so return true
-    // otherwise, it means that they are not an anagram
+    // Check by ensuring their character counts are the same
+    // Use an array to count characters in `s` (increment) and `t` (decrement)
+    // If all counts are 0 after processing, they are anagrams
     public boolean isAnagram(String s, String t) {
         int[] count = new int[26];
         for (int i = 0; i < s.length(); i++) {

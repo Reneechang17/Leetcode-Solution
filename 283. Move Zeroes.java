@@ -4,10 +4,10 @@
 // https://leetcode.cn/problems/move-zeroes/
 
 class Solution {
-    // two pointer, i pointer start from 0
-    // and j pointer iterate the array, if the cur is not zero
-    // then we let nums[i] = nums[j]
-    // by the end, the remain position are 0, then fill them
+    // Use two pointers to move non-zero elements forward
+    // `i` keeps track of the position to place the next non-zero element
+    // `j` iterates through the array, moving non-zero values to position `i`
+    // Fill remaining positions with zeros
     public void moveZeroes(int[] nums) {
         int i = 0;
         for (int j = 0; j < nums.length; j++) {

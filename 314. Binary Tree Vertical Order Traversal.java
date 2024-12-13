@@ -1,11 +1,14 @@
 // Medium
 // Tree
-// O(n)
-// https://leetcode.com/problems/binary-tree-vertical-order-traversal/
+// Time:O(n), Space:O(n)
+// https://leetcode.cn/problems/binary-tree-vertical-order-traversal/
 
 import java.util.*;
 
 class Solution {
+    // Use BFS to traverse the tree level by level
+    // Maintain a map to group nodes by their vertical column
+    // Track the column index using a Pair(TreeNode, column index)
   class Pair<T, U> {
       T first; 
       U second; 

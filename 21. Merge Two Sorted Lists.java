@@ -5,7 +5,7 @@
 
 class Solution {
     // Iterate list1 and list2, and compare which is smaller one be the next
-    // finally check which list is not going to end, than add the remain part to tail
+    // Finally check which list is not going end, than add the remain part to tail
     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         ListNode dummy = new ListNode(-1);
         ListNode cur = dummy;

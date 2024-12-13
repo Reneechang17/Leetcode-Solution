@@ -1,33 +1,33 @@
 // Medium
 // Priority Queue
-// Time:O(nlogn),Space:O(n)
+// Time:O(nlogn), Space:O(n)->if all conflict
 // https://leetcode.cn/problems/meeting-rooms-ii/
 
 import java.util.*;
 
 class Solution {
-    // sort the start time, and add first end time in pq
-    // for the every cur one, check if the cur start time is bigger than the prev's end time
-    // if no conflict, we no need for new meeting room; if conflict, we need a new one
+    // Use Priority Queue to track ongoing meetings and its end time
+    // Sort by start time, and add first meeting's end time
+    // Each time we go through the meetings, compare the cur start time and prev end time(pq.peek())
+    // If no conflict, reuse room; if conflict, add cur end time to que to account for new room
     public int minMeetingRooms(int[][] intervals) {
         // basecase
-        if (intervals.length == 0 || intervals == null) {
-            return 0;
-        }
-        // sort by start time
+        if (intervals == null || intervals.length == 0) return 0;
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        pq.add(intervals[0][1]); // initialize the pq and add the first end time
+        pq.offer(intervals[0][1]);
 
         for (int i = 1; i < intervals.length; i++) {
-            // if the cur start time > prev's end time -> no conflict
+            // if cur start after or when the earliest meeting end
+            // no conflict-> reuse the room by removing the earliest ended meeting
+            // 没有冲突，会把之前的meeting移除，加入当前的
             if (intervals[i][0] >= pq.peek()) {
-                pq.poll(); // poll the prev ended meeting
+                pq.poll();
             }
-            // if conflict, add cur end time to pq
-            pq.add(intervals[i][1]);
+            // add the cur end time to the que 
+            pq.offer(intervals[i][1]);
         }
+        // the size of que represents the max number of rooms needed
         return pq.size();
     }
 }

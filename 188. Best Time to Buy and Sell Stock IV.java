@@ -1,31 +1,32 @@
 // Hard
 // DP
-// O(n * 2k)
-// Similar: 123
-// https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/
+// Time:O(n * k), Space:O(k)
+// https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-iv/
 
 class Solution {
-  public int maxProfit(int k, int[] prices) {
-      int n = prices.length;
-      if (n == 0 || k == 0) return 0;
-      int[] dp = new int[2 * k + 1];
-
-      // 初始化所有j為奇數的情況，也就是買入股票
-      for (int i = 1; i < 2 * k + 1; i += 2) {
-          dp[i] = -prices[0];
-      }
-
-      for (int i = 1; i < n; i++) {
-          for (int j = 1; j < 2 * k + 1; j++) {
-              if (j % 2 == 1) {
-                  dp[j] = Math.max(dp[j], dp[j - 1] - prices[i]);
-              } else {
-                  dp[j] = Math.max(dp[j], dp[j - 1] + prices[i]);
-              }
-          }
-      }
-      return dp[2 * k];
-  }
+    // Use DP to track max profit for each transaction state (buy/sell)
+    // Odd states represent buying, even states represent selling
+    // Iterate prices, update each state based on previous states
+    // Result is stored in the last sell state (dp[2 * k])
+    public int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        if (n == 0 || k == 0) return 0;
+        int[] dp = new int[2 * k + 1];
+        // initialize the odd state -> buying the stock
+        for (int i = 1; i < 2 * k + 1; i += 2) {
+            dp[i] = -prices[0];
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < 2 * k + 1; j++) {
+                if (j % 2 == 1) {
+                    dp[j] = Math.max(dp[j], dp[j - 1] - prices[i]);
+                } else {
+                    dp[j] = Math.max(dp[j], dp[j - 1] + prices[i]);
+                }
+            }
+        } 
+        return dp[2 * k];
+    }
 }
 
 /**

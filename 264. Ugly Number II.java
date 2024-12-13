@@ -1,33 +1,27 @@
 // Medium
-// DP
-// O(n)
-// https://leetcode.com/problems/ugly-number-ii/
+// DP, Two Pointers
+// Time:O(n), Space:O(n)
+// https://leetcode.cn/problems/ugly-number-ii/
 
 class Solution {
+  // Use DP and three pointers to generate the ugly numbers
+  // Maintain a DP arr where dp[i] is the i-th unly number
+  // For each step, calculate the next candidates(2*dp[2], 3*dp[3], 5*dp[5]),
+  // pick the smallest as the next ugly number, and move the corresponding pointer
   public int nthUglyNumber(int n) {
-      int[] ugly = new int[n];
-      ugly[0] = 1; // 第一個醜數就是1
-      int i2 = 0, i3 = 0, i5 = 0; // 初始化三個指針
-      int factor2 = 2, factor3 = 3, factor5 = 5; // 初始化三個因子
+      int[] dp = new int[n + 1];
+      dp[0] = 1; // the first ugly num is 1
+      int p2 = 0, p3 = 0, p5 = 0; // initialize three pointers
+      int f2 = 2, f3 = 3, f5= 5; // initialize three factors
 
       for (int i = 1; i < n; i++) {
-          int min = Math.min(Math.min(factor2, factor3), factor5); // 找到當前最小的醜數
-          ugly[i] = min; // 將最小的醜數添加到數組中
-
-          // 更新指針和因子
-          if (min == factor2) factor2 = 2 * ugly[++i2];
-          if (min == factor3) factor3 = 3 * ugly[++i3];
-          if (min == factor5) factor5 = 5 * ugly[++i5];
+          int min = Math.min(Math.min(f2, f3), f5);
+          dp[i] = min;
+          // update the corresponding pointer(first) and factor
+          if (min == f2) f2 = 2 * dp[++p2];
+          if (min == f3) f3 = 3 * dp[++p3];
+          if (min == f5) f5 = 5 * dp[++p5];
       }
-      return ugly[n - 1];
+      return dp[n - 1];
   }
 }
-
-/**
- * 給定一個整數n，找到第n個整數
- * 醜數：指只包含質因數235的正整數，第一個醜數為1
- * 
- * 思路：可以用dp來做，構建一個醜數數組，確保每個醜數都是前面的醜數都是乘以2，3，5來的
- * 結合三指針技術，分別代表乘以2，3，5的位置，開始時，所有指針都指向數組的第一個位置
- * 從ugly[1]到ugly[n-1]，每次都從ugly[i2]*2、ugly[i3]*3、ugly[i5]*5 中取其中最小的放入ugly數組
- **/

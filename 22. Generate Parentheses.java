@@ -1,15 +1,17 @@
 // Medium
-// Backtracking
+// Backtracking, String
 // Time:O(4^n / sqrt(n) * n),Space:O(4^n / sqrt(n) * n)
 // https://leetcode.cn/problems/generate-parentheses/
 
 import java.util.*;
 
 class Solution {
-    // seems like we need to find all the possible->backtracking
+    // We can found the final string contain 2*n char
+    // Use backtracking to find all the possible string 
+    //  - Use StringBuilder instead of String to avoid creating new str in each recursion
+    //  - Open bracket should appear before close
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();
-        // use StringBuilder instead of String to avoid creating new string in each recursion
         backtracking(res, new StringBuilder(), 0, 0, n);
         return res;
     }
@@ -25,7 +27,6 @@ class Solution {
             cur.deleteCharAt(cur.length() - 1);
         }
         // add close bracket
-        // close<open since open must be added before close
         if (close < open) {
             cur.append(")");
             backtracking(res, cur, open, close + 1, n);

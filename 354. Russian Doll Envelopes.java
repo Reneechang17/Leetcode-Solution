@@ -1,7 +1,7 @@
 // Hard
 // DP, Sorting, Binary Search
-// O(n logn)
-// https://leetcode.com/problems/russian-doll-envelopes/
+// Time:O(n logn), Space:O(n)
+// https://leetcode.cn/problems/russian-doll-envelopes/
 
 import java.util.Arrays;
 
