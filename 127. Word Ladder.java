@@ -13,11 +13,11 @@ class Solution {
     // Use a set to track visited words and prevent revisiting. If endWord isn't in wordList, return 0
     public int ladderLength(String beginWord, String endWord, List<String> wordList) {
         Set<String> set = new HashSet<>(wordList);
-        // basecase: if endWord is not in wordList, return 0
+        // basecase: if the endWord not appear in wordList return 0
         if (!set.contains(endWord)) return 0;
 
         Queue<String> que = new LinkedList<>();
-        que.offer(beginWord);
+        que.add(beginWord);
         Set<String> vis = new HashSet<>(); // use for mark as vis
         vis.add(beginWord);
         int level = 1;
@@ -26,27 +26,28 @@ class Solution {
             int n = que.size();
             for (int i = 0; i < n; i++) {
                 String curWord = que.poll();
-                // iterate each char in curWord
+                // iterate each char in curWord -> turn string to string arr
                 char[] curWordChar = curWord.toCharArray();
-                for (int j = 0; j < curWordChar.length; j++) {
-                    char oldWord = curWordChar[j]; 
-                    // try all possible char to replace
+                for (int j = 0; j < curWord.length(); j++) {
+                    char oldWord = curWordChar[j];
+                    // try all possible char to replace 
                     for (char c = 'a'; c <= 'z'; c++) {
                         curWordChar[j] = c;
                         // get the new word
                         String newWord = new String(curWordChar);
-                        // check if this newWord matches with endWord
+                        // check if this word matches with endWord
                         if (newWord.equals(endWord)) {
                             return level + 1;
                         }
-                        // check if newWord in the wordList and did not vis
-                        // if so, add newWord to queue and mark as vis
+                        // check if newWord in the wordList and didn't vis
+                        // if so, add newWord to que and mark as vis
                         if (set.contains(newWord) && !vis.contains(newWord)) {
-                            que.offer(newWord);
+                            que.add(newWord);
                             vis.add(newWord);
                         }
                     }
-                    curWordChar[j] = oldWord; // set back
+                    // set back
+                    curWordChar[j] = oldWord;
                 }
             }
             level++;

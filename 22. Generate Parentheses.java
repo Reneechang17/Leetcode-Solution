@@ -12,7 +12,7 @@ class Solution {
     //  - Open bracket should appear before close
     public List<String> generateParenthesis(int n) {
         List<String> res = new ArrayList<>();
-        backtracking(res, new StringBuilder(), 0, 0, n);
+        backtracking(res, new StringBuilder(), 0, 0, n); // 0,0 are the number of open and close
         return res;
     }
     private void backtracking(List<String> res, StringBuilder cur, int open, int close, int n) {

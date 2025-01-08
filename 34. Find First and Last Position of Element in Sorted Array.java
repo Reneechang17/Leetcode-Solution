@@ -4,10 +4,10 @@
 // https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/
 
 class Solution {
-    // we need to find the first and last position of target
-    // if the target appear many times, we need to return the most left and most right one
-    // we can use the binary search to do this, but we cannot directly return the mid value 
-    // we need to keep adjusting the left and right to find the most edge one
+    // Use binary search to find the first and last positions of the target in the sorted array
+    // For the first pos, keep searching the left part when nums[mid] == target
+    // For the last position, keep searching the right part when nums[mid] == target
+    // If the target is not found, return [-1, -1]
     public int[] searchRange(int[] nums, int target) {
         int[] res = new int[]{-1, -1};
         res[0] = findFirst(nums, target);
@@ -17,10 +17,10 @@ class Solution {
 
     private int findFirst(int[] nums, int target) {
         int index = -1, left = 0, right = nums.length - 1;
+        // make sure we also check when left == right
         while (left <= right) {
             int mid = (left + right) >> 1;
             if (nums[mid] >= target) {
-                // we need to put the equal here, so that we can keep find the left part
                 if (nums[mid] == target) index = mid;
                 right = mid - 1;
             } else {
@@ -35,7 +35,6 @@ class Solution {
         while (left <= right) {
             int mid = (left + right) >> 1;
             if (nums[mid] <= target) {
-                // same here, we need to keep finding the right part
                 if (nums[mid] == target) index = mid;
                 left = mid + 1;
             } else {

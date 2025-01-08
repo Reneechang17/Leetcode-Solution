@@ -5,8 +5,8 @@
 
 class Solution {
     // Use k % n to get the actual rotate steps
-    // as rotate n times or more results in the same array
-    // reverse the whole nums
+    // as rotate n times or more results in the same arr
+    // reverse the whole arr
     // reverse first k elements
     // reverse n - k elements
     public void rotate(int[] nums, int k) {
@@ -25,3 +25,11 @@ class Solution {
         }
     }
 }
+
+// dryrun
+// Input: nums = [-1,-100,3,99], k = 2
+// n = 4, k = 2 % 4 = 2
+// This ensures we only rotate within the bounds of the array size
+// reverse nums[0]~nums[3] -> [99,3,-100,-1]
+// reverse nums[0]~nums[1] -> [3,99,-100,-1]
+// reverse nums[2]~numd[3] -> [3,99,-1,-100]

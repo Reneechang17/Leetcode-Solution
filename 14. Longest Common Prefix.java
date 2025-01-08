@@ -5,9 +5,11 @@
 // https://leetcode.cn/problems/longest-common-prefix/
 
 class Solution {
-    // Find the shortest string as the initial prefix since common prefix can't exceed its length
-    // Then, iterate all strings, if any word can't use shortest string as prefix, cut the length
+    // Iterate the strs to find the shortest string as the initial prefix 
+    // since common prefix can't exceed its length
+    // Then iterate again, if any s can't use the prefix, cut the length
     public String longestCommonPrefix(String[] strs) {
+        // basecase
         if (strs == null || strs.length == 0) return "";
         String prefix = strs[0];
         for (String s : strs) {
@@ -16,7 +18,7 @@ class Solution {
             }
         }
         for (String s : strs) {
-            // if any s can't use this prefix as common-> cut it
+            // if any s can't use predfix as common start->cut it
             while (!s.startsWith(prefix)) {
                 prefix = prefix.substring(0, prefix.length() - 1);
                 if (prefix.isEmpty()) return "";

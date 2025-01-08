@@ -16,7 +16,6 @@ class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
         List<List<Integer>> graph = new ArrayList<>();
         int[] inDegree = new int[numCourses];
-
         for (int i = 0; i < numCourses; i++) {
             graph.add(new ArrayList<>());
         }
@@ -26,8 +25,8 @@ class Solution {
             graph.get(prereq).add(course);
             inDegree[course]++;
         }
-
         Queue<Integer> que = new LinkedList<>();
+        // find the course with no prereq as start
         for (int i = 0; i < numCourses; i++) {
             if (inDegree[i] == 0) {
                 que.offer(i);
