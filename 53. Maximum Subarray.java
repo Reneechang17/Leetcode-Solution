@@ -8,15 +8,13 @@ class Solution {
     // If the running sum becomes negative, reset to 0
     // Since every negative possible cannot form the max subarray
     public int maxSubArray(int[] nums) {
+        // basecase
         if (nums.length == 1) return nums[0];
-
         int max = Integer.MIN_VALUE, count = 0;
         for (int i = 0; i < nums.length; i++) {
             count += nums[i];
             max = Math.max(max, count);
-            if (count < 0) {
-                count = 0;
-            }
+            if (count < 0) count = 0;
         }
         return max;
     }
