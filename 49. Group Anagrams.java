@@ -9,7 +9,7 @@ import java.util.*;
 class Solution {
     // Group anagrams by encoding each word into a frequency count of letters.
     // 1. Encode each word into a key (letter frequency) using a 26-char array.
-    // 2. Use a Map to group words sharing the same encoded key.
+    // 2. Use Map to group words sharing the same encoded key.
     // 3. Return all groups as a list of lists.
     public List<List<String>> groupAnagrams(String[] strs) {
         // map store the encode String and all the string has same code
