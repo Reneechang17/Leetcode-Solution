@@ -25,10 +25,11 @@ class Solution {
             graph.get(prereq).add(course);
             inDegree[course]++;
         }
+
         Queue<Integer> que = new LinkedList<>();
-        // find the course with no prereq as start
+        // find the start point: course with no prereq
         for (int i = 0; i < numCourses; i++) {
-            if (inDegree[i] == 0) {
+            if (inDegree[i] == 0) { 
                 que.offer(i);
             }
         }
