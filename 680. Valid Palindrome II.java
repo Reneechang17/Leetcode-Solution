@@ -8,7 +8,7 @@ class Solution {
       int left = 0, right = s.length() - 1;
       while (left < right) {
           if (s.charAt(left) != s.charAt(right)) {
-              // try skip either left or right char and check if valid
+              // try skip left or right for one char
               return isValid(s, left + 1, right) || isValid(s, left, right - 1);
           }
           left++;

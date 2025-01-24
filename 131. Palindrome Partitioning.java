@@ -1,50 +1,44 @@
 // Medium
 // Backtracking
-// O(2^n)
-// https://leetcode.com/problems/palindrome-partitioning/
+// Time:O(n2^n), Space:O(n)
+// https://leetcode.cn/problems/palindrome-partitioning/
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.List;
-
+import java.util.*;
 class Solution {
-  List<List<String>> res = new ArrayList<>();
-  Deque<String> deq = new LinkedList<>();
-
-  public List<List<String>> partition(String s) {
-      backtracking (s, 0);
-      return res;
-  }
-  public void backtracking(String s, int start) {
-      if (start >= s.length()) {
-          res.add(new ArrayList<>(deq));
-          return;
-      }
-      for (int i = start; i < s.length(); i++) {
-          if (isPalindrome(s, start, i)) {
-              String str = s.substring(start, i + 1);
-              deq.add(str);
-          } else {
-              continue;
-          }
-          backtracking(s, i + 1);
-          deq.removeLast();
-      }
-  }
-  public boolean isPalindrome(String s, int start, int end) {
-      for (int i = start, j = end; i < j; i++, j--) {
-          if(s.charAt(i) != s.charAt(j)) {
-              return false;
-          }
-      }
-      return true;
-  }
+    // Use backtrack to find all possible ways to partition the string
+    // At each pos, check if substring is palindrome and recurse for remaining str
+    // If reach the end of str, add cur partition to the res
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        List<String> path = new ArrayList<>();
+        backtracking(s, 0, path, res);
+        return res;
+    }
+    private void backtracking(String s, int start, List<String> path, List<List<String>> res) {
+        // if reach the end of string, add cur path to res
+        if (start == s.length()) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        // try to partition at each position
+        for (int end = start; end < s.length(); end++) {
+            // check palindrome for substring
+            if (isValid(s, start, end)) {
+                // add this substring to the cur path
+                path.add(s.substring(start, end + 1));
+                backtracking(s, end + 1, path, res);
+                path.remove(path.size() - 1);
+            }
+        }
+    }
+    private boolean isValid(String s, int left, int right) {
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
 }
-
-/**
- * 分割回文串：將給定的字符串s分割成子串，使得每個子串都是回文子串
- * 
- * hint：回文串分割問題的回溯搜索和組合問題的回溯相似
- * 怎麼檢查是否為回文串：定義雙指針在頭尾，如果前後指針指向的元素不相等，就不是回文子串
- **/

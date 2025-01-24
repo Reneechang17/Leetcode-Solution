@@ -4,7 +4,6 @@
 // https://leetcode.cn/problems/longest-consecutive-sequence/
 
 import java.util.*;
-
 class Solution {
     // Use a Set to remove duplicates and enable fast lookup
     // Iterate through the set, and for each number, check if it can be start 
@@ -12,14 +11,14 @@ class Solution {
     // Update the max length found for each sequence
     public int longestConsecutive(int[] nums) {
         Set<Integer> set = new HashSet<>();
-        for (int n : nums) {
-            set.add(n);
+        for (int num : nums) {
+            set.add(num);
         }
         int res = 0;
-        for (int n : set) {
-            // check if the n can be start: set cannot contain the n - 1
-            if (!set.contains(n - 1)) {
-                int curNum = n;
+        for (int x : set) {
+            // check start: set cannot contain the n - 1
+            if (!set.contains(x - 1)) {
+                int curNum = x;
                 int curRes = 1;
                 while (set.contains(curNum + 1)) {
                     curNum++;

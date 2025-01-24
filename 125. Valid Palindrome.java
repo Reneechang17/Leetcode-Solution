@@ -4,12 +4,12 @@
 // https://leetcode.cn/problems/valid-palindrome/
 
 class Solution {
-    // use two pointers to compare
-    // before comparing, we need to check if the left or right pointer is point to the valid char
+    // Use two pointers to compare
+    // Before comparing, check if the left/right pointer is point to the valid char
     public boolean isPalindrome(String s) {
         int left = 0, right = s.length() - 1;
         while (left < right) {
-            // skip non-char 
+            // skip non-char
             while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
                 left++;
             }

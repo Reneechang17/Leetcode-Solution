@@ -13,7 +13,7 @@ class Solution {
             slow = slow.next;
             fast = fast.next.next;
         }
-        // if the length is odd, move slow one step further
+        // if the length is odd, move slow step further
         if (fast != null) {
             slow = slow.next;
         }
@@ -29,7 +29,7 @@ class Solution {
         }
         return true;
     }
-    public ListNode reverse(ListNode head) {
+    private ListNode reverse(ListNode head) {
         ListNode pre = null, cur = head;
         while (cur != null) {
             ListNode curNext = cur.next;
