@@ -3,9 +3,10 @@
 // Time:O(n^2),Space:O(1)
 // https://leetcode.cn/problems/3sum-closest/
 
-import java.util.Arrays;
-
+import java.util.*;
 class Solution {
+    // Sort arr and use two pointers to find the closest sum
+    // Use a variable to check it
     public int threeSumClosest(int[] nums, int target) {
         Arrays.sort(nums);
         int ans = Integer.MAX_VALUE;
