@@ -8,13 +8,12 @@ class Solution {
     // Calculate the area using the two heights at the pointers and the distance between them
     // Adjust the pointer pointing to the shorter height to find a larger area
     public int maxArea(int[] height) {
-        int left = 0, right = height.length - 1;
-        int maxArea = 0;
+        int left = 0, right = height.length - 1, maxArea = 0;
         while (left < right) {
             int minHeight = Math.min(height[left], height[right]);
             int curArea = minHeight * (right - left);
             maxArea = Math.max(maxArea, curArea);
-            // move the pointer pointing to the smallest height
+            // move pointer to the smaller height
             if (height[left] < height[right]) {
                 left++;
             } else {
