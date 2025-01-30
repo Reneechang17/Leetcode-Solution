@@ -1,23 +1,21 @@
 // Easy
-// Prefix Min
-// O(n)
+// Iteration
+// Time:O(n), Space:O(1)
 // https://leetcode.cn/problems/maximum-difference-between-increasing-elements/
 
 class Solution {
-  // 前缀最小值Premin
+  // Track the min value while iterating the arr
+  // If the cur element is bigger than the min, update the max diff
+  //   - update the min value if a smaller element is found
   public int maximumDifference(int[] nums) {
-    int res = -1, preMin = nums[0];
-
-    // check if the nums[i] > premin, if so, then we calculate the diff of nums[i]
-    // and premin
-    // if not, we update the premin with nums[i]
-    for (int i = 1; i < nums.length; i++) {
-      if (nums[i] > preMin) {
-        res = Math.max(res, nums[i] - preMin);
-      } else {
-        preMin = nums[i];
+      int minVal = nums[0], maxDiff = -1;
+      for (int i = 1; i < nums.length; i++) {
+          if (nums[i] > minVal) {
+              maxDiff = Math.max(maxDiff, nums[i] - minVal);
+          }
+          // update the minVal
+          minVal = Math.min(minVal, nums[i]);
       }
-    }
-    return res;
+      return maxDiff;
   }
 }
