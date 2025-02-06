@@ -18,7 +18,7 @@ class Solution {
             }
         }
         for (String s : strs) {
-            // if any s can't use predfix as common start->cut it
+            // if any s can't use prefix as common start->cut it
             while (!s.startsWith(prefix)) {
                 prefix = prefix.substring(0, prefix.length() - 1);
                 if (prefix.isEmpty()) return "";

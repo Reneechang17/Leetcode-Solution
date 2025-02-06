@@ -3,7 +3,8 @@
 // Time:O(n), Space:O(n)
 // https://leetcode.cn/problems/longest-substring-without-repeating-characters/
 
-import java.util.*;class Solution {
+import java.util.*;
+class Solution {
     // Use Sliding Window to find substring, and use HashMap to check repeating char
     // Every time expand the window, check if the cur exist already
     // If existing, move the left pointer to find the next window
