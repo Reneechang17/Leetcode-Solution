@@ -4,29 +4,29 @@
 // https://leetcode.cn/problems/search-in-rotated-sorted-array/
 
 class Solution {
-    // Search for a target in a rotated sorted array using binary search
-    // - The key is to determine which part of the array is sorted at each step
-    // - If the left part is sorted, check if the target lies within this range. If yes, adjust right; otherwise, adjust left 
-    // - If the right part is sorted, check if the target lies within this range. If yes, adjust left; otherwise, adjust right 
-    // - Repeat until the target is found or the search space is empty
+    // Search for target in rotated sorted arr using binary search
+    // - first to find which part is sorted 
+    // - then check if target in that range, and adjust the pointer
+    // Repeat until the target is found or the search space is empty
     public int search(int[] nums, int target) {
         int left = 0, right = nums.length - 1;
         while (left <= right) {
             int mid = (left + right) >> 1;
             if (nums[mid] == target) return mid;
-
-            // determine sorted part
-            // means left part is sorted
+            // determine which part is sorted
             if (nums[left] <= nums[mid]) {
-                // if target in nums[left]~nums[mid], adjust right pointer
+                // when left part is sorted
+                // check if target lies in nums[left]~nums[mid]
+                // if so, adjust right pointer
                 if (target >= nums[left] && target < nums[mid]) {
                     right = mid - 1;
                 } else {
-                    // otherwise, adjust left pointer
                     left = mid + 1;
                 }
             } else {
-                // if target in nums[mid]~nums[right], adjust left pointer
+                // when right part is sorted
+                // check if target lies in nums[mid]~nums[right]
+                // if so, adjust left pointer
                 if (target > nums[mid] && target <= nums[right]) {
                     left = mid + 1;
                 } else {
