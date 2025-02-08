@@ -1,6 +1,6 @@
 // Easy
 // LinkedList
-// O(n)
+// Time:O(n),Space:O(n)
 // https://leetcode.cn/problems/reverse-linked-list/
 
 class Solution {
@@ -8,10 +8,7 @@ class Solution {
   // pre -> cur -> next
   // make the cur.next = pre; but we also need to store the cur.next first
   public ListNode reverseList(ListNode head) {
-      ListNode pre = null;
-      ListNode cur = head;
-      ListNode temp; 
-
+      ListNode pre = null, cur = head, temp;
       while (cur != null) {
           temp = cur.next;
           cur.next = pre;

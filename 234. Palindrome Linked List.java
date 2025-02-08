@@ -5,20 +5,17 @@
 
 class Solution {
     // Use slow and fast pointer to find the middle of list
-    // Reverse the second half of the list
-    // Compare the first half and second half for validation
+    // Reverse the second half and compare first and second's val
     public boolean isPalindrome(ListNode head) {
         ListNode slow = head, fast = head;
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        // if the length is odd, move slow step further
-        if (fast != null) {
-            slow = slow.next;
-        }
-        ListNode first = head;
-        ListNode second = reverse(slow);
+        // if length is odd, move slow further
+        if (fast != null) slow = slow.next;
+        ListNode first = head, second = reverse(slow);
+        // compare two linkedlist
         while (second != null) {
             if (first.val != second.val) {
                 return false;
@@ -30,12 +27,14 @@ class Solution {
         return true;
     }
     private ListNode reverse(ListNode head) {
+        // 1 - 2 - 3
+        // 3 - 2 - 1
         ListNode pre = null, cur = head;
         while (cur != null) {
-            ListNode curNext = cur.next;
+            ListNode next = cur.next;
             cur.next = pre;
-            pre = cur;
-            cur = curNext;
+            pre = cur; 
+            cur = next;
         }
         return pre;
     }
