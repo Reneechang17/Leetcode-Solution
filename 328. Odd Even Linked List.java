@@ -4,9 +4,8 @@
 // https://leetcode.cn/problems/odd-even-linked-list/
 
 class Solution {
-  // Two Pointers to separate odd/even index nodes
-  // And iterate the list to link nodes, 
-  //  at the end, connect the odd and even together
+  // Two Pointers to separate odd/even nodes
+  // Iterate list to link nodes, at the end, connect odd and even together
   public ListNode oddEvenList(ListNode head) {
       if (head == null || head.next == null) return head;
       ListNode odd = head, even = head.next, evenHead = even;
@@ -17,7 +16,7 @@ class Solution {
           even.next = odd.next;
           even = even.next;
       }
-      odd.next = evenHead; // connect two LinkedList
+      odd.next = evenHead;
       return head;
   }
 }
