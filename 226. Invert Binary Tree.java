@@ -4,22 +4,18 @@
 // https://leetcode.cn/problems/invert-binary-tree/
 
 import java.util.ArrayDeque;
-
 class Solution {
   public TreeNode invertTree(TreeNode root) {
-    if (root == null)
-      return null;
-
-    invertTree(root.left);
-    invertTree(root.right);
-    swapNode(root);
-    return root;
+      if (root == null) return null;
+      invertTree(root.left);
+      invertTree(root.right);
+      swap(root);
+      return root;
   }
-
-  private void swapNode(TreeNode root) {
-    TreeNode temp = root.left;
-    root.left = root.right;
-    root.right = temp;
+  private void swap(TreeNode root) {
+      TreeNode tmp = root.left;
+      root.left = root.right;
+      root.right = tmp;
   }
 }
 
@@ -33,7 +29,6 @@ class Solution {
 // 3. swap at root 4: swap root.left and root.right -> [4,7,2,9,6,3,1]
 
 // BFS Solution
-
 class Solution2 {
   public TreeNode invertTree(TreeNode root) {
       if (root == null) {return null;}
