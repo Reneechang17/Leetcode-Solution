@@ -1,33 +1,22 @@
 // Easy
 // DFS
-// O(n)
+// Time:O(n),Space:O(h)
 // https://leetcode.cn/problems/diameter-of-binary-tree/
 
 class Solution {
-    // 找二叉樹中任意兩個節點之間路徑長度的最大值，也就是找直徑
-    // 不一定要通過根節點，可以通過任意節點
-    // DFS -> 找左右子樹高度的和
-
+    // Use DFS to calculate left&right heights
     private int max = 0;
 
     public int diameterOfBinaryTree(TreeNode root) {
         dfs(root);
         return max;
     }
-
     private int dfs(TreeNode node) {
-        if (node == null) {
-            return 0;
-        }
-
-        int leftHeight = dfs(node.left);
-        int rightHeight = dfs(node.right);
-
-        // 最大直徑：左右子樹高度的和
-        max = Math.max(max, leftHeight + rightHeight);
-
-        // 返回當前節點的高度(左右中較大的+1 加上當前節點)
-        return Math.max(leftHeight, rightHeight) + 1;
+        if (node == null) return 0;
+        int left = dfs(node.left);
+        int right = dfs(node.right);
+        max = Math.max(max, left + right);
+        return Math.max(left, right) + 1; // height of cur node
     }
 }
 

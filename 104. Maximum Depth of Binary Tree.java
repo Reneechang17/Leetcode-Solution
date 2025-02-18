@@ -1,12 +1,11 @@
 // Easy
 // BFS
-// Time:O(n), Space:O(n)
+// Time:O(n), Space:O(h)
 // https://leetcode.cn/problems/maximum-depth-of-binary-tree/
 
 import java.util.*;
-
 class Solution {
-    // Use the bfs to calculate the depth -> Queue
+    // Use BFS to calculate depth -> Queue
     // When we do the bfs, also need to check if the cur node has child
     //   - if it has child, add to queue
     public int maxDepth(TreeNode root) {
@@ -17,9 +16,9 @@ class Solution {
         while (!que.isEmpty()) {
             int n = que.size();
             for (int i = 0; i < n; i++) {
-                TreeNode temp = que.poll();
-                if (temp.left != null) que.offer(temp.left);
-                if (temp.right != null) que.offer(temp.right);
+                TreeNode tmp = que.poll();
+                if (tmp.left != null) que.offer(tmp.left);
+                if (tmp.right != null) que.offer(tmp.right);
             }
             depth++;
         }
