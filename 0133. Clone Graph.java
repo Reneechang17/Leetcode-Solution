@@ -4,27 +4,6 @@
 // https://leetcode.cn/problems/clone-graph/
 
 import java.util.*;
-
-class Node {
-  public int val;
-  public List<Node> neighbors;
-
-  public Node() {
-    val = 0;
-    neighbors = new ArrayList<Node>();
-  }
-
-  public Node(int _val) {
-    val = _val;
-    neighbors = new ArrayList<Node>();
-  }
-
-  public Node(int _val, ArrayList<Node> _neighbors) {
-    val = _val;
-    neighbors = _neighbors;
-  }
-}
-
 class Solution {
   // If node is null, return null; clone the start node and store in Map
   // For each node, clone neighbors if not already cloned and add to queue
@@ -56,5 +35,25 @@ class Solution {
           }
       }
       return startNode;
+  }
+}
+
+class Node {
+  public int val;
+  public List<Node> neighbors;
+
+  public Node() {
+    val = 0;
+    neighbors = new ArrayList<Node>();
+  }
+
+  public Node(int _val) {
+    val = _val;
+    neighbors = new ArrayList<Node>();
+  }
+
+  public Node(int _val, ArrayList<Node> _neighbors) {
+    val = _val;
+    neighbors = _neighbors;
   }
 }

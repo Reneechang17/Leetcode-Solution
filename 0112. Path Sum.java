@@ -12,7 +12,7 @@ class Solution {
         targetSum -= root.val;
 
         // if the root's left and right are null
-        // we can check is the target is minus to zero, if yes, we find a valid path
+        // check if target is minus to zero, if yes, we find a valid path
         if (root.left == null && root.right == null) return targetSum == 0;
 
         if (root.left != null) {

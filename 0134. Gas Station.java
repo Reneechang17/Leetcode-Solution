@@ -4,10 +4,9 @@
 // https://leetcode.cn/problems/gas-station/
 
 class Solution {
-    // Simulate a greedy approach:
-    // - Maintain `total` to check if the circuit is possible
-    // - Use `cur` to track current gas in the tank
-    // - Update start point if `cur` < 0, as it implies we can't start from the cur station
+    // Maintain total to check if the circuit is possible
+    // Use cur to track current gas 
+    //  - update start point if cur< 0, as it implies we can't start from the cur station
     public int canCompleteCircuit(int[] gas, int[] cost) {
         // total means the total gas, cur means the cur gas
         // start means the cur start index
