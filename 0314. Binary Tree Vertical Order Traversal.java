@@ -9,44 +9,49 @@ class Solution {
     // Use BFS to traverse the tree level by level
     // Maintain a map to group nodes by their vertical column
     // Track the column index using a Pair(TreeNode, column index)
-  class Pair<T, U> {
-      T first; 
-      U second; 
 
-      public Pair (T first, U second) {
-          this.first = first;
-          this.second = second;
-      }
-  }
-  public List<List<Integer>> verticalOrder(TreeNode root) {
-      List<List<Integer>> res = new ArrayList<>();
-      if (root == null) return res;
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (root == null)
+            return res;
 
-      Queue<Pair<TreeNode, Integer>> que = new LinkedList<>();
-      que.offer(new Pair(root, 0));
+        Queue<Pair<TreeNode, Integer>> que = new LinkedList<>();
+        que.offer(new Pair(root, 0));
 
-      Map<Integer, List<Integer>> columnMap = new HashMap<>();
+        Map<Integer, List<Integer>> columnMap = new HashMap<>();
 
-      while (!que.isEmpty()) {
-          Pair<TreeNode, Integer> cur = que.poll();
-          TreeNode curNode = cur.first;
-          int column = cur.second;
+        while (!que.isEmpty()) {
+            Pair<TreeNode, Integer> cur = que.poll();
+            TreeNode curNode = cur.first;
+            int column = cur.second;
 
-          columnMap.putIfAbsent(column, new ArrayList<>());
-          columnMap.get(column).add(curNode.val);
+            columnMap.putIfAbsent(column, new ArrayList<>());
+            columnMap.get(column).add(curNode.val);
 
-          if (curNode.left != null) que.offer(new Pair(curNode.left, column - 1));
-          if (curNode.right != null) que.offer(new Pair(curNode.right, column + 1));
-      }
+            if (curNode.left != null)
+                que.offer(new Pair(curNode.left, column - 1));
+            if (curNode.right != null)
+                que.offer(new Pair(curNode.right, column + 1));
+        }
 
-      int minCol = Collections.min(columnMap.keySet());
-      int maxCol = Collections.max(columnMap.keySet());
+        int minCol = Collections.min(columnMap.keySet());
+        int maxCol = Collections.max(columnMap.keySet());
 
-      for (int i = minCol; i <= maxCol; i++) {
-          res.add(columnMap.get(i));
-      }
-      return res;
-  }
+        for (int i = minCol; i <= maxCol; i++) {
+            res.add(columnMap.get(i));
+        }
+        return res;
+    }
+}
+
+class Pair<T, U> {
+    T first; 
+    U second; 
+
+    public Pair (T first, U second) {
+        this.first = first;
+        this.second = second;
+    }
 }
 
 /**

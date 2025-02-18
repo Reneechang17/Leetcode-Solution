@@ -1,5 +1,5 @@
 // Hard
-// Dsign, Hash Table, Linked List
+// Hash Table, Linked List
 // https://leetcode.com/problems/all-oone-data-structure/
 
 import java.util.*;

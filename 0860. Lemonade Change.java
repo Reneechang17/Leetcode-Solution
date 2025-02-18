@@ -1,7 +1,7 @@
 // Easy
 // -
-// O(n)
-// https://leetcode.com/problems/lemonade-change/
+// Time:O(n),Space:O(1)
+// https://leetcode.cn/problems/lemonade-change/
 
 class Solution {
   public boolean lemonadeChange(int[] bills) {

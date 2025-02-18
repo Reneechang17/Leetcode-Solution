@@ -1,15 +1,13 @@
 // Easy
 // Math, Simulation
-// O(n)
+// Time:O(n),Space:O(n)
 // https://leetcode.cn/problems/fizz-buzz/
 
 import java.util.*;
 
 class Solution {
-    // 直接模擬即可
     public List<String> fizzBuzz(int n) {
         List<String> res = new ArrayList<>();
-
         // i start from 1
         for (int i = 1; i <= n; i++) {
             if (i % 3 == 0 && i % 5 == 0) {

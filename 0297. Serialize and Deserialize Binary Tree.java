@@ -5,7 +5,7 @@
 
 import java.util.*;
 
-public class Solution {
+class Solution {
   
   // 序列化：將二叉樹序列化成字符串
   // 用前序遍歷，將節點值和null分別保存在字符串中

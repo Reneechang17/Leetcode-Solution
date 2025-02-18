@@ -1,5 +1,5 @@
 // Easy
-// Tree, DFS
+// DFS
 // Time:O(n),Space:O(h)
 // https://leetcode.cn/problems/univalued-binary-tree/
 
