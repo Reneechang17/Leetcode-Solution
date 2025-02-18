@@ -5,7 +5,6 @@
 // https://leetcode.com/problems/maximum-length-of-pair-chain/
 
 import java.util.Arrays;
-
 class Solution {
   public int findLongestChain(int[][] pairs) {
       Arrays.sort(pairs, (a, b) -> a[1] - b[1]); // sorting for index end
