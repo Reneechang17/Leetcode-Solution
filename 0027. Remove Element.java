@@ -1,6 +1,6 @@
 // Easy
 // Two Pointers
-// O(n)
+// Time:O(n),Space:O(1)
 // https://leetcode.cn/problems/remove-element/
 
 class Solution {
