@@ -1,41 +1,28 @@
 // Hard
-// Array, Hash Table(原地哈希)
-// O(n)
-// https://leetcode.com/problems/first-missing-positive/
+// Hash Table(原地哈希)
+// Time:O(n),Space:O(1)
+// https://leetcode.cn/problems/first-missing-positive/
 
 class Solution {
-  public int firstMissingPositive(int[] nums) {
-      // 解法：原地哈希
-      int n = nums.length;
-
-      // 處理所有存在的負數，把他們都變成n+1，因為這對於找最小缺失的正整數無關
-      for (int i = 0; i < n; i++) {
-          if (nums[i] <= 0) {
-              nums[i] = n + 1;
-          }
-      }
-
-      // 遍歷修改後的數組，如果這個數字在1<=x<=n,就把它應該出現的位置的數字變為負數，表示這個數字是存在的
-      for (int i = 0; i < n; i++) {
-          int num = Math.abs(nums[i]);
-          if (num <= n) {
-              nums[num - 1] = -Math.abs(nums[num - 1]);
-          }
-      }
-
-      // 再遍歷數組，找到第一個數字為正的位置，其索引+1就是我們要找的最小缺失正整數
-      for (int i = 0; i < n; i++) {
-          if (nums[i] > 0) {
-              return i + 1;
-          }
-      }
-
-      // 如果最後所有位置都是負數，代表都被標記過，那麼答案就是n+1
-      return n + 1;
-  }
+    public int firstMissingPositive(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n; i++) {
+            while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+                // swap nums[i] and nums[nums[i] - 1]
+                int tmp = nums[i];
+                nums[i] = nums[nums[i] - 1];
+                nums[tmp - 1] = tmp;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            if (nums[i] != i + 1) return i + 1;
+        }
+        // if all pos are correct, the missing num will be n+1
+        return n + 1;
+    }
 }
 
-/**
- * 給定一個未排序的數組，找到一個未出現的最小正整數
- * 需要在時間複雜度O(n) & 不使用額外空間來做
- **/
+// 要求正整数 -> 可以忽略所有不[1,n]范围内的数字
+// 可以利用数组下标来记录数字存在情况，把每个数字x放入下标x-1处，类似桶排序
+// 如果当前数组x在数组内并满足1<=x<=x，把x放到nums[x-1]的位置
+// 最后遍历数组nums，如果下标i处没有存放i+1，那么i+1就是第一个缺失的正整数
