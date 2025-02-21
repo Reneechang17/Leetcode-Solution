@@ -1,5 +1,5 @@
 // Easy
-// Bit Manipulation
+// XOR Operation
 // Time:O(n),Space:O(1)
 // https://leetcode.cn/problems/single-number/
 
