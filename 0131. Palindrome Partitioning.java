@@ -11,20 +11,18 @@ class Solution {
     public List<List<String>> partition(String s) {
         List<List<String>> res = new ArrayList<>();
         List<String> path = new ArrayList<>();
-        backtracking(s, 0, path, res);
+        backtracking(s, 0, path, res); // 0 is the start point
         return res;
     }
     private void backtracking(String s, int start, List<String> path, List<List<String>> res) {
-        // if reach the end of string, add cur path to res
         if (start == s.length()) {
             res.add(new ArrayList<>(path));
             return;
         }
-        // try to partition at each position
+        // partition at each pos
         for (int end = start; end < s.length(); end++) {
-            // check palindrome for substring
+            // check if substring is palindrome
             if (isValid(s, start, end)) {
-                // add this substring to the cur path
                 path.add(s.substring(start, end + 1));
                 backtracking(s, end + 1, path, res);
                 path.remove(path.size() - 1);

@@ -1,21 +1,16 @@
 // Easy
 // Binary Search
-// O(logn)
+// Time:O(logn),Space:O(1)
 // https://leetcode.cn/problems/valid-perfect-square/
 
 class Solution {
+    // Check if num is a perfect square -> meaning x * x = num
+    // Use Binary Search to find the square root in range[1, num]
     public boolean isPerfectSquare(int num) {
-        // 判斷是不是完全平方數 -> 即x * x = num
-        // 二分 -> 範圍是[1, num]
         int left = 1, right = num;
-
-        // 確保檢查到left和right相等的情況，也是一個可能的mid
         while (left <= right) {
-            int mid = (left + right) >> 1;
-
-            // 防止溢出，因為mid是int類型，相乘的結果可能會超過int的範圍
-            long square = 1L * mid * mid; 
-
+            int mid = left + (right - left) / 2;
+            long square = 1L * mid * mid;
             if (square == num) {
                 return true;
             } else if (square < num) {
