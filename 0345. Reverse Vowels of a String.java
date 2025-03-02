@@ -1,38 +1,32 @@
 // Easy
-// String
-// O(n)
-// https://leetcode.com/problems/reverse-vowels-of-a-string/
+// Two Pointers, String
+// Time:O(n),Space:O(n)
+// https://leetcode.cn/problems/reverse-vowels-of-a-string/
 
 class Solution {
-  public String reverseVowels(String s) {
-      boolean[] vowels = new boolean[128];
-      for(char c : "aeiouAEIOU".toCharArray()){
-          vowels[c] = true;
-      }
-      char[] cs = s.toCharArray();
-      int i = 0, j = cs.length - 1;
-      while(i < j){
-          while(i < j && !vowels[cs[i]]){
-              ++i;
-          }
-          while(i < j && !vowels[cs[j]]){
-              --j;
-          }
-          // switch
-          if(i < j){
-              char t = cs[i];
-              cs[i] = cs[j];
-              cs[j] = t;
-              ++i;
-              --j;
-          }
-      }
-      return String.valueOf(cs);
-  }
-}
+    // Two Pointers -> from start and end, when occur vowels -> swap
+    public String reverseVowels(String s) {
+        char[] chars = s.toCharArray();
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            while (left < right && !isVowel(chars[left])) {
+                left++;
+            }
+            while (left < right && !isVowel(chars[right])) {
+                right--;
+            }
+            if (left < right) {
+                char tmp = chars[left];
+                chars[left] = chars[right];
+                chars[right] = tmp;
+                left++;
+                right--;
+            }
+        }
+        return new String(chars);
+    }
 
-/**
- * 思路：
- * 先用vowels來遍歷字符串“aeiouAEIOU”，將對應的字符在數組位置設為true
- * 再用雙指針分別從頭尾向中間遍歷，遇到元音交換
- **/
+    private boolean isVowel(char c) {
+        return "aeiouAEIOU".indexOf(c) != -1;
+    }
+}
