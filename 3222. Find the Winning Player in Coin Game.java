@@ -1,7 +1,7 @@
 // Easy
 // Simulation
 // Time:O(1),Space:O(1)
-// https://leetcode.cn/problems/find-the-winning-player-in-coin-game/description/
+// https://leetcode.cn/problems/find-the-winning-player-in-coin-game/
 
 class Solution {
   // 75只能拿一个，两个就超标了。得到115的方法是1枚x（75），4枚y（40）
