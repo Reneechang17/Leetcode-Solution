@@ -1,21 +1,20 @@
 // Medium
 // Two Pointers, LinkedList
 // Time:O(nlogn),Space:O(logn)call stack
-// https://leetcode.cn/problems/sort-list/
+// https://leetcode.cn/problems/7WHec2/
 
 class Solution {
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) return head;
-        // use slow-fast pointers to find the mid of the list
-        ListNode mid = getMid(head);
-        ListNode rightHead = mid.next;
-        mid.next = null;
+        ListNode mid = getMid(head); // use two pointers
+        ListNode second = mid.next;
+        mid.next = null; 
 
-        // recursively apply merge sort on left and right sublists
+        // recursively apply merge sort on left/right sublists
         ListNode left = sortList(head);
-        ListNode right = sortList(rightHead);
+        ListNode right = sortList(second);
 
-        // merge two lists
+        // merge two list
         return merge(left, right);
     }
     private ListNode getMid(ListNode head) {
