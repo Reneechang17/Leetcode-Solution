@@ -16,7 +16,7 @@ import java.util.List;
 //   }
 // };
 
-class Node {
+public class Node {
   public int val;
   public Node left;
   public Node right;
@@ -41,4 +41,4 @@ class Node {
     right = _right;
     next = _next;
   }
-};
+}
