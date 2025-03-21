@@ -1,13 +1,14 @@
 // Easy
 // LinkedList
 // Time:O(m+n),Space:O(1)
-// https://leetcode.cn/problems/intersection-of-two-linked-lists/
+// https://leetcode.cn/problems/3u1WK4/
 
 class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
         ListNode curA = headA, curB = headB;
         int lenA = 0, lenB = 0;
-        // calculate the len of two linkedlist and find diff
+
+        // calculate the len
         while (curA != null) {
             lenA++;
             curA = curA.next;
@@ -16,7 +17,7 @@ class Solution {
             lenB++;
             curB = curB.next;
         }
-        // make sure curA as the longer one, if curB is longer, swap 
+        // make sure curA is longer one
         curA = headA;
         curB = headB;
         if (lenB > lenA) {
@@ -27,13 +28,15 @@ class Solution {
             curA = curB;
             curB = tmpCur;
         }
+        
+        // let the longer one step further
         int gap = lenA - lenB;
-        // let the longer one go 'gap' steps further
         while (gap > 0) {
             curA = curA.next;
             gap--;
         }
-        // find the intersection
+
+        // find intersection
         while (curA != null) {
             if (curA == curB) {
                 return curA;
