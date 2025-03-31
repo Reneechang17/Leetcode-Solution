@@ -1,57 +1,40 @@
 // Medium
-// Tree, Hash Table
-// O(n)
+// DFS, Map
+// Time:O(n),Space:O(n)
 // https://leetcode.com/problems/most-frequent-subtree-sum/
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class Solution {
-  Map<Integer, Integer> sumCount;
-  int maxCount;
+    // DFS to traverse the tree and Map record the freq of each subtree sum
 
-  public int[] findFrequentTreeSum(TreeNode root) {
-      maxCount = 0;
-      sumCount = new HashMap<>();
-      countSubtreeSums(root);
+    private Map<Integer, Integer> map = new HashMap<>();
+    private int maxFreq = 0;
 
-      List<Integer> maxSums = new ArrayList<>();
-      for (int sum : sumCount.keySet()) {
-          if (sumCount.get(sum) == maxCount) {
-              maxSums.add(sum);
-          }
-      }
-      // 轉回數組
-      int[] res = new int[maxSums.size()];
-      for (int i = 0; i < maxSums.size(); i++) {
-          res[i] = maxSums.get(i);
-      }
-      return res;
-  }
+    public int[] findFrequentTreeSum(TreeNode root) {
+        dfs(root);
 
-  private int countSubtreeSums (TreeNode node) {
-      if (node == null) return 0;
+        List<Integer> list = new ArrayList<>();
+        for (int sum : map.keySet()) {
+            if (map.get(sum) == maxFreq) {
+                list.add(sum);
+            }
+        }
+        int[] res = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            res[i] = list.get(i);
+        }
+        return res;
+    }
+    private int dfs(TreeNode node) {
+        if (node == null) return 0;
 
-      int leftSum = countSubtreeSums(node.left);
-      int rightSum = countSubtreeSums(node.right);
+        int leftSum = dfs(node.left), rightSum = dfs(node.right);
+        int sum = node.val + leftSum + rightSum;
+        
+        map.put(sum, map.getOrDefault(sum, 0) + 1);
+        maxFreq = Math.max(maxFreq, map.get(sum));
 
-      int curSum = node.val + leftSum + rightSum;
-
-      int count = sumCount.getOrDefault(curSum, 0) + 1;
-      sumCount.put(curSum, count);
-
-      maxCount = Math.max(maxCount, count);
-      return curSum;
-  }
+        return sum;
+    }
 }
-
-/**
- * 這題要求找出二叉樹種的子樹元素和最頻繁的和，如果多個和出現的次數相同，則返回所有的和
- * 
- * 解法：可以用遞歸計算子樹的和並使用哈希表跟蹤各個和出現的頻率
- * sumCount：哈希表紀錄每個子樹和出現的次數
- * maxCount：紀錄出現最頻繁的子樹和的次數
- * countSubtreeSums：遞歸方法計算每個節點為根的子樹和，並更新哈希表和最大次數
- **/
