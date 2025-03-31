@@ -11,14 +11,14 @@ class Codec {
     // length#string
     public String encode(List<String> strs) {
         StringBuilder sb = new StringBuilder();
-        for (String str : strs) {
-            sb.append(str.length()).append("#").append(str);
+        for (String s : strs) {
+            sb.append(s.length()).append("#").append(s);
         }
         return sb.toString();
     }
 
     // Decodes a single string to a list of strings.
-    // Get the len and substring the char with this len
+    // Get the len and the substring 
     public List<String> decode(String s) {
         List<String> res = new ArrayList<>();
         int i = 0;
