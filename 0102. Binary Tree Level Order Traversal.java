@@ -15,24 +15,20 @@ class Solution {
 
     public void bfs(TreeNode node) {
         if (node == null) return;
-
         Queue<TreeNode> que = new LinkedList<>();
         que.offer(node);
 
         while (!que.isEmpty()) {
             int n = que.size();
             List<Integer> list = new ArrayList<>();
-
             for (int i = 0; i < n; i++) {
-                TreeNode temp = que.poll();
-                list.add(temp.val);
-
-                if (temp.left != null) {
-                    que.offer(temp.left);
+                TreeNode tmp = que.poll();
+                list.add(tmp.val);
+                if (tmp.left != null) {
+                    que.offer(tmp.left);
                 }
-
-                if (temp.right != null) {
-                    que.offer(temp.right);
+                if (tmp.right != null) {
+                    que.offer(tmp.right);
                 }
             }
             res.add(list);
