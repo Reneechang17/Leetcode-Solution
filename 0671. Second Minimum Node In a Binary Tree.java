@@ -1,32 +1,38 @@
 // Easy
-// DFS
-// O(n)
+// Recursion
+// Time:O(n),Space:O(h)
 // https://leetcode.cn/problems/second-minimum-node-in-a-binary-tree/
 
 class Solution {
-    // 每個節點都有0/2個節點，並且滿足子節點大於父節點的特性
-    // 父節點是兩個子節點中較小的那個
-    // 找第二小的值，我們已經可以確定父節點會是最小的
-    private int secondMin = -1; 
-    private int rootVal;
-
     public int findSecondMinimumValue(TreeNode root) {
-        rootVal = root.val;
-        dfs(root);
-        return secondMin;
-    }
+        // empty tree or only one node in tree
+        if (root == null || (root.left == null && root.right == null)) return -1;
 
-    private void dfs (TreeNode node) {
-        if (node == null) {
-            return;
+        int rootVal = root.val; // the min node is root node
+
+        // find second min node in left tree
+        int leftSecMin;
+        if (root.left.val == rootVal) {
+            leftSecMin = findSecondMinimumValue(root.left);
+        } else {
+            leftSecMin = root.left.val;
         }
 
-        if (node.val > rootVal) {
-            if (secondMin == -1 || node.val < secondMin) {
-                secondMin = node.val;
-            }
+        // find second min node in right tree
+        int rightSecMin;
+        if (root.right.val == rootVal) {
+            rightSecMin = findSecondMinimumValue(root.right);
+        } else {
+            rightSecMin = root.right.val;
         }
-        dfs(node.left);
-        dfs(node.right);
+
+        if (leftSecMin == -1) {
+            return rightSecMin;
+        }
+        if (rightSecMin == -1) {
+            return leftSecMin;
+        }
+
+        return Math.min(leftSecMin, rightSecMin);
     }
 }
