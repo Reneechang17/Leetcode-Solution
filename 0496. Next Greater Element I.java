@@ -1,43 +1,30 @@
 // Easy
-// Hash Table, Monotonic Stack
-// O(n + m)
-// https://leetcode.com/problems/next-greater-element-i/
+// Stack
+// Time:O(n + m),Space:O(n)
+// https://leetcode.cn/problems/next-greater-element-i/
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
-  public int[] nextGreaterElement(int[] nums1, int[] nums2) {
-      Stack<Integer> stack = new Stack<>();
-      Map<Integer, Integer> map = new HashMap<>();
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Map<Integer, Integer> map = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < nums2.length; i++) {
+            // pop elements that have found next greater element
+            while (!stack.isEmpty() && nums2[i] > stack.peek()) {
+                map.put(stack.pop(), nums2[i]);
+            }
+            stack.push(nums2[i]);
+        }
+        // remaining elements have no next greater element, set -1
+        while (!stack.isEmpty()) {
+            map.put(stack.pop(), -1);
+        }
 
-      // 遍歷nums2的元素構建單調遞減棧，找每一個元素下一個更大的元素
-      for (int num : nums2) {
-          while (!stack.isEmpty() && stack.peek() < num) {
-              map.put(stack.pop(), num);
-          }
-          stack.push(num);
-      }
-
-      // 將剩餘的元素（沒有找到更大右側的更大元素）處理為-1
-      while (!stack.isEmpty()) {
-          map.put(stack.pop(), -1);
-      }
-
-      // 根據哈希表獲取每個元素的下一個更大元素
-      int[] res = new int[nums1.length];
-      for (int i = 0; i < nums1.length; i++) {
-          res[i] = map.get(nums1[i]);
-      }
-      return res;
-  }
+        int[] res = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            res[i] = map.get(nums1[i]);
+        }
+        return res;
+    }
 }
-
-/**
- * 下一個更大元素 I：要求找到在數組nums1中每個元素在nums2中的下一個更大元素
- * nums1是nums2的子集，，對於nums1每個元素，需要在nums2中找到它右側的第一個更大的元素，如果不存在，則return -1
- * 
- * 這題可以用哈希表加單調遞減棧來解決，遍歷nums2的元素構建單調遞減棧，找每一個元素下一個更大的元素
- * 再用哈希表存儲每個元素的下一個更大元素，最後根據哈希表獲取每個元素的下一個更大元素來構建結果數組
- **/
