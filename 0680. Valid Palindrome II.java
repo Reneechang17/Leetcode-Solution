@@ -4,26 +4,26 @@
 // https://leetcode.cn/problems/valid-palindrome-ii/
 
 class Solution {
-  public boolean validPalindrome(String s) {
-      int left = 0, right = s.length() - 1;
-      while (left < right) {
-          if (s.charAt(left) != s.charAt(right)) {
-              // try skip left or right for one char
-              return isValid(s, left + 1, right) || isValid(s, left, right - 1);
-          }
-          left++;
-          right--;
-      }
-      return true;
-  }
-  private boolean isValid(String s, int left, int right) {
-      while (left < right) {
-          if (s.charAt(left) != s.charAt(right)) {
-              return false;
-          }
-          left++;
-          right--;
-      }
-      return true;
-  }
+    public boolean validPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return isValid(s, left + 1, right) || isValid(s, left, right - 1);
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    private boolean isValid(String s, int left, int right) {
+        while (left < right) {
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
 }
