@@ -1,61 +1,45 @@
 // Hard 
-// Sliding Window, Hash Table
-// Time:O(n),Space:O(n)
+// Sliding Window
+// Time:O(n),Space:O(k)
 // https://leetcode.cn/problems/minimum-window-substring/
 
 import java.util.*;
 class Solution {
     public String minWindow(String s, String t) {
         // basecase
-        if (s == null || t == null || s.length() == 0 || t.length() == 0) return "";
-        // use tMap to store the char in t and it's appear time
+        if (s == null || t == null || s.length() == 0 || t.length() == 0 || s.length() < t.length())
+            return "";
+
         Map<Character, Integer> tMap = new HashMap<>();
         for (char c : t.toCharArray()) {
             tMap.put(c, tMap.getOrDefault(c, 0) + 1);
         }
 
-        // create a map to store the char and its freq in window
+        int left = 0, minLeft = 0, minLen = Integer.MAX_VALUE, cnt = 0;
         Map<Character, Integer> window = new HashMap<>();
-        int left = 0, right = 0, valid = 0, start = 0, len = Integer.MAX_VALUE;
-        while (right < s.length()) {
-            char next = s.charAt(right);
-            right++;
-            // check if next is already in tMap, and put it in window(Map)
-            // and check if the next in both map are equal, if so, valid++
-            if (tMap.containsKey(next)) {
-                window.put(next, window.getOrDefault(next, 0) + 1);
-                if (window.get(next).equals(tMap.get(next))) {
-                    valid++;
-                }
+
+        for (int right = 0; right < s.length(); right++) {
+            char rightChar = s.charAt(right);
+            window.put(rightChar, window.getOrDefault(rightChar, 0) + 1);
+
+            if (tMap.containsKey(rightChar) && window.get(rightChar) <= tMap.get(rightChar)) {
+                cnt++;
             }
-            // when valid is equal to tMap's size
-            // calculate the window's size and try to shrink the window
-            while (valid == tMap.size()) {
-                if (right - left < len) {
-                    start = left;
-                    len = right - left;
+
+            while (cnt == t.length()) {
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    minLeft = left;
                 }
-                char drop = s.charAt(left);
+
+                char leftChar = s.charAt(left);
+                window.put(leftChar, window.get(leftChar) - 1);
+                if (tMap.containsKey(leftChar) && window.get(leftChar) < tMap.get(leftChar)) {
+                    cnt--;
+                }
                 left++;
-                if (tMap.containsKey(drop)) {
-                    if (window.get(drop).equals(tMap.get(drop))) {
-                        valid--;
-                    }
-                    window.put(drop, window.get(drop) - 1);
-                }
             }
         }
-        return len == Integer.MAX_VALUE ? "" : s.substring(start, start + len);
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(minLeft, minLeft + minLen);
     }
 }
-
-/**
-* Use sliding window to find the min window in string `s`
-*    that contains all chars of string `t`. The steps are:
-* 1. Use Map `tMap` to store the freq of chars in `t`
-* 2. Use sliding window with `left` and `right` pointers to track chars in `s`
-* 3. Expand the window by moving `right` and update the freq of chars in `window`
-* 4. When all chars in `t` are matched (`valid == tMap.size()`), shrink window by moving `left`
-*    to find the smallest valid window
-* 5. Return the smallest window substring or an empty string if no valid window is found
-*/
