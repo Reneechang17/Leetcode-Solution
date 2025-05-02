@@ -1,68 +1,67 @@
 // Hard
 // Trie, DFS, Backtracking
-// Trie => Time:O(m*n),Space:O(m*n)
-// DFS => Time:O(m*n*4^L),Space:O(word.length)
+// Time:O(k·L + m·n·4^L),Space:O(k·L)
 // https://leetcode.cn/problems/word-search-ii/
 
 import java.util.*;
 
 class Solution {
-    int[][] DIRS = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}}; // down/up/right/left
+    int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+
 
     public List<String> findWords(char[][] board, String[] words) {
         Trie trie = new Trie();
-        for (String word : words) {
-            trie.insert(word);
+        for (String w : words) {
+            trie.insert(w);
         }
 
         Set<String> res = new HashSet<String>();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                dfs(board, trie, i, j, res); // perform dfs for each pos
+                dfs(board, trie, i, j, res);
             }
         }
         return new ArrayList<String>(res);
     }
 
-    public void dfs(char[][] board, Trie cur, int i, int j, Set<String> res) {
-        if (!cur.children.containsKey(board[i][j])) return;
-        
+    private void dfs(char[][] board, Trie cur, int i, int j, Set<String> res) {
+        if (!cur.child.containsKey(board[i][j])) return;
+
         char c = board[i][j];
-        cur = cur.children.get(c); // get the trie node of cur char
-        // if cur node is the end of cur word
+        cur = cur.child.get(c); // get the cur char's trie node 
         if (!"".equals(cur.word)) {
-            // add word to res
             res.add(cur.word);
         }
-        
-        board[i][j] = '#'; // mark as vis
+
+        board[i][j] = '#';
         for (int[] dir : DIRS) {
             int i2 = i + dir[0], j2 = j + dir[1];
             if (i2 >= 0 && i2 < board.length && j2 >= 0 && j2 < board[0].length) {
                 dfs(board, cur, i2, j2, res);
             }
         }
-        board[i][j] = c; // backtracking
+        board[i][j] = c;
     }
 }
 
 class Trie {
+    // Time:O(m*n),Space:O(m*n)
     String word;
-    Map<Character, Trie> children; // 存储子节点
+    Map<Character, Trie> child;
 
     public Trie() {
         this.word = "";
-        this.children = new HashMap<Character, Trie>();
+        this.child = new HashMap<Character, Trie>();
     }
 
     public void insert(String word) {
         Trie cur = this;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
-            if (!cur.children.containsKey(c)) {
-                cur.children.put(c, new Trie());
+            if (!cur.child.containsKey(c)) {
+                cur.child.put(c, new Trie());
             }
-            cur = cur.children.get(c);
+            cur = cur.child.get(c);
         }
         cur.word = word;
     }
