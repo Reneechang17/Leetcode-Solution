@@ -6,13 +6,12 @@
 import java.util.*;
 
 class Solution {
-    int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
-
+    private static final int[][] DIRS = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
 
     public List<String> findWords(char[][] board, String[] words) {
         Trie trie = new Trie();
-        for (String w : words) {
-            trie.insert(w);
+        for (String s : words) {
+            trie.insert(s);
         }
 
         Set<String> res = new HashSet<String>();
@@ -23,12 +22,12 @@ class Solution {
         }
         return new ArrayList<String>(res);
     }
-
+    
     private void dfs(char[][] board, Trie cur, int i, int j, Set<String> res) {
         if (!cur.child.containsKey(board[i][j])) return;
 
         char c = board[i][j];
-        cur = cur.child.get(c); // get the cur char's trie node 
+        cur = cur.child.get(c);
         if (!"".equals(cur.word)) {
             res.add(cur.word);
         }
@@ -45,7 +44,6 @@ class Solution {
 }
 
 class Trie {
-    // Time:O(m*n),Space:O(m*n)
     String word;
     Map<Character, Trie> child;
 
