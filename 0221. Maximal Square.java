@@ -8,7 +8,6 @@ class Solution {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
         int m = matrix.length, n = matrix[0].length, maxSide = 0;
 
-        // dp:represent the size of the largest square with bottom-right corner at (i, j)
         int[][] dp = new int[m][n];
 
         for (int i = 0; i < m; i++) {
