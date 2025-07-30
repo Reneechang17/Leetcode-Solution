@@ -1,3 +1,4 @@
 ## This is my Leetcode Solution Repo
 
-- Programming Language: Java(Primary) and Python
+- Anyways I hope I can do more instead of just saying because the next job hunting just right corner.
+- Even though I don't like Leetcode tbh:>
