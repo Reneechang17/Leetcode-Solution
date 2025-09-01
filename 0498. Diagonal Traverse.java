@@ -6,32 +6,37 @@
 import java.util.*;
 
 class Solution {
+    /**
+     * key point: row+col = k(k is diagonal no.)
+     *
+     * k=0: (0.0) = [1] -> going up
+     * k=1: (0,1),(1,0) = [2,4] -> going down
+     * k=2: (0,2),(1,1),(2,0) = [3,5,7] -> going up
+     * k=3: (1,2),(2,1) = [6,8] -> going down
+     * k=4: (2,2) = [9] -> going up
+     */
     public int[] findDiagonalOrder(int[][] mat) {
-        if(mat == null || mat.length == 0 || mat[0].length == 0) return new int[0];
-        int m = mat.length, n = mat[0].length, index = 0;
+        if (mat == null || mat.length == 0) return new int[0];
+        int m = mat.length, n = mat[0].length;
         int[] res = new int[m * n];
+        int idx = 0;
 
-        for (int d = 0; d < m + n - 1; d++) {
-            // start from mat[0,d] or mat[d,0]
-            int row = d < m ? d : m - 1;
-            int col = d < m ? 0 : d - m + 1;
-
-            List<Integer> curDiagonal = new ArrayList<>();
-            while (row >= 0 && col < n) {
-                curDiagonal.add(mat[row][col]);
-                row--;
-                col++;
+        // iterate each diagonal
+        for (int k = 0; k < m + n - 1; k++) {
+            List<Integer> diagonal = new ArrayList<>();
+            for (int row = 0; row < m; row++) {
+                int col = k - row; // row+col=k
+                if (col >= 0 && col < n) {
+                    diagonal.add(mat[row][col]);
+                }
             }
-            // fill res arr
-            if (d % 2 == 0) {
-                for (int x : curDiagonal) {
-                    res[index++] = x;
-                }
-            } else {
-                // reverse iterate
-                for (int i = curDiagonal.size() - 1; i >= 0; i--) {
-                    res[index++] = curDiagonal.get(i);
-                }
+            // Decide direction 
+            if (k % 2 == 0) {
+                Collections.reverse(diagonal);
+            }
+
+            for (int val: diagonal) {
+                res[idx++] = val;
             }
         }
         return res;
