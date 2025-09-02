@@ -6,9 +6,8 @@
 import java.util.*;
 
 class TwoSum {
-    // General two sum -> Hash Table
     private Map<Integer, Integer> map;
-
+    
     public TwoSum() {
         map = new HashMap<>();
     }
@@ -16,16 +15,16 @@ class TwoSum {
     public void add(int number) {
         map.put(number, map.getOrDefault(number, 0) + 1);
     }
-    
+
     public boolean find(int value) {
         for (int num : map.keySet()) {
-            int target = value - num;
-            if (target != num) {
-                if (map.containsKey(target)) {
+            int t = value - num;
+            if (t != num) {
+                if (map.containsKey(t)) {
                     return true;
                 }
-                // if target == num
             } else {
+                // make sure it appears more than once
                 if (map.get(num) > 1) {
                     return true;
                 }
