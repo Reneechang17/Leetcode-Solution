@@ -5,24 +5,29 @@
 
 class Solution {
     public boolean isPalindrome(ListNode head) {
+        // use fast-slow pointers to find the mid point
         ListNode slow = head, fast = head;
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        if (fast != null) slow = slow.next; // if odd, slow move forward
-        ListNode first = head, sec = reverse(slow);
-        while (sec != null) {
-            if (first.val != sec.val) {
+        // if odd number, slow need to move forward
+        // we don't need to check the mid node if odd
+        if (fast != null)
+            slow = slow.next;
+
+        ListNode first = head, second = reverse(slow);
+        while (second != null) {
+            if (first.val != second.val) {
                 return false;
             } else {
                 first = first.next;
-                sec = sec.next;
+                second = second.next;
             }
         }
         return true;
     }
-
+    
     private ListNode reverse(ListNode head) {
         ListNode pre = null, cur = head;
         while (cur != null) {
