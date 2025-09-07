@@ -1,7 +1,6 @@
 // Medium
-// Array, Binary Search
-// O(log n)
-// Similar: 704
+// Binary Search
+// Time:O(log n), Space:O(1)
 // https://leetcode.com/problems/search-in-a-sorted-array-of-unknown-size/
 
 /**
@@ -30,8 +29,3 @@ class Solution {
         return reader.get(left) == target ? left : -1;
     }
 }
-
-/**
- * 思路：Binary Search
- * 解法和704一模一樣
- **/
