@@ -4,17 +4,18 @@
 // https://leetcode.cn/problems/reverse-vowels-of-a-string/
 
 class Solution {
-    // Two Pointers -> from start and end, when occur vowels -> swap
     public String reverseVowels(String s) {
         char[] chars = s.toCharArray();
         int left = 0, right = s.length() - 1;
         while (left < right) {
-            while (left < right && !isVowel(chars[left])) {
+            // no need to swap
+            while (left < right && !isVowels(chars[left])) {
                 left++;
             }
-            while (left < right && !isVowel(chars[right])) {
+            while (left < right && !isVowels(chars[right])) {
                 right--;
             }
+
             if (left < right) {
                 char tmp = chars[left];
                 chars[left] = chars[right];
@@ -26,7 +27,9 @@ class Solution {
         return new String(chars);
     }
 
-    private boolean isVowel(char c) {
-        return "aeiouAEIOU".indexOf(c) != -1;
+    private boolean isVowels(char c) {
+        // indexOf() return char index in the string ("")
+        String vowels = "aeiouAEIOU";
+        return vowels.indexOf(c) != -1; // if it is vowel, it will give an index, or -1
     }
 }

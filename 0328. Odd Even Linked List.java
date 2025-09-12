@@ -4,19 +4,19 @@
 // https://leetcode.cn/problems/odd-even-linked-list/
 
 class Solution {
-  // Two Pointers to separate odd/even nodes
-  // Iterate list to link nodes, at the end, connect odd and even together
-  public ListNode oddEvenList(ListNode head) {
-      if (head == null || head.next == null) return head;
-      ListNode odd = head, even = head.next, evenHead = even;
-
-      while (even != null && even.next != null) {
-          odd.next = even.next;
-          odd = odd.next;
-          even.next = odd.next;
-          even = even.next;
-      }
-      odd.next = evenHead;
-      return head;
-  }
+    public ListNode oddEvenList(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+        
+        ListNode odd = head, even = head.next, evenHead = even;
+        while (even != null && even.next != null) {
+            // 1-2-3-4-5
+            odd.next = even.next; // 1-3
+            odd = odd.next; // odd = 3
+            even.next = odd.next; // 2-4
+            even = even.next; // even = 4
+        }
+        odd.next = evenHead;
+        return head;
+    }
 }
