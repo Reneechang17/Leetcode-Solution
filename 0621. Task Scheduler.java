@@ -1,40 +1,35 @@
 // Medium
-// Greedy, Sorting
-// O(n)
+// Math
+// Time:O(n), Space:O(1)
 // https://leetcode.cn/problems/task-scheduler/
 
-import java.util.Arrays;
+// It actually is:
+// example: tasks = [A,A,A,B,B,B], n = 2
+// -> A _ _ A _ _ A 
+// set B -> AB _ AB _ AB 
+// -> ans = 8
 
 class Solution {
-  public int leastInterval(char[] tasks, int n) {
-      // 統計每個任務的頻率
-      int[] freq = new int[26];
-      for (char task : tasks) {
-          freq[task - 'A']++;
-      }
+    public int leastInterval(char[] tasks, int n) {
+        // count freq
+        int[] freq = new int[26];
+        int maxCnt = 0;
 
-      // 找到頻率最高的任務
-      Arrays.sort(freq);
-      int maxFreq = freq[25];
-      int maxCount = 1;
+        for (char t : tasks) {
+            freq[t - 'A']++;
+            maxCnt = Math.max(maxCnt, freq[t - 'A']);
+        }
 
-      // 計算有多少個任務的頻率是最高的
-      for (int i = 24; i >= 0; i--) {
-          if (freq[i] == maxFreq) {
-              maxCount++;
-          } else {
-              break;
-          }
-      }
+        // the most freq one will give the structure like line 7
+        int mostFreq = 0;
+        for (int f : freq) {
+            if (f == maxCnt)
+                mostFreq++;
+        }
 
-      // 計算所需的最少時間
-      // 框架大小為(maxFreq - 1) * (n + 1) ，加上最高頻率的任務個數
-      int partCount = maxFreq - 1; // 構建空間框架的間隔數
-      // int partLen = n + 1; // 每個間隔的長度
-      int emptySlots = partCount * (n + 1 - maxCount); // 空閒位置，考慮到頻率相等的任務
-      int remainingTasks = tasks.length - maxFreq * maxCount; // 剩餘任務
-      int idleSlots = Math.max(0, emptySlots - remainingTasks); // 計算空閒
+        // calculate structure = (maxCnt-1) * (n+1) + mostFreq
+        int size = (maxCnt - 1) * (n + 1) + mostFreq;
 
-      return tasks.length + idleSlots; // 總時間 = 任務數 + 空閒數
-  }
+        return Math.max(size, tasks.length);
+    }
 }
