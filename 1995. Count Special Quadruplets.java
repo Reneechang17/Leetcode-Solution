@@ -1,42 +1,31 @@
 // Easy
+// Map
+// Time:O(n^3), Space:O(n^2)
 // https://leetcode.cn/problems/count-special-quadruplets/
 
 import java.util.*;
 
-class Solution {
-    // Brute Force
-    // Time:O(n^4), Space:O(1)
-    public int countQuadruplets(int[] nums) {
-        int n = nums.length, ans = 0;
-        for (int a = 0; a < n; a++) {
-            for (int b = a + 1; b < n; b++) {
-                for (int c = b + 1; c < n; c++) {
-                    for (int d = c + 1; d < n; d++) {
-                        if (nums[a] + nums[b] + nums[c] == nums[d]) {
-                            ans++;
-                        }
-                    }
-                }
-            }
-        }
-        return ans;
-    }
-}
+// It's pretty simple to come up with brute force but the complexity is beautiful as well.
+// emmm the optimize way looks a bit funny just give O(n^4)->O(n^3) with hashmap,
+// we could see nums[a]+nums[b] = nums[d]-nums[c]........
 
-class Solution2 {
-    // HashMap
-    // Time:O(n^3), Space:O(min(n,C))
+class Solution {
     public int countQuadruplets(int[] nums) {
-        int n = nums.length, ans = 0;
+        int n = nums.length;
+        int cnt = 0;
         Map<Integer, Integer> map = new HashMap<>();
-        for (int c = n - 2; c >= 2; c--) {
-            map.put(nums[c + 1], map.getOrDefault(nums[c + 1], 0) + 1);
-            for (int a = 0; a < c; a++) {
-                for (int b = a + 1; b < c; b++) {
-                    ans += map.getOrDefault(nums[a] + nums[b] + nums[c], 0);
-                }
+
+        for (int b = n - 3; b >= 1; b--) {
+            for (int d = b + 2; d < n; d++) {
+                int diff = nums[d] - nums[b + 1]; // nums[d] - nums[c]
+                map.put(diff, map.getOrDefault(diff, 0) + 1);
+            }
+
+            for (int a = 0; a < b; a++) {
+                int sum = nums[a] + nums[b];
+                cnt += map.getOrDefault(sum, 0);
             }
         }
-        return ans;
+        return cnt;
     }
 }
