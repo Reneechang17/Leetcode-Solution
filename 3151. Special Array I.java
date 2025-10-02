@@ -1,3 +1,7 @@
+// Easy
+// Array
+// Time:O(n),Space:O()
+// https://leetcode.cn/problems/special-array-i/
 
 class Solution {
     public boolean isArraySpecial(int[] nums) {
