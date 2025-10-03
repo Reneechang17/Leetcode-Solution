@@ -3,7 +3,6 @@
 // Time:O(mn log(mn)),Space:O(mn)
 // https://leetcode.cn/problems/trapping-rain-water-ii/
 
-// I can't do it
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
