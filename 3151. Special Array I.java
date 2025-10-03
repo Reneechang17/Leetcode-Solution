@@ -1,6 +1,6 @@
 // Easy
 // Array
-// Time:O(n),Space:O()
+// Time:O(n),Space:O(1)
 // https://leetcode.cn/problems/special-array-i/
 
 class Solution {
