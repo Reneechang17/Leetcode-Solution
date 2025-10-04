@@ -1,42 +1,64 @@
 // Easy
 // PrefixSum, Binary Search
-// Time: O(nlogn) -> Sorting, O(mlogn) -> Binary Search, Space: O(n)
+// Time:O(nlogn + mlogn), Space:O(1)
 // https://leetcode.cn/problems/longest-subsequence-with-limited-sum/
 
 import java.util.Arrays;
 
 class Solution {
-  // 对nums排序，求前缀和f，再通过二分找到f[i]>queries[j]的最小下标i
-  // 那么和小于等于q的最长子序列长度为i - 1
-  public int[] answerQueries(int[] nums, int[] queries) {
-      int n = nums.length, m = queries.length;
-      Arrays.sort(nums);
-      int[] f = new int[n + 1];
-      
-      // 计算前缀和
-      for (int i = 0; i < n; i++) {
-          f[i + 1] = f[i] + nums[i];
-      }
+    // Since this is easy, I think brute force should be work
+    public int[] answerQueries(int[] nums, int[] queries) {
+        Arrays.sort(nums);
 
-      int[] res = new int[m];
-      for (int i = 0; i < m; i++) {
-          res[i] = binarySearch(f, queries[i]) - 1;
-      }
-      return res;
-  }
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] += nums[i - 1];
+        }
 
-  // 具体来说前缀和数组f[k]表示数组nums排序后前k个元素的总和，通过二分查找第一个大于queries[i]的位置
-  // 可以确定，在此位置之前的子序列总和是小于或等于queries[i]的
-  public int binarySearch(int[] f, int target) {
-      int left = 0, right = f.length - 1;
-      while (left <= right) {
-          int mid = (left + right) >> 1;
-          if (f[mid] > target) {
-              right = mid - 1;
-          } else {
-              left = mid + 1;
-          }
-      }
-      return left;
-  }
+        int[] res = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int cnt = 0;
+            for (int j = 0; j < nums.length; j++) {
+                if (nums[j] <= queries[i]) {
+                    cnt++;
+                } else {
+                    break;
+                }
+            }
+            res[i] = cnt;
+        }
+        return res;
+    }
+}
+
+// We can also optimize with binary search to find the last position <= queries[i]
+class Solution2 {
+    public int[] answerQueries(int[] nums, int[] queries) {
+        Arrays.sort(nums);
+        for (int i = 1; i < nums.length; i++) {
+            nums[i] += nums[i - 1];
+        }
+
+        int[] res = new int[queries.length];
+        for (int i = 0; i < queries.length; i++) {
+            int index = binarySearch(nums, queries[i]);
+            res[i] = index + 1;
+        }
+        return res;
+    }
+
+    private int binarySearch(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        int ret = -1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] <= target) {
+                ret = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return ret;
+    }
 }
