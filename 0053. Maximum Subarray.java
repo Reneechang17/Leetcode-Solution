@@ -4,16 +4,16 @@
 // https://leetcode.cn/problems/maximum-subarray/
 
 class Solution {
-    // Iterate arr while maintaining a running sum 
-    //   - if running sum becomes negative, reset to 0
-    //   - since every negative possible cannot form the max subarray
     public int maxSubArray(int[] nums) {
-        if (nums.length == 1) return nums[0];
-        int max = Integer.MIN_VALUE, count = 0;
+        if (nums.length == 1)
+            return nums[0];
+        int max = Integer.MIN_VALUE, sum = 0;
+        
         for (int i = 0; i < nums.length; i++) {
-            count += nums[i];
-            max = Math.max(max, count);
-            if (count < 0) count = 0;
+            sum += nums[i];
+            max = Math.max(max, sum);
+            if (sum < 0)
+                sum = 0; // Any negative cannot form the maxSubArray
         }
         return max;
     }
