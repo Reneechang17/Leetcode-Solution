@@ -1,37 +1,27 @@
-import java.util.HashMap;
-import java.util.Map;
-
 // Medium
-// Prefix Sum, Hash Table
-// O(N)
-// Similar: 560
-// https://leetcode.com/problems/subarray-sums-divisible-by-k/
+// Prefix, Map
+// Time:O(n), Space:O(k)
+// https://leetcode.cn/problems/subarray-sums-divisible-by-k/
+
+import java.util.*;
+
+// If two remainder from prefixSum % k are same, the subarrays between them could be divided by k.
 
 class Solution {
-  public int subarraysDivByK(int[] nums, int k) {
-    Map<Integer, Integer> count = new HashMap<>();
-      // initialize: The remainder of 0 occurs once 
-      // consider that the array itself is divisible by k
-      count.put(0, 1); 
-      int sum = 0, res = 0;
-      for(int n : nums){
-          sum += n; // update prefix
-          // Since sum might be negative, so we need to do-> (sum % k + k) % k
-          // to ensure that sum will not be negative 
-          int modulus = (sum % k + k) % k;
-          // times that current remainder occurs
-          int sameModulusCount = count.getOrDefault(modulus, 0); 
-          res += sameModulusCount;
-          count.put(modulus, sameModulusCount + 1);
-      }
-      return res;
-  }
-}
+    public int subarraysDivByK(int[] nums, int k) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1);
 
-/**
- * 思路：前綴和+哈希表
- * 用哈希表存儲當前餘數出現的次數（key：餘數，vlue：次數），初始化為餘數為0的情況出現1次（默認整個數組是可以被k整除的）
- * 遍歷數組，累加前綴和，計算餘數
- * Note：因為sum有可能是負數，所以要把sum % k 再加上k再模k，確保sum為非負數
- * 通過哈希表獲取當前餘數出現的次數
- **/
+        int sum = 0, res = 0;
+        
+        for (int x : nums) {
+            sum += x;
+
+            int remainder = ((sum % k) + k) % k;
+
+            res += map.getOrDefault(remainder, 0);
+            map.put(remainder, map.getOrDefault(remainder, 0) + 1);
+        }
+        return res;
+    }
+}
