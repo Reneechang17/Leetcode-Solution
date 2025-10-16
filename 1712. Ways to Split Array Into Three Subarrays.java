@@ -1,3 +1,7 @@
+// Medium
+// PrefixSum
+// Time:O(n), Space:O(n)
+// https://leetcode.cn/problems/ways-to-split-array-into-three-subarrays/
 
 class Solution {
     public int waysToSplit(int[] nums) {
@@ -16,7 +20,7 @@ class Solution {
         int minMid = 1, maxMid = 1;
 
         for (int left = 0; left < n - 2; left++) {
-            int leftSum = prefix[left];
+            // int leftSum = prefix[left];
 
             minMid = Math.max(minMid, left + 1);
             while (minMid < n - 1 && prefix[minMid] < 2 * prefix[left]) {
