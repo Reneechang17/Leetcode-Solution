@@ -1,33 +1,32 @@
 // Medium
 // Priority Queue
-// Time:O(nlogn), Space:O(n)->if all conflict
+// Time:O(nlogn), Space:O(n)
 // https://leetcode.cn/problems/meeting-rooms-ii/
+
+// Basic idea: If no conflict, we can resue the meeting room; if conflict, need to add one.
 
 import java.util.*;
 
 class Solution {
-    // Use Priority Queue to track ongoing meetings and its end time
-    // Sort by start time, and add first meeting's end time
-    // Each time we go through the meetings, compare the cur start time and prev end time(pq.peek())
-    // If no conflict, reuse room; if conflict, add cur end time to que to account for new room
     public int minMeetingRooms(int[][] intervals) {
-        // basecase
-        if (intervals == null || intervals.length == 0) return 0;
+        // basecase 
+        // if (intervals == null || intervals.length == 0) return 0;
+
+        // Sort by start time
         Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
+        // pq will include the max meeting rooms we need.
         PriorityQueue<Integer> pq = new PriorityQueue<>();
-        pq.offer(intervals[0][1]);
+        pq.offer(intervals[0][1]); // init with first end time
 
         for (int i = 1; i < intervals.length; i++) {
-            // if cur start after or when the earliest meeting end
-            // no conflict-> reuse the room by removing the earliest ended meeting
-            // 没有冲突，会把之前的meeting移除，加入当前的
+            // check conflict, if no, pop out the prev meeting room
+            // Cur' start >= prev' end 
             if (intervals[i][0] >= pq.peek()) {
                 pq.poll();
             }
-            // add the cur end time to the que 
+            // or we add the cur to pq -> need a new room
             pq.offer(intervals[i][1]);
         }
-        // the size of que represents the max number of rooms needed
         return pq.size();
     }
 }
