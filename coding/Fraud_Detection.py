@@ -1,124 +1,61 @@
-from collections import defaultdict
+from typing import List, Dict, Tuple
 
-def calculate_fraud_scores(n, transactions_list, rules_list, m, merchants_list):
-    # Parse transactions list
-    transactions = []
-    for trans in transactions_list:
-        parts = trans.split(',')
-        transactions.append({
-            'merchant_id': parts[0],
-            'amount': int(parts[1]),
-            'customer_id': parts[2],
-            'hour': int(parts[3])
-        })
-    
-    # Parse rules list
-    rules = []
-    for r in rules_list:
-        parts = r.split(',')
-        rules.append({
-            'min_amount': int(parts[0]),
-            'multiplicative': float(parts[1]),
-            'additive': int(parts[2]),
-            'penalty': int(parts[3])
-        })
+def calculate_merchant_fraud_score(transaction_list: List[str], rules_list: List[str], merchants_list: List[str]) -> List[str]:
+    # Init merchant's score
+    scores: Dict[str, int] = {}
+    merchants: List[str] = []
+    for s in merchants_list:
+        m_id, v = [x.strip() for x in s.split(',', 1)]
+        scores[m_id] = int(v)
+        merchants.append(m_id)
 
-    # Init merchant scores dict
-    merchant_scores = {}
-    for mer in merchants_list:
-        parts = mer.split(',')
-        merchant_id = parts[0]
-        base_score = int(parts[1])
-        merchant_scores[merchant_id] = float(base_score)
-
-    tlim = min(n, len(transactions), len(rules))
+    # Pairs transactions and rules by index: (merchant, amount, customer, hour, min_amount, mul, add, penalty)
+    records: List[Tuple[str, int, str, int, int, int, int, int]] = []
+    for i in range(len(transaction_list)):
+        m_id, amt, c_id, hour = [x.strip() for x in transaction_list[i].split(',')]
+        r_min, r_mul, r_add, r_pen = [x.strip() for x in rules_list[i].split(',')]
+        records.append((m_id, int(amt), c_id, int(hour), int(r_min), int(r_mul), int(r_add), int(r_pen)))
     
     # Part1
-    for i in range(tlim):
-        trans = transactions[i]
-        rule = rules[i]
-        merchant_id = trans['merchant_id']
-        amount = trans['amount']
-
-        if amount > rule['min_amount']:
-            merchant_scores[merchant_id] *= rule['multiplicative']
+    for m_id, amt, c_id, hour, min_amt, mul, add, pen in records:
+        if m_id in scores and amt > min_amt:
+            scores[m_id] = scores[m_id] * mul
     
     # Part2
-    cus_mer_add = defaultdict(list) # key=(cus_id, mer_id) -> [additive1, additive2, ..]
-    for i in range(tlim):
-        trans = transactions[i]
-        rule = rules[i]
-        key = (trans['customer_id'], trans['merchant_id'])
-        cus_mer_add[key].append(rule['additive'])
-        k = len(cus_mer_add[key])
-
-        if k == 3:
-            merchant_scores[trans['merchant_id']] += sum(cus_mer_add[key])
-        elif k > 3:
-            merchant_scores[trans['merchant_id']] += rule['additive']
-
+    pair_cnt: Dict[str, int] = {}
+    pair_sum: Dict[str, int] = {}
+    for m_id, amt, c_id, hour, min_amt, mul, add, pen in records:
+        if m_id not in scores:
+            continue
+        key = f"{m_id}#{c_id}"
+        pair_cnt[key] = pair_cnt.get(key, 0) + 1
+        pair_sum[key] = pair_sum.get(key, 0) + add
+    
+    for key, cnt in pair_cnt.items():
+        if cnt >= 3:
+            m_id = key.split('#', 1)[0]
+            scores[m_id] = scores.get(m_id, 0) + pair_sum.get(key, 0)
+    
     # Part3
-    groups = defaultdict(list) # key=(customer_id, merchant_id, hour) -> [idx0, idx1, ...]
-    for i in range(tlim):
-        t = transactions[i]
-        groups[(t['customer_id'], t['merchant_id'], t['hour'])].append(i)
+    hour_cnt: Dict[str, int] = {}
+    pen_sum: Dict[str, int] = {}
+    hour_lookup: Dict[str, int] = {}
 
-    def time_sign(h):
-        if 12 <= h <= 17:
-            return +1
-        if (9 <= h <= 11) or (18 <= h <= 21):
-            return -1
-        return 0
+    for m_id, amt, c_id, hour, min_amt, mul, add, pen in records:
+        if m_id not in scores:
+            continue
+        key = f"{m_id}#{c_id}#{hour}"
+        hour_cnt[key] = hour_cnt.get(key, 0) + 1
+        pen_sum[key] = pen_sum.get(key, 0) + pen
+        hour_lookup.setdefault(key, hour)
     
-    for (cus, mer, h), idxs in groups.items():
-        if len(idxs) >= 3:
-            sgn = time_sign(h)
-            if sgn != 0:
-                for i in idxs:
-                    pen = rules[i]['penalty']
-                    merchant_scores[mer] += sgn * pen
-
-    # Output
-    res = []
-    for merchant_id in sorted(merchant_scores.keys()):
-        score = int(round(merchant_scores[merchant_id]))
-        res.append(f"{merchant_id},{score}")
+    for key, cnt in hour_cnt.items():
+        if cnt >= 3:
+            h = hour_lookup[key]
+            s = 1 if 12 <= h <= 17 else (-1 if (9 <= h <= 11) or (18 <= h <= 21) else 0)
+            if s:
+                m_id = key.split('#', 1)[0]
+                scores[m_id] = scores.get(m_id, 0) + s * pen_sum[key]
     
-    return res
-
-# Test case
-if __name__ == "__main__":
-    n = 6
-    transactions_list = [
-        "merchant1,1200,customer1,10",
-        "merchant1,500,customer1,10",
-        "merchant2,2400,customer1,15",
-        "merchant1,800,customer1,16",
-        "merchant1,1000,customer2,17",
-        "merchant1,1400,customer1,10"
-    ]
-    rules_list = [
-        "1000,2,8,15",
-        "1400,5,3,19",
-        "2300,3,17,3",
-        "1800,2,9,6",
-        "1000,4,8,2",
-        "1200,3,11,7"
-    ]
-    m = 2
-    merchants_list = [
-        "merchant1,10",
-        "merchant2,20"
-    ]
-
-    result = calculate_fraud_scores(n, transactions_list, rules_list, m, merchants_list)
-
-    print("Output:")
-    for line in result:
-        print(line)
-
-    print("\nExpected:")
-    print("merchant1,50")
-    print("merchant2,60")
-
-    print("\nPassed or not:", result == ["merchant1,50", "merchant2,60"])
+    merchants.sort()
+    return [f"{m_id},{scores.get(m_id, 0)}" for m_id in merchants]
