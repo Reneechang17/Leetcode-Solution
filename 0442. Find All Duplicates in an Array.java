@@ -1,32 +1,26 @@
 // Medium
 // Array, Hash Table
-// O(n)
-// https://leetcode.com/problems/find-all-duplicates-in-an-array/
+// Time:O(n), Space:O(1)
+// https://leetcode.cn/problems/find-all-duplicates-in-an-array/
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
+// Try to modify in place
 
 class Solution {
-  public List<Integer> findDuplicates(int[] nums) {
-    List<Integer> res = new ArrayList<>();
-    // set can use to filter the duplicate the elements
-    Set<Integer> set = new HashSet<>();
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> res = new ArrayList<>();
 
-    for (int num : nums) {
-      if (set.contains(num)) {
-        res.add(num);
-      } else {
-        set.add(num);
-      }
+        for (int x : nums) {
+            int index = Math.abs(x) - 1;
+
+            // we can mark as negative means we visited already.
+            if (nums[index] < 0) {
+                res.add(Math.abs(x));
+            } else {
+                nums[index] = -nums[index];
+            }
+        }
+        return res;
     }
-    return res;
-  }
 }
-
-/**
- * 思路：可以用set去重
- * 我們可以遍歷數組，如果這個integer沒有出現在set中，那就加入set
- * 如果出現在set中，代表重複了，就加入res
- **/
