@@ -1,6 +1,6 @@
 // Medium
 // String, Stack
-// O(n)
+// Time:O(m), Space:O(n)
 // https://leetcode.cn/problems/exclusive-time-of-functions/
 
 import java.util.*;
