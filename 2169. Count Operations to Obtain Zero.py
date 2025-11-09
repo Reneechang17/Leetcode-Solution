@@ -1,0 +1,16 @@
+# Easy
+# Math
+# Time:O(log(min(num1, num2))), Space:O(1)
+# https://leetcode.cn/problems/count-operations-to-obtain-zero/
+
+class Solution:
+    def countOperations(self, num1: int, num2: int) -> int:
+        count = 0
+        while num1 > 0 and num2 > 0:
+            if num1 >= num2:
+                count += num1 // num2
+                num1 %= num2
+            else:
+                count += num2 // num1
+                num2 %= num1
+        return count
