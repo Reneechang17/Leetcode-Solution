@@ -1,36 +1,40 @@
 // Medium
-// Hash Table, TreeMap
-// Time:O(logn)for set & get,Space:O(nk)
+// TreeMap
 // https://leetcode.cn/problems/snapshot-array/
 
 import java.util.*;
 
-class SnapshotArray {
-  private int snapId;
-  // map存储每个索引的历史值, key是索引值, val是一个TreeMap<snapId, snap的值
-  // TreeMap存储稀疏变化，只存储每个索引的修改记录，每次快照只记录发生了变化的部分
-  // 通过floorEntry快速定位快照值，floorEntry用于查找键的API，返回小于或等于给定键的最大键值对（Map.Entry）
-  private Map<Integer, TreeMap<Integer, Integer>> history;
+// each index maintain a history version: [(snap_id, value)]
+// use binary search to find the closest version in get()
 
-  public SnapshotArray(int length) {
-      snapId = 0;
-      history = new HashMap<>();
-      for (int i = 0; i < length; i++) {
-          history.putIfAbsent(i, new TreeMap<>());
-          history.get(i).put(0, 0);
-      }
-  }
-  
-  public void set(int index, int val) {
-      history.get(index).put(snapId, val);
-  }
-  
-  public int snap() {
-      return snapId++;
-  }
-  
-  public int get(int index, int snap_id) {
-      // 找到snap <= snap_id 的最大键对应的值
-      return history.get(index).floorEntry(snap_id).getValue();
-  }
+class SnapshotArray {
+    private List<TreeMap<Integer, Integer>> history;
+    private int snapId;
+
+    // Time:O(n), Space:O(n)
+    public SnapshotArray(int length) {
+        history = new ArrayList<>();
+        for (int i = 0; i < length; i++) {
+            TreeMap<Integer, Integer> map = new TreeMap<>();
+            map.put(0, 0);
+            history.add(map);
+        }
+        snapId = 0;
+    }
+
+    // Time:O(logk), Space:O(1)
+    public void set(int index, int val) {
+        history.get(index).put(snapId, val);
+    }
+
+    // Time:O(1), Space:O(1)
+    public int snap() {
+        return snapId++;
+    }
+
+    // Time:O(logk), Space:O(1)
+    public int get(int index, int snap_id) {
+        // use TreeMap's floorEntry to find <= snap_id the biggest key
+        return history.get(index).floorEntry(snap_id).getValue();
+    }
 }
