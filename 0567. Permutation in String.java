@@ -1,50 +1,42 @@
 // Medium
-// Hash Table, Sliding Window
-// O(m + n)
+// Sliding Window
+// Time: O(n), Space: O(1)
 // https://leetcode.cn/problems/permutation-in-string/
 
-import java.util.*;
 class Solution {
-  public boolean checkInclusion(String s1, String s2) {
-      // use hashmap to record the times of each char in s1
-      Map<Character, Integer> need = new HashMap<>();
-      Map<Character, Integer> window = new HashMap<>();
-      for(int i = 0; i < s1.length(); i++){
-          char c = s1.charAt(i);
-          need.put(c, need.getOrDefault(c, 0) + 1);
-      }
+    public boolean checkInclusion(String s1, String s2) {
+        if (s1.length() > s2.length()) {
+            return false;
+        }
 
-      // initialize the window, set left/right/valid number
-      int left = 0, right = 0, valid = 0;
-      // start expand the window(move right)
-      while(right < s2.length()){
-          char c = s2.charAt(right);
-          right++;
-          // update window
-          if(need.containsKey(c)){
-              window.put(c, window.getOrDefault(c, 0) + 1);
-              if(window.get(c).equals(need.get(c))){
-                  valid++;
-              }
-          }
-          // check when to shrink the window
-          // when right - left >= s1.length()
-          while(right - left >= s1.length()){
-              // first check if find the valid substring
-              if (valid == need.size())
+        // calculate the char freq of s1
+        int[] cnt1 = new int[26];
+        int[] window = new int[26];
+
+        for (char c : s1.toCharArray()) {
+            cnt1[c - 'a']++;
+        }
+
+        for (int i = 0; i < s2.length(); i++) {
+            window[s2.charAt(i) - 'a']++;
+
+            if (i >= s1.length()) {
+                window[s2.charAt(i - s1.length()) - 'a']--;
+            }
+
+            // check if they match
+            if (matches(cnt1, window)) {
                 return true;
-              // then deal with the drop char
-              char d = s2.charAt(left);
-              left++;
-              // update window
-              if(need.containsKey(d)){
-                  if(window.get(d).equals(need.get(d))){
-                      valid--;
-                  }
-                  window.put(d, window.get(d) - 1);
-              }
-          }
-      }
-      return false;
-  }
+            }
+        }
+        return false;
+    }
+
+    private boolean matches(int[] c1, int[] w) {
+        for (int i = 0; i < 26; i++) {
+            if (c1[i] != w[i])
+                return false;
+        }
+        return true;
+    }
 }
