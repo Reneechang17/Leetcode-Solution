@@ -57,9 +57,7 @@ class SnapshotSet:
         else:
             lst.append((self._ver, op))
 
-
 # Lc 1146
-
 class SnapshotArray:
 
     def __init__(self, length: int):

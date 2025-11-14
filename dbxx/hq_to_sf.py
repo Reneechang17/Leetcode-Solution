@@ -6,9 +6,7 @@ from typing import *
 # Time:O(M*R*C), Space:O(R*C)
 
 def find_fastest_transportation(grid: List[List[str]], time: List[int], cost: List[int]) -> int:
-    # goal: minimize the time, if same, find the smallest cost
-    # run the BFS for each way
-
+    # goal: minimize the time, if same, find the cheapest cost
     m, n = len(grid), (len(grid[0]) if grid else 0)
     if m == 0 or n == 0:
         return -1
@@ -25,7 +23,8 @@ def find_fastest_transportation(grid: List[List[str]], time: List[int], cost: Li
         return -1
     
     if src == dst:
-        return 1
+        # choose the cheapest and min time 
+        return min(range(1, M+1), key=lambda m:(time[m-1], cost[m-1], m))
     
     M = len(time) # number of modes(mode ids are 1...M)
 
@@ -34,7 +33,7 @@ def find_fastest_transportation(grid: List[List[str]], time: List[int], cost: Li
     
     def can_enter(x: int, y: int, mode: int) -> bool:
         # check if (x, y) could be enter with that mode
-        c = str(grid[x][y])
+        c = grid[x][y]
         if c == 'X':
             return False
         if c in ('S', 'D'):
@@ -73,3 +72,6 @@ def find_fastest_transportation(grid: List[List[str]], time: List[int], cost: Li
             best_mode, best_time, best_cost = mode, total_time, total_cost
     
     return best_mode
+
+# Followup: if we accept switch mode mid-way, we can build the status with(x,y,mode)
+# and set cost as weight, use Dijkstra to find the shortest time.

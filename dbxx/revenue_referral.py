@@ -52,7 +52,6 @@ class RevenueSys:
             self.ins(new, ref)
         return cid
     
-
     # v1: top k with total < threshold, O(log n + k)
     def get_top_k_below(self, k: int, threshold: int) -> List[int]:
         res = []

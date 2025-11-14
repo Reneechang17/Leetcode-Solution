@@ -1,10 +1,50 @@
-# lc 362: https://leetcode.cn/problems/design-hit-counter/
-
-# use deque to store timestamp, add by hit(), clean before 300s by getHits()
-
 from collections import deque
+from typing import *
+
+# the easy way is use que to store timestamp, but it'll be hard to handle under high qps
 
 class HitCounter:
+    def __init__(self, window: int = 300):
+        if window <= 0:
+            raise ValueError("window must be positive")
+        self.window = window
+        self.bucket = [{"sec": 0, "cnt": 0} for _ in range(window)]
+
+    # O(1)
+    def hit(self, t: int) -> None:
+        i = t % self.window
+        b = self.bucket[i]
+        if b["sec"] != t:
+            b["sec"], b["cnt"] = t, 1
+        else:
+            b["cnt"] += 1
+
+    # O(window)
+    def get_hits(self, t: int) -> int:
+        left = t - self.window + 1
+        sum = 0
+        for b in self.bucket:
+            if b["sec"] >= left:
+                sum += b["cnt"]
+        return sum
+
+    def get_qps(self, t: int) -> float:
+        return self.get_hits(t) / float(self.window)
+    
+# Test
+if __name__ == "__main__":
+    hc = HitCounter(window=5)
+    hc.hit(1); hc.hit(1); hc.hit(2)        
+    print(hc.get_hits(2))   # 3
+    print(hc.get_qps(2))    # 0.6
+    print(hc.get_hits(7))   # 0
+    hc.hit(6); hc.hit(7); hc.hit(7)
+    print(hc.get_hits(7))   # 3
+
+# lc 362: https://leetcode.cn/problems/design-hit-counter/
+# use deque to store timestamp, add by hit(), clean before 300s by getHits()
+
+class HitCounter2:
     
     def __init__(self):
         self.que = deque()

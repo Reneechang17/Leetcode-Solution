@@ -17,9 +17,9 @@ def fib_move_sequence(order, src, dst):
         curr, n = 0, order
         output = []
 
-        # guard:out of range target returns empty
         if target < 0 or target >= size[order]:
             return ""
+        
         while target != curr and n > 1:
             left_size = size[n - 2]
             left_l, left_r = curr + 1, curr + left_size

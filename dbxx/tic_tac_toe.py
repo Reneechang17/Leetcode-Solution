@@ -36,10 +36,8 @@ class TicTacToeK:
 
         return 0
 
-# Original question 
 # Time:O(1) per move
 # Space:O(M)
-
 class TicTacToe:
 
     def __init__(self, n: int):
