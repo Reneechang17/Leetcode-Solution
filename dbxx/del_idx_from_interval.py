@@ -1,4 +1,5 @@
 # core is find the pos of the idx in range and seg by this pos
+# Time:O(n), Space:O(1)
 
 from typing import *
 
