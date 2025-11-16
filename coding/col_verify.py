@@ -1,12 +1,11 @@
-
 # Parse the csv string -> a list of rows(excl header)
 def parse_csv(data: str) -> list[list[str]]:
     lines = data.strip().split("\n")
     return [line.split(",") for line in lines[1:]] # skip header
 
 # rule 1: all non empty and valid
-def rule_non_empty(row: list[str], expected_len: int) -> bool:
-    return len(row) == expected_len and all(cell.strip() != "" for cell in row)
+def rule_non_empty(row: list[str], exp_len: int) -> bool:
+    return len(row) == exp_len and all(cell.strip() != "" for cell in row)
 
 # rule 2: col5's length should be in [5, 31] (clean empty space)
 def rule_col5_len(row: list[str]) -> bool:
@@ -75,7 +74,7 @@ def validate_rows(data: str) -> list[str]:
     
     return res
 
-# test
+# Test
 if __name__ == "__main__":
     data = (
         "col1,col2,col3,col4,col5,col6\n"

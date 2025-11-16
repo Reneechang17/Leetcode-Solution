@@ -43,7 +43,6 @@ def payment_statement_v1(payment_str, invoice_list):
         return "invalid payment input"
     
     iid = pay["invoice_id"]
-
     match_inv = None
     for inv_s in invoice_list:
         inv = parse_invoice(inv_s)
@@ -55,23 +54,19 @@ def payment_statement_v1(payment_str, invoice_list):
     
     if not match_inv:
         return f"{pay['pid']} has no matching invoice {iid}"
-    
     return f"{pay['pid']} paid off by {iid} due on {match_inv['due']}"
 
-# common: find amt == payment.amt with earliest due date
+# helper: find amt == payment.amt with earliest due date
 def find_invoice_exact_by_amount(payment, invoice_list):
     tgt_amt = payment["amount"]
     best = None # (due, invoice_dict)
-
     for inv_s in invoice_list:
         inv = parse_invoice(inv_s)
         if not inv:
             continue
-
         if inv["amount"] == tgt_amt:
             if best is None or inv["due"] < best[0]:
                 best = (inv["due"], inv)
-
     return best[1] if best else None
 
 # Part 2: will not give "invoice_id"
@@ -89,7 +84,7 @@ def payment_statement_v2(payment_str, invoice_list):
         f"due on {inv['due']} by {pay['amount_str']}"
     )
 
-# common: find abs(inv.amt - payment,amt) <= amt_range
+# helper: find abs(inv.amt - payment,amt) <= amt_range
 def find_invoice_in_range(payment, invoice_list, amt_range):
     tgt_amt = payment["amount"]
     best = None
@@ -98,11 +93,9 @@ def find_invoice_in_range(payment, invoice_list, amt_range):
         inv = parse_invoice(inv_s)
         if not inv:
             continue
-
         if abs(inv["amount"] - tgt_amt) <= amt_range:
             if best is None or inv["due"] < best[0]:
                 best = (inv["due"], inv)
-
     return best[1] if best else None
 
 # Part 3: add range
@@ -110,7 +103,6 @@ def payment_statement_v3(payment_str, invoice_list, amt_range):
     pay = parse_payment_no_invoice(payment_str)
     if not pay:
         return "invalid payment input"
-    
     # exact match first
     inv = find_invoice_exact_by_amount(pay, invoice_list)
     if inv:
@@ -118,12 +110,11 @@ def payment_statement_v3(payment_str, invoice_list, amt_range):
             f"{pay['pid']} paid off by {inv['iid']} "
             f"due on {inv['due']} by {pay['amount_str']}"
         )
-    
     # try range
     inv = find_invoice_in_range(pay, invoice_list, amt_range)
     if inv:
         return (
-            f"{pay['pid']} paid off by {inv['iid']}"
+            f"{pay['pid']} paid off by {inv['iid']} "
             f"due on {inv['due']} by {pay['amount_str']}"
         )
     
@@ -132,8 +123,7 @@ def payment_statement_v3(payment_str, invoice_list, amt_range):
         f"+-{amt_range} around {pay['amount_str']}"
     )
 
-# test
-
+# Test
 if __name__ == "__main__":
     print("===== Part 1 =====")
     payment1 = "paymentX,600,Paying off: invoiceX,invoicex"
@@ -174,7 +164,7 @@ if __name__ == "__main__":
         "inv12,2024-03-01,700",    # out of range
     ]
     print(payment_statement_v3(payment4, invoices4, 50))
-    # exp：paymentW paid off by inv11 due on 2024-01-20 by 500
+    # exp: paymentW paid off by inv11 due on 2024-01-20 by 500
 
     print("\n===== Part 3=====")
     payment5 = "paymentQ,1000,big payment"
@@ -183,4 +173,4 @@ if __name__ == "__main__":
         "ib,2024-01-02,200",
     ]
     print(payment_statement_v3(payment5, invoices5, 50))
-    # exp：提示 no invoice within range
+    # exp: no invoice within range

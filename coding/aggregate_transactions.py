@@ -1,14 +1,9 @@
-
 # Part 1: register_receivables
-
 def register_receivables(transactions_csv):
     lines = transactions_csv.strip().splitlines()
     if not lines:
         return []
-    
-    # skip first (header)
-    data_lines = lines[1:]
-
+    data_lines = lines[1:] # skip first (header)
     agg = {} # key:(merchant, card, date) -> amount
 
     for line in data_lines:
@@ -42,11 +37,10 @@ def print_receivables_for_part1(receivables):
         print(f"{r['id']},{r['card_type']},{r['payout_date']},{r['amount']}")
 
 # Part 2: update receivables(full buy)
-def parse_contracts(contracts_csv):
+def parse_contracts(contracts_csv): # Parse contract first
     lines = contracts_csv.strip().splitlines()
     if not lines:
         return []
-    
     data_lines = lines[1:]
     res = []
 
@@ -68,12 +62,10 @@ def parse_contracts(contracts_csv):
                 "amount": amount,
             }
         )
-
     return res
 
 def update_receivables(receivables, contracts_csv):
     contracts = parse_contracts(contracts_csv)
-
     # key: (merchant_id, card_type, payout_date) -> receivable dict
     rec_map = {}
     for r in receivables:
@@ -82,7 +74,6 @@ def update_receivables(receivables, contracts_csv):
     
     bought_keys = set()
     new_recs = []
-
     for c in contracts:
         key = (c["merchant_id"], c["card_type"], c["payout_date"])
         bought_keys.add(key)
@@ -94,12 +85,10 @@ def update_receivables(receivables, contracts_csv):
                 "amount": c["amount"],
             }
         )
-    
     # not covered
     for key, r in rec_map.items():
         if key not in bought_keys:
             new_recs.append(r)
-    
     return new_recs
 
 def print_receivables_for_part2(receivables):
@@ -111,16 +100,14 @@ def print_receivables_for_part2(receivables):
 
 def update_receivables_partial(receivables, contracts_csv):
     contracts = parse_contracts(contracts_csv)
-
     # key: (merchant_id, card_type, payout_date) -> receivable dict
     rec_map = {}
     for r in receivables:
-        key = key = (r["id"], r["card_type"], r["payout_date"])
+        key = (r["id"], r["card_type"], r["payout_date"])
         rec_map[key] = r
     
     new_rec = []
-
-    # copy
+    # copy: do substract
     for r in receivables:
         new_rec.append(r)
     
@@ -140,12 +127,10 @@ def update_receivables_partial(receivables, contracts_csv):
                 "amount": c["amount"],
             }
         )
-    
     return new_rec
 
-# test
+# Test
 if __name__ == "__main__":
-    # ---------- Part 1 tests ----------
     print("=== Part 1 ===")
 
     tx_csv_1 = """customer_id,merchant_id,payout_date,card_type,amount
@@ -172,7 +157,6 @@ cust4,merchantB,2021-12-29,MasterCard,200
     print_receivables_for_part1(recs2)
     print()
 
-    # ---------- Part 2 tests ----------
     print("=== Part 2 ===")
 
     tx_csv_p2_1 = """customer_id,merchant_id,payout_date,card_type,amount
@@ -214,7 +198,6 @@ contract2,merchantC,2022-01-09,Visa,1500
 
     print()
 
-    # ---------- Part 3 tests (partial contracts) ----------
     print("=== Part 3 (partial) ===")
 
     tx_csv_p3 = """customer_id,merchant_id,payout_date,card_type,amount
