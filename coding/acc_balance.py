@@ -1,4 +1,3 @@
-
 from collections import defaultdict
 
 class Solution:
@@ -23,7 +22,6 @@ class Solution:
             
             res = float("inf")
             vis = set() # only travel once for same amount in same level
-
             for i in range(cur + 1, n):
                 if balances[cur] * balances[i] < 0 and balances[i] not in vis:
                     vis.add(balances[i])
@@ -41,7 +39,7 @@ class Solution:
         
         return dfs(0)
     
-# test
+# Test
 if __name__ == "__main__":
     sol = Solution()
 

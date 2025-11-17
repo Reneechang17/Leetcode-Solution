@@ -1,18 +1,11 @@
-
-import os
-
 # Part 1: give log and closing_time, calculate penalty
-# Open && N -> +1
-# Close && Y -> +1
-
+# Open && N -> +1 / Close && Y -> +1
 def compute_penalty(log, closing_time):
     if not log:
         return 0
-    
     customers = log.split(" ")
-    n = len(customers)
     penalty = 0
-    for i in range(n):
+    for i in range(len(customers)):
         c = customers[i]
         if i < closing_time:
             if c == "N":
@@ -20,41 +13,32 @@ def compute_penalty(log, closing_time):
         else:
             if c == "Y":
                 penalty += 1
-    
     return penalty
 
 # Part 2: find min closing_time
 # go through each hour, Y -> penalty -= 1; N -> penalty += 1
-
 def find_best_closing_time(log):
     if not log:
         return 0
-    
     customers = log.split(" ")
-    n = len(customers)
-    penalty = 0
-    min_penalty, min_idx = 0, 0
-
-    for i in range(n):
+    penalty, min_penalty, min_idx = 0, 0
+    for i in range(len(customers)):
         if customers[i] == "Y":
             penalty -= 1
         else:
             penalty += 1
-        
         if penalty < min_penalty:
             min_penalty = penalty
             min_idx = i + 1
-    
     return min_idx
 
+# Part 3: no nested
 def get_best_closing_times(aggregate_log):
     tokens = aggregate_log.split()
     res = []
-
     in_log = False # whether in BEGIN...END
     bad = False # check if log is invalid(nested BEGIN or invalid token)
     cur = []
-
     for t in tokens:
         if t == "BEGIN":
             if not in_log:
@@ -85,11 +69,9 @@ def get_best_closing_times(aggregate_log):
 # Part 4: input: file, streaming read
 def get_best_closing_times_v2(filename):
     res = []
-
     in_log = False
     bad = False
     cur = []
-
     with open(filename, "r") as f:
         for line in f:
             tokens = line.split()
@@ -120,7 +102,7 @@ def get_best_closing_times_v2(filename):
                             bad = True
     return res
 
-# test
+# Test
 if __name__ == "__main__":
     print("Part 1:")
     print("Case 1:", compute_penalty("Y Y N Y", 0))   # 3

@@ -1,4 +1,3 @@
-
 # Common: parse requests, return list[dict] sorted by time
 def parse_payments(requests):
     payments = []
@@ -6,7 +5,6 @@ def parse_payments(requests):
         line = req.strip()
         if not line:
             continue
-
         parts = line.split(",")
         if len(parts) != 5:
             # skip header if it's not digit, because input is csv
@@ -16,7 +14,6 @@ def parse_payments(requests):
             continue # invalid format
 
         ts_str, unique_id, amount, card_number, merchant = parts
-
         # timestamp -> int
         if not ts_str.strip().isdigit():
             continue
@@ -30,7 +27,6 @@ def parse_payments(requests):
                 "merchant": merchant
             }
         )
-    
     # sort
     payments.sort(key=lambda x: x["timestamp_seconds"])
     return payments
@@ -54,17 +50,14 @@ def parse_rules(requests_rules):
         line = req.strip()
         if not line:
             continue
-
         parts = line.split(",")
         if len(parts) != 3:
-            # skip header
-            f = parts[0].strip()
+            f = parts[0].strip() # skip header
             if not f.isdigit():
                 continue
             continue
 
         ts_str, field, value = parts
-
         if not ts_str.strip().isdigit():
             continue
 
@@ -75,7 +68,6 @@ def parse_rules(requests_rules):
                 "value": value
             }
         )
-    
     rules.sort(key=lambda x: x["timestamp_seconds"])
     return rules
 
@@ -88,7 +80,6 @@ def apply_fraud_rules(requests_payments, requests_rules):
     for p in payments:
         t = p["timestamp_seconds"]
         is_approved = True
-
         for r in rules:
             if r["timestamp_seconds"] > t:
                 break
@@ -109,7 +100,6 @@ def apply_fraud_rules(requests_payments, requests_rules):
             output += "APPROVE"
         else:
             output += "REJECT"
-        
         print(output)
 
 # Part 3: fraud loss(prev approve, but hit the rules later)
@@ -118,10 +108,8 @@ def cal_total_fraud_loss(requests_payments, requests_rules):
     rules = parse_rules(requests_rules)
 
     total = 0.0
-
     for p in payments:
         t = p["timestamp_seconds"]
-
         # first check if it should be rejected at prev time
         rej_at_time = False
         for r in rules:
@@ -132,12 +120,10 @@ def cal_total_fraud_loss(requests_payments, requests_rules):
             if value == p[field]:
                 rej_at_time = True
                 break
-        
         if rej_at_time: 
             # we don't incl the rej in loss cuz money didn't pay out
             continue
-
-        # check if it hit fraud for later rules
+        # check if it hits fraud for later rules
         for r in rules:
             if r["timestamp_seconds"] > t:
                 field = r["field"]
@@ -145,11 +131,9 @@ def cal_total_fraud_loss(requests_payments, requests_rules):
                 if value == p[field]:
                     total += float(p["amount"])
                     break
-    
     print("Total fraud loss:", total)
 
 # Test
-
 if __name__ == "__main__":
     print("***** Part 1 *****")
     # Edge 1: 多条、时间无序
@@ -224,3 +208,4 @@ if __name__ == "__main__":
     # 当时就被 rule1 (t=1) 拦下 -> 不算 loss
     # 即使 20 秒有 rule2 命中同一笔交易，也不再算损失
     cal_total_fraud_loss(data_p3_2, rules_p3_2)
+    
