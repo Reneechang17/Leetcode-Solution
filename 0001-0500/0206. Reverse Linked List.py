@@ -3,7 +3,7 @@
 # Time:O(n), Space:O(1)
 # https://leetcode.cn/problems/reverse-linked-list/
 
-from typing import *
+from typing import Optional
 
 class ListNode:
     def __init__(self, val=0, next=None):
