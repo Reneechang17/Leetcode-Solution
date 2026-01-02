@@ -1,12 +1,14 @@
-# Easy
-# O(m + n)
-# https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/
+# Time:O(m*n), Space:O(1)
 
 class Solution:
     def strStr(self, haystack: str, needle: str) -> int:
-        return haystack.find(needle)
+        m, n = len(haystack), len(needle)
 
-# 這題用Python最快，直接調用find，如果是Java需要看一下KMP
+        for i in range(m - n + 1):
+            if haystack[i : i + n] == needle:
+                return i
+
+        return -1
 
 # Java代碼
 # class Solution {
