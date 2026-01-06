@@ -1,6 +1,6 @@
 // Medium
 // String
-// Time:O(m+n),Space:O(m+n)
+// Time:O(m*n),Space:O(m+n)
 // https://leetcode.cn/problems/multiply-strings/
 
 class Solution {

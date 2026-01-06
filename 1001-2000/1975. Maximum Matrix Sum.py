@@ -1,0 +1,22 @@
+# Time:O(m*n), Space:O(1)
+
+from typing import List
+
+class Solution:
+    def maxMatrixSum(self, matrix: List[List[int]]) -> int:
+        total = 0
+        neg_count = 0
+        min_abs = float('inf')
+
+        for row in matrix:
+            for val in row:
+                total += abs(val)
+                if val < 0:
+                    neg_count += 1
+                min_abs = min(min_abs, abs(val))
+
+        if neg_count % 2 == 1:
+            return total - 2 * min_abs
+        
+        return total
+    
