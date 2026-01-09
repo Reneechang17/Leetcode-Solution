@@ -10,18 +10,20 @@ class TreeNode:
         
 class Solution:
     def maxPathSum(self, root: Optional[TreeNode]) -> int:
-        self.max_sum = float("-inf")
+        max_sum = float('-inf')
 
-        def max_gain(node: Optional[TreeNode]) -> int:
+        def dfs(node):
+            nonlocal max_sum
             if not node:
                 return 0
+            
+            left_gain = max(dfs(node.left), 0)
+            right_gain = max(dfs(node.right), 0)
 
-            left = max(max_gain(node.left), 0)
-            right = max(max_gain(node.right), 0)
+            cur_sum = node.val + left_gain + right_gain
+            max_sum = max(max_sum, cur_sum)
 
-            self.max_sum = max(self.max_sum, node.val + left + right)
+            return node.val + max(left_gain, right_gain)
 
-            return node.val + max(left, right)
-
-        max_gain(root)
-        return self.max_sum
+        dfs(root)
+        return max_sum

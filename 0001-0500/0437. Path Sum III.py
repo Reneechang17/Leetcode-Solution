@@ -1,26 +1,34 @@
+# Time:O(n), Space:O(n)
+
 from typing import Optional
-from TreeNode import TreeNode
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class Solution:
     def pathSum(self, root: Optional[TreeNode], targetSum: int) -> int:
         prefix_sum = {0: 1}
-        return self.dfs(root, 0, targetSum, prefix_sum)
-    
-    def dfs(self, node: Optional[TreeNode], cur: int, target: int, prefix_sum: dict) -> int:
-        # basecase
-        if not node:
-            return 0
-        
-        cur += node.val
 
-        cnt = prefix_sum.get(cur - target, 0)
-        prefix_sum[cur] = prefix_sum.get(cur, 0) + 1
+        def dfs(node, cur_sum):
+            if not node:
+                return 0
 
-        # process left and right subtree recursively
-        cnt += self.dfs(node.left, cur, target, prefix_sum)
-        cnt += self.dfs(node.right, cur, target, prefix_sum) 
+            cur_sum += node.val
+            count = 0
 
-        # backtracking
-        prefix_sum[cur] -= 1
+            if cur_sum - targetSum in prefix_sum:
+                count = prefix_sum[cur_sum - targetSum]
 
-        return cnt
+            prefix_sum[cur_sum] = prefix_sum.get(cur_sum, 0) + 1
+
+            count += dfs(node.left, cur_sum)
+            count += dfs(node.right, cur_sum)
+
+            prefix_sum[cur_sum] -= 1
+
+            return count
+
+        return dfs(root, 0)
