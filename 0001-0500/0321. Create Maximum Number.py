@@ -4,34 +4,36 @@ from typing import List
 
 class Solution:
     def maxNumber(self, nums1: List[int], nums2: List[int], k: int) -> List[int]:
-        def max_subseq(nums, length):
+        def max_subsequence(nums, k):
+            drop = len(nums) - k
             stack = []
-            drop = len(nums) - length
-
-            for x in nums:
-                while stack and stack[-1] < x and drop > 0:
+            for num in nums:
+                while drop and stack and stack[-1] < num:
                     stack.pop()
                     drop -= 1
-                stack.append(x)
-            return stack[:length]
-        
-        def merge(seq1, seq2):
-            res = []
-            while seq1 or seq2:
-                if seq1 > seq2:
-                    res.append(seq1[0])
-                    seq1 = seq1[1:]
-                else:
-                    res.append(seq2[0])
-                    seq2 = seq2[1:]
-            return res
+                stack.append(num)
+            return stack[:k]
 
-        max_res = []
+        def merge(a, b):
+            ret = []
+            i, j = 0, 0
+            while i < len(a) or j < len(b):
+                if a[i:] > b[j:]:
+                    ret.append(a[i])
+                    i += 1
+                else:
+                    ret.append(b[j])
+                    j += 1
+            return ret
+
+        res = []
+
         for i in range(max(0, k - len(nums2)), min(k, len(nums1)) + 1):
-            seq1 = max_subseq(nums1, i)
-            seq2 = max_subseq(nums2, k - i)
-            cand = merge(seq1, seq2)
-            max_res = max(max_res, cand)
-        
-        return max_res
+            sub1 = max_subsequence(nums1, i)
+            sub2 = max_subsequence(nums2, k - i)
+            cand = merge(sub1, sub2)
+            if cand > res:
+                res = cand
+
+        return res
     

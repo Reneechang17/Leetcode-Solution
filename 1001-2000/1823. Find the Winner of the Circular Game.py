@@ -1,7 +1,14 @@
-# Time:O(n*k), Space:O(n)
-
 from collections import deque
 
+# Recommended: Time:O(n), Space:O(1)
+class Solution:
+    def findTheWinner(self, n: int, k: int) -> int:
+        winner = 1
+        for i in range(2, n + 1):
+            winner = (winner + k - 1) % i + 1
+        return winner
+    
+# Time:O(n*k), Space:O(n)
 class Solution:
     def findTheWinner(self, n: int, k: int) -> int:
         que = deque(range(1, n + 1))
@@ -11,12 +18,3 @@ class Solution:
                 que.append(que.popleft())
             que.popleft()
         return que[0]
-
-# Recommended: Time:O(n), Space:O(1)
-class Solution:
-    def findTheWinner(self, n: int, k: int) -> int:
-        winner = 0
-        for i in range(2, n + 1):
-            winner = (winner + k) % i
-        return winner + 1 # 1-indexed
-    

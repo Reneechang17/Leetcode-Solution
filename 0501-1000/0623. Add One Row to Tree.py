@@ -10,22 +10,19 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def addOneRow(self, root: Optional[TreeNode], val: int, depth: int) -> Optional[TreeNode]:
-        # insert at depth 1
+    def addOneRow(
+        self, root: Optional[TreeNode], val: int, depth: int
+    ) -> Optional[TreeNode]:
         if depth == 1:
             new_root = TreeNode(val)
             new_root.left = root
             return new_root
-        
-        # BFS to find depth-1 layer
-        que = deque([(root, 1)])
 
+        que = deque([(root, 1)])
         while que:
             node, cur_depth = que.popleft()
-
             if cur_depth == depth - 1:
-                old_left = node.left
-                old_right = node.right
+                old_left, old_right = node.left, node.right
 
                 node.left = TreeNode(val)
                 node.right = TreeNode(val)
@@ -37,5 +34,34 @@ class Solution:
                     que.append((node.left, cur_depth + 1))
                 if node.right:
                     que.append((node.right, cur_depth + 1))
+
+        return root
+
+class Solution:
+    def addOneRow(
+        self, root: Optional[TreeNode], val: int, depth: int
+    ) -> Optional[TreeNode]:
+        if depth == 1:
+            new_root = TreeNode(val)
+            new_root.left = root
+            return new_root
+
+        def dfs(node, cur_depth):
+            if not node:
+                return
+
+            if cur_depth == depth - 1:
+                left_child = TreeNode(val)
+                left_child.left = node.left
+                node.left = left_child
+
+                right_child = TreeNode(val)
+                right_child.right = node.right
+                node.right = right_child
+            else:
+                dfs(node.left, cur_depth + 1)
+                dfs(node.right, cur_depth + 1)
+
+        dfs(root, 1)
         return root
     

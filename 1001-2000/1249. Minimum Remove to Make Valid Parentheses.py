@@ -8,15 +8,21 @@ class Solution:
         remove = set()
         stack = []
 
-        for i, c in enumerate(s):
-            if c == '(':
+        for i in range(len(s)):
+            if s[i] == "(":
                 stack.append(i)
-            elif c == ')':
+            elif s[i] == ")":
                 if stack:
                     stack.pop()
                 else:
                     remove.add(i)
 
-        remove.update(stack)
+        for i in stack:
+            remove.add(i)
 
-        return ''.join(s[i] for i in range(len(s)) if i not in remove)
+        res = []
+        for i in range(len(s)):
+            if i not in remove:
+                res.append(s[i])
+
+        return "".join(res)

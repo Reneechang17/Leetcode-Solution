@@ -1,24 +1,29 @@
-# Easy
-# Sliding Window, Array
-# Time:O(nlogn), Space:O(n)
-# https://leetcode.cn/problems/find-x-sum-of-all-k-long-subarrays-i/
+# Time:O(n*k*logk), Space:O(1)
 
-from collections import Counter
-from typing import *
+from typing import List
 
 class Solution:
     def findXSum(self, nums: List[int], k: int, x: int) -> List[int]:
+        n = len(nums)
         res = []
 
-        for i in range(len(nums) - k + 1):
-            window = nums[i:i + k]
-            freq = Counter(window)
-            sorted_items = sorted(freq.items(), key=lambda p: (p[1], p[0]), reverse=True)
+        for start in range(n - k + 1):
+            freq = [0] * 51
+            for i in range(start, start + k):
+                freq[nums[i]] += 1
 
-            x_sum = 0
-            for num, cnt in sorted_items[:x]:
-                x_sum += num * cnt
-            
-            res.append(x_sum)
-        
-        return res         
+            elements = []
+            for val in range(1, 51):
+                if freq[val] > 0:
+                    elements.append((val, freq[val]))
+
+            elements.sort(key=lambda e: (-e[1], -e[0]))
+
+            total = 0
+            for i in range(min(x, len(elements))):
+                val, count = elements[i]
+                total += val * count
+
+            res.append(total)
+
+        return res        

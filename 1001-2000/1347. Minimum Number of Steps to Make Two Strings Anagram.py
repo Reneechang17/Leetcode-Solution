@@ -5,13 +5,14 @@ class Solution:
         count = [0] * 26
 
         for c in s:
-            count[ord(c) - ord('a')] += 1
+            count[ord(c) - ord("a")] += 1
         for c in t:
-            count[ord(c) - ord('a')] -= 1
-        
+            count[ord(c) - ord("a")] -= 1
+
         steps = 0
         for c in count:
             if c > 0:
                 steps += c
+
         return steps
     

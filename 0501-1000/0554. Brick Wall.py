@@ -1,4 +1,4 @@
-# Time:O(n*m), Space:O(n*m)
+# Time:O(n*m), Space:O(gaps)
 
 from typing import List
 from collections import defaultdict
@@ -8,12 +8,11 @@ class Solution:
         gap_count = defaultdict(int)
 
         for row in wall:
-            pos = 0
+            width_sum = 0
+            for brick in row[:-1]:
+                width_sum += brick
+                gap_count[width_sum] += 1
 
-            for i in range(len(row) - 1):
-                pos += row[i]
-                gap_count[pos] += 1
-        
-        max_gaps = max(gap_count.values()) if gap_count else 0
-        return len(wall) - max_gaps
-    
+        max_gap = max(gap_count.values()) if gap_count else 0
+
+        return len(wall) - max_gap

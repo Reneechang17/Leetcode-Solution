@@ -1,20 +1,19 @@
+from collections import defaultdict
+
 class Leaderboard:
 
     def __init__(self):
-        self.scores = {}
+        self.scores = defaultdict(int)
 
     def addScore(self, playerId: int, score: int) -> None:
-        if playerId in self.scores:
-            self.scores[playerId] += score
-        else:
-            self.scores[playerId] = score
+        self.scores[playerId] += score
 
     def top(self, K: int) -> int:
         all_scores = sorted(self.scores.values(), reverse=True)
         return sum(all_scores[:K])
 
     def reset(self, playerId: int) -> None:
-        del self.scores[playerId]
+        self.scores[playerId] = 0
 
 class Leaderboard:
 

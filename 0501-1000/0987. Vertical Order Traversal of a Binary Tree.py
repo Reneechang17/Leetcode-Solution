@@ -11,25 +11,21 @@ class TreeNode:
 
 class Solution:
     def verticalTraversal(self, root: Optional[TreeNode]) -> List[List[int]]:
-        # columns[col]=[(row, val), ...]
-        columns = defaultdict(list)
+        col_map = defaultdict(list)
 
-        def dfs(node, row, col):
+        def dfs(node, col, row):
             if not node:
                 return
+            col_map[col].append((row, node.val))
+            dfs(node.left, col - 1, row + 1)
+            dfs(node.right, col + 1, row + 1)
 
-            columns[col].append((row, node.val))
-            dfs(node.left, row + 1, col - 1)
-            dfs(node.right, row + 1, col + 1)
-        
         dfs(root, 0, 0)
-        
-        res = []
 
-        # sort by col
-        for col in sorted(columns.keys()):
-            # sort by (row, val)
-            col_node = sorted(columns[col])
-            res.append([val for _, val in col_node])
+        res = []
+        for col in sorted(col_map.keys()):
+            nodes = sorted(col_map[col], key=lambda x: (x[0], x[1]))
+            res.append([val for _, val in nodes])
+
         return res
     

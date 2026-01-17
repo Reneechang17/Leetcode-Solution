@@ -1,15 +1,20 @@
+# Time:O(n), Space:O(1)
+
 from typing import *
 
 class Solution:
     def findDuplicates(self, nums: List[int]) -> List[int]:
         res = []
 
-        for x in nums:
-            idx = abs(x) - 1 # 1-indexed
+        for num in nums:
+            index = abs(num) - 1 # 1-index
 
-            if nums[idx] < 0:
-                res.append(abs(x))
+            if nums[index] < 0:
+                # already neg -> meet before
+                res.append(abs(num))
             else:
-                nums[idx] = -nums[idx]
+                # turn it to neg when first meet this element
+                nums[index] = -nums[index]
         
         return res
+    

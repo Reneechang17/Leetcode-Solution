@@ -1,9 +1,4 @@
-# Medium
-# Graph, BFS
 # Time:O(V+E), Space:O(V+E)
-# https://leetcode.cn/problems/course-schedule/
-
-# BFS would be more clear, but also can do with DFS(find cycle)
 
 from typing import *
 from collections import defaultdict, deque

@@ -1,5 +1,6 @@
+# Time:O(n), Space:O(1)
 
-from typing import *
+from typing import List
 
 class Solution:
     def findMaxAverage(self, nums: List[int], k: int) -> float:
@@ -7,9 +8,8 @@ class Solution:
         max_sum = window_sum
 
         for i in range(k, len(nums)):
-            window_sum -= nums[i - k]
-            window_sum += nums[i]
+            window_sum = window_sum - nums[i - k] + nums[i]
             max_sum = max(max_sum, window_sum)
-        
+
         return max_sum / k
     

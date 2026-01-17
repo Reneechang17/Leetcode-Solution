@@ -1,23 +1,22 @@
-# Medium
-# Design
-# https://leetcode.cn/problems/design-browser-history/
-
 class BrowserHistory:
 
     def __init__(self, homepage: str):
         self.history = [homepage]
-        self.current = 0
+        self.cur = 0
     
+    # Time:O(k), Space:O(n)
     def visit(self, url: str) -> None:
-        self.history = self.history[:self.current + 1]
+        self.history = self.history[: self.cur + 1]
         self.history.append(url)
-        self.current += 1
-
+        self.cur += 1
+    
+    # Time:O(1), Space:O(n)
     def back(self, steps: int) -> str:
-        self.current = max(0, self.current - steps)
-        return self.history[self.current]
-
+        self.cur = max(0, self.cur - steps)
+        return self.history[self.cur]
+    
+    # Time:O(1), Space:O(n)
     def forward(self, steps: int) -> str:
-        self.current = min(len(self.history) - 1, self.current + steps)
-        return self.history[self.current]
+        self.cur = min(len(self.history) - 1, self.cur + steps)
+        return self.history[self.cur]
         
