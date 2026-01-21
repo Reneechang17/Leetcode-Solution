@@ -1,4 +1,4 @@
-package Mathworks;
+package Mworks;
 
 /** Segment Intersections
  * 给定n条线段，每条线段i由两个整数startsAt[i]和endsAt[i]描述。每条线段覆盖从startsAt[i]到endsAt[i]的所有点。

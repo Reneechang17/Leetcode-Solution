@@ -1,4 +1,4 @@
-package MetaPE;
+package MPE;
 
 import java.util.*;
 
