@@ -13,11 +13,6 @@ All possible 2-card draws:
 Favorable draws = {[1,4], [2,3]} → 2 out of 6
 Probability = 2/6 = 0.3333
 
-1. Count number of k-card combinations with sum = target
-2. Divide by total combinations C(n, k)
-3. Use DP: dp[c][s] = ways to choose c cards with sum s
-4. Iterate cards backwards to ensure no reuse
-
 - Total combinations = C(n, k) = n! / (k! * (n-k)!)
   This counts all possible ways to choose k cards from n
 - Probability = favorable_combinations / total_combinations
@@ -31,17 +26,19 @@ from math import comb
 
 # Time:O(n*k*S), Space:O(k*S)
 def winning_possibility(k: int, target: int, deck: List[int]) -> float:
-
     n = len(deck)
 
-    # dp[c][s] means the number of ways to choose a number of card and their sum is s
-    dp = [defaultdict(int) for _ in range(n + 1)]
+    if k < 0 or k > n:
+        return 0.0
+
+    # dp[c][s] number of ways to choose exactly c cards and their sum is s
+    dp = [defaultdict(int) for _ in range(k + 1)]
     dp[0][0] = 1 # 0 card -> sum = 0
 
     # pass each card once
     for val in deck:
         # iterate backward to avoid using the same card
-        # the new card can only consider match with the card didn't use (each card only use once)
+        # the new card can only consider match the card didn't use (each card only use once)
         for c in range(k, 0, -1):
             for s, cnt in list(dp[c - 1].items()):
                 dp[c][s + val] += cnt

@@ -1,59 +1,56 @@
-'''
-Problem: Reorder employees based on reporting hierarchy
-Input: 
-  - employees: list of (name, title)
-  - reports: dict {subordinate: boss} showing reporting relationships
-Output: employees sorted from lowest to highest in hierarchy
+"""
+Problem: Reorder employees based on reporting hierarchy (titles only)
 
-Approach:
-1. Build graph: boss → subordinates (reverse of reports dict)
-2. Topological sort starting from top-level (CEO, indegree=0)
-3. Assign levels: higher position = smaller level number (CEO=0)
-4. Sort employees by level (ascending, lowest first)
+Given:
+- employees: List[Tuple[name, title]]
+- reports: Dict[subordinate_title -> boss_title]
+  Meaning: subordinate_title reports to boss_title.
 
-Example hierarchy:
-       CEO (level 0)
-      /           \
-    CTO(1)       CFO(1)
-     |
-  Manager(2)
-     |
- Engineer(3)
-'''
+Goal:
+Re-order employees from lowest to highest in the hierarchy.
+Employees with the same title stay together; titles at the same level
+(e.g., CTO and CFO both report to CEO) can be in either order.
+
+Example:
+employees = [(John, Manager), (Sally, CTO), (Sam, CEO), (Drax, Engineer), (Bob, CFO), (Daniel, Engineer)]
+reports   = {CTO: CEO, Manager: CTO, Engineer: Manager, CFO: CEO}
+
+One valid output:
+[(Drax, Engineer), (Daniel, Engineer), (John, Manager), (Sally, CTO), (Bob, CFO), (Sam, CEO)]
+"""
+
 
 from typing import List, Tuple, Dict
 from collections import defaultdict, deque
 
 # Time:O(V+E), Space:O(V+E)
 def solution(employees: List[Tuple[str, str]], report:Dict[str, str]) -> List[Tuple[str, str]]:
-    
-    # graph: boss -> subordinates
+    # build title graph: boss->[sub]
     graph = defaultdict(list)
-    indegree = defaultdict(int)
+    indegree = {} # title -> indegree
 
     for sub, boss in report.items():
         graph[boss].append(sub)
-        indegree[sub] += 1
+        indegree.setdefault(sub, 0)
         indegree.setdefault(boss, 0)
+        indegree[sub] += 1
     
-    que = deque([title for title in indegree if indegree[title] == 0]) # find the top level
+    que = deque(t for t, d in indegree.items() if d == 0)
+    level = {} # title -> level (0=highest)
 
-    level = {}
     cur_level = 0
-
     while que:
         for _ in range(len(que)):
-            title = que.popleft()
-            level[title] = cur_level
+            t = que.popleft()
+            level[t] = cur_level
 
-            # pass sub
-            for sub in graph[title]:
+            for sub in graph[t]:
                 indegree[sub] -= 1
                 if indegree[sub] == 0:
                     que.append(sub)
         cur_level += 1
     
-    # sort by level desc
+    # sort employees: lower title first -> larger level first
     return sorted(employees, key=lambda x: -level.get(x[1]))
 
 if __name__ == "__main__":

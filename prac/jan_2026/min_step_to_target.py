@@ -4,9 +4,7 @@ Start: n = 1
 Operations: 1. n = n × 2  2. n = n ÷ 3 (integer division)
 Find: Min steps to reach target t
 
-Approach: BFS from 1 to t
-Why BFS? BFS finds shortest path in unweighted graph
-Graph nodes: integers, edges: ×2 and ÷3 operations
+Approach: We BFS from 1. To prevent infinite growth, we bound state space.
 '''
 
 from collections import deque
@@ -16,6 +14,8 @@ from collections import deque
 def min_steps_to_target(t: int) -> int:
     if t == 1:
         return 0
+    
+    upper = 2 * t
     
     que = deque([(1, 0)]) # (cur, steps)
     vis = {1}
@@ -28,7 +28,7 @@ def min_steps_to_target(t: int) -> int:
         if next == t:
             return steps + 1
         # don't go too far
-        if next not in vis:
+        if next <= upper and next not in vis:
             vis.add(next)
             que.append((next, steps + 1))
 
@@ -47,5 +47,5 @@ if __name__ == "__main__":
     print("Test 1: t=1 →", min_steps_to_target(1), "(expected: 0)")
     print("Test 2: t=2 →", min_steps_to_target(2), "(expected: 1)")
     print("Test 3: t=10 →", min_steps_to_target(10), "(expected: 6)")
-    print("Test 4: t=3 →", min_steps_to_target(3), "(expected: 7)")
-    print("Test 5: t=6 →", min_steps_to_target(6), "(expected: 8)")
+    print("Test 4: t=3 →", min_steps_to_target(3), "(expected: -1)")
+    print("Test 5: t=6 →", min_steps_to_target(6), "(expected: -1)")

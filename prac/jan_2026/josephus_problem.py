@@ -30,7 +30,7 @@ def josephus_problem_rec(n: int, m: int) -> int:
     return (josephus_problem_rec(n - 1, m) + m) % n
 
 # iteration
-# Time:O(1), Space:O(1)
+# Time:O(n), Space:O(1)
 def josephus_problem_iter(n: int, m: int) -> int:
     res = 0 # base case: f(1, m)=0
     

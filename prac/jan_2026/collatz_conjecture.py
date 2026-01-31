@@ -10,10 +10,13 @@ Count steps needed to transform x into 1.
 Follow-up: Use memoization to optimize repeated calls.
 """
 
-# Time:O(k), Space:O(k)
+# Time:O(k), Space:O(n)
+# k = chain's length
+# n = appear num
 
 class CollatzConjecture:
     def __init__(self):
+        # step from x to 1
         self.memo = {1: 0}
     
     def count_steps(self, x: int) -> int:
@@ -21,14 +24,9 @@ class CollatzConjecture:
             raise ValueError("Input must be positive integer")
         
         path = []
-        steps = 0
         cur = x
 
-        while cur > 1:
-            if cur in self.memo:
-                steps += self.memo[cur]
-                break
-
+        while cur not in self.memo:
             path.append(cur)
 
             if cur % 2 == 0:
@@ -36,12 +34,13 @@ class CollatzConjecture:
             else:
                 cur = 3 * cur + 1
             
+        steps = self.memo[cur]
+        
+        for num in reversed(path):
             steps += 1
+            self.memo[num] = steps
         
-        for i, num in enumerate(path):
-            self.memo[num] = steps - i
-        
-        return steps
+        return self.memo[x]
 
 print("Test 1: n = 1")
 calc = CollatzConjecture()

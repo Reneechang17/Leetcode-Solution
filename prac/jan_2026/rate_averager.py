@@ -16,12 +16,13 @@ from collections import defaultdict
 
 class FxRateTracker:
     def __init__(self):
-        # bank -> {currency: rate}
+        # bank[bank][currency]=latest rate from this bank
         self.bank_rates = defaultdict(dict)
         # currency -> [total_sum, bank_acc] 
         # use for running average
         self.currency_stats = defaultdict(lambda: [0.0, 0])
     
+    # Time:O(1), Space:O(B*C)
     def add_rate(self, bank: str, currency: str, rate: float) -> None:
         if currency in self.bank_rates[bank]:
             old_rate = self.bank_rates[bank][currency]
@@ -36,6 +37,7 @@ class FxRateTracker:
         # add new rate to total
         self.currency_stats[currency][0] += rate
     
+    # Time:O(C), Space:O(B*C)
     def display_ave_rates(self) -> dict:
         ave = {}
         for currency, (total, cnt) in self.currency_stats.items():

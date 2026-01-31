@@ -24,7 +24,7 @@ from typing import Dict, Tuple
 
 class CurrencyPriceTracker:
     def __init__(self):
-        # currency -> bank -> price
+        # data[currency][bank] = cur price for this bank
         self.data = defaultdict(dict)
         # currency -> (total_price, bank_count)
         self.stats = defaultdict(lambda: [0.0, 0])
@@ -42,7 +42,7 @@ class CurrencyPriceTracker:
         
         self.data[currency][bank] = price
     
-    # Time:O(k)
+    # Time:O(C)
     def average_price(self) -> Dict[str, float]:
         res = {}
         for currency, (total, count) in self.stats.items():
