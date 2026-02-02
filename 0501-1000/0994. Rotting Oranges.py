@@ -1,41 +1,39 @@
-# Time:O(m*n), Space:O(m*n)
+# Time:O(mn), Space:O(mn)
 
 from collections import deque
 from typing import List
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        m, n = len(grid), len(grid[0])
+        rows, cols = len(grid), len(grid[0])
         que = deque()
         fresh = 0
 
-        for i in range(m):
-            for j in range(n):
-                if grid[i][j] == 2:
-                    que.append((i, j))
-                elif grid[i][j] == 1:
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 2:
+                    que.append((r, c))
+                elif grid[r][c] == 1:
                     fresh += 1
-
+        
         if fresh == 0:
             return 0
 
         minutes = 0
-        dirs = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        dirs = [(1,0), (-1,0), (0,1), (0,-1)]
 
-        while que:
-            minutes += 1
-            size = len(que)
-
-            for i in range(size):
+        while que and fresh > 0:
+            for _ in range(len(que)):
                 r, c = que.popleft()
 
                 for dr, dc in dirs:
                     nr, nc = r + dr, c + dc
 
-                    if 0 <= nr < m and 0 <= nc < n and grid[nr][nc] == 1:
+                    if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == 1:
                         grid[nr][nc] = 2
                         fresh -= 1
                         que.append((nr, nc))
-
-        return minutes - 1 if fresh == 0 else -1
+            minutes += 1
+        
+        return minutes if fresh == 0 else -1
     

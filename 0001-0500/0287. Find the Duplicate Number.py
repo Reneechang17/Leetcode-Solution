@@ -8,7 +8,7 @@ class Solution:
         while left < right:
             mid = (left + right) // 2
 
-            # count <= mid
+            # count the element <= mid
             count = 0
             for num in nums:
                 if num <= mid:

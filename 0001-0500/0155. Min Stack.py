@@ -1,22 +1,23 @@
+# Time:O(1), Space:O(n)
+
 class MinStack:
+    # use stack to store (val, cur_min)
 
     def __init__(self):
         self.stack = []
-        self.min_stack = [] # cur min stack
-    
-    def push(self, val: int) -> None:
-        self.stack.append(val)
-        if not self.min_stack:
-            self.min_stack.append(val)
-        else:
-            self.min_stack.append(min(val, self.min_stack[-1]))
 
+    def push(self, val: int) -> None:
+        if not self.stack:
+            self.stack.append((val, val))
+        else:
+            cur_min = min(val, self.stack[-1][1])
+            self.stack.append((val, cur_min))
+        
     def pop(self) -> None:
         self.stack.pop()
-        self.min_stack.pop()
 
     def top(self) -> int:
-        return self.stack[-1]
-
+        return self.stack[-1][0]
+        
     def getMin(self) -> int:
-        return self.min_stack[-1]
+        return self.stack[-1][1]

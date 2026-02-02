@@ -5,21 +5,17 @@ class Solution:
         sign = -1 if x < 0 else 1
         x = abs(x)
 
+        INT_MAX = 2**31 - 1
         res = 0
 
         while x > 0:
             d = x % 10
             x //= 10
 
-            if res > (2**31 - 1) // 10:
+            if res > INT_MAX // 10 or (res == INT_MAX // 10 and d > 7):
                 return 0
-
+            
             res = res * 10 + d
-
-        res *= sign
-
-        if res < -(2**31) or res > 2**31 - 1:
-            return 0
-
-        return res
+        
+        return sign * res
     

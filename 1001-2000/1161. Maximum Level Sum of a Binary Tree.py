@@ -15,26 +15,27 @@ class Solution:
             return 0
 
         que = deque([root])
-        max_sum = float("-inf")
-        max_level = 0
-        cur_level = 1
+        level = 1
+        best_level = 1
+        max_sum = float('-inf')
 
         while que:
-            level_sum = 0
             size = len(que)
+            cur_sum = 0
 
             for _ in range(size):
                 node = que.popleft()
-                level_sum += node.val
+                cur_sum += node.val
+
                 if node.left:
                     que.append(node.left)
                 if node.right:
                     que.append(node.right)
-
-            if level_sum > max_sum:
-                max_sum = level_sum
-                max_level = cur_level
-
-            cur_level += 1
-
-        return max_level
+            
+            if cur_sum > max_sum:
+                max_sum = cur_sum
+                best_level = level
+            
+            level += 1
+        
+        return best_level

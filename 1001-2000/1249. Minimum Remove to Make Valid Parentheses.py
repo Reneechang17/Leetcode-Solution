@@ -6,23 +6,23 @@
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
         remove = set()
-        stack = []
+        stack = [] # store '(' idx
 
-        for i in range(len(s)):
-            if s[i] == "(":
+        for i, c in enumerate(s):
+            if c == '(':
                 stack.append(i)
-            elif s[i] == ")":
+            elif c == ')':
                 if stack:
-                    stack.pop()
+                    stack.pop() # match a '('
                 else:
-                    remove.add(i)
-
+                    remove.add(i) # additional ')'
+        
         for i in stack:
             remove.add(i)
 
         res = []
-        for i in range(len(s)):
+        for i, c in enumerate(s):
             if i not in remove:
                 res.append(s[i])
-
-        return "".join(res)
+                
+        return res

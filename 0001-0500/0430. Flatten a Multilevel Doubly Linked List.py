@@ -1,4 +1,4 @@
-# Time:O(n), Space:O(d)
+# Time:O(n), Space:O(n)
 
 from typing import Optional
 
@@ -9,34 +9,68 @@ class Node:
         self.next = next
         self.child = child
 
+# DFS
 class Solution:
-    def flatten(self, head: "Optional[Node]") -> "Optional[Node]":
-        def dfs(node):
-            if not node:
-                return None, None  # new_head & tail
+    def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return head
 
+        def dfs(node):
             cur = node
-            tail = node
+            last = node
 
             while cur:
                 next = cur.next
+
                 if cur.child:
-                    child_head, child_tail = dfs(cur.child)
+                    child_head = cur.child
+                    child_tail = dfs(child_head)
+
                     cur.next = child_head
                     child_head.prev = cur
+                    cur.child = None # cleanup child
+
                     if next:
                         child_tail.next = next
                         next.prev = child_tail
-                    else:
-                        tail = child_tail
-                    cur.child = None
+                    
+                    last = child_tail
                     cur = child_tail
+                else:
+                    last = cur
+                cur = cur.next
+                
+            return last
+        
+        dfs(head)
+        return head
 
-                if cur:
-                    tail = cur
-                cur = next
-            return node, tail
+# Stack
+class Solution:
+    def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if not head:
+            return head
+        
+        stack = []
+        cur = head
 
-        new_head, _ = dfs(head)
-        return new_head
+        while cur:
+            if cur.child:
+                if cur.next:
+                    # use stack to store the origin cur.next
+                    stack.append(cur.next)
+                
+                # handle child first, let it be cur.next
+                cur.next = cur.child
+                cur.child.prev = cur
+                cur.child = None
+
+            if not cur.next and stack:
+                nxt = stack.pop()
+                cur.next = nxt
+                nxt.prev = cur
+            
+            cur = cur.next
+        
+        return head
     

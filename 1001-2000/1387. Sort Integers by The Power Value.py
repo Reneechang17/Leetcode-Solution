@@ -1,31 +1,34 @@
-# Time:O(nlogn+nL), Space:O(n+C)
+# Time:O(nlogn), Space:O(m)
 
 class Solution:
     def getKth(self, lo: int, hi: int, k: int) -> int:
-        cache = {} # cache[x]=power of x
+        memo = {}
 
         def get_power(x):
             if x == 1:
                 return 0
-            if x in cache:
-                return cache[x]
             
-            # calculate power
+            if x in memo:
+                return memo[x]
+            
             if x % 2 == 0:
+                # 1 is cur step
+                # x -> next_x 
+                # + recursion to get power
                 power = 1 + get_power(x // 2)
             else:
                 power = 1 + get_power(3 * x + 1)
             
-            cache[x] = power
+            memo[x] = power
             return power
-        
-        # array of (number, power)
+
         arr = []
         for num in range(lo, hi + 1):
             power = get_power(num)
             arr.append((num, power))
         
-        # sort by power, if same, sort by number
+        # sort
         arr.sort(key=lambda x: (x[1], x[0]))
-        return arr[k - 1][0] # 0-indexed
+        
+        return arr[k - 1][0]
     

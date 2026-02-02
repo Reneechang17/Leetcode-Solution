@@ -5,30 +5,34 @@ import random
 class RandomizedSet:
 
     def __init__(self):
-        self.vals = []
-        self.map = {}
+        self.arr = []
+        self.map = {} # val -> idx in arr
 
     def insert(self, val: int) -> bool:
         if val in self.map:
             return False
-
-        self.map[val] = len(self.vals)
-        self.vals.append(val)
+        
+        self.map[val] = len(self.arr)
+        self.arr.append(val)
         return True
 
     def remove(self, val: int) -> bool:
         if val not in self.map:
             return False
-
+        
         index = self.map[val]
-        last_val = self.vals[-1]
+        last_val = self.arr[-1]
 
-        self.vals[index] = last_val
+        # move the last element to id (cover val)
+        # for O(1), instead of moving n's element
+        self.arr[index] = last_val
         self.map[last_val] = index
 
-        self.vals.pop()
+        # del the last element
+        self.arr.pop()
         del self.map[val]
+
         return True
 
     def getRandom(self) -> int:
-        return random.choice(self.vals)
+        return random.choice(self.arr)

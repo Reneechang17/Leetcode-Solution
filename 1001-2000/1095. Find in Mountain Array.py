@@ -1,39 +1,52 @@
-# Time:O(logn), Space:O(1)
+# Time:O(logn), Space:O(logn)
 
 class Solution:
-    def findInMountainArray(self, target: int, mountainArr: "MountainArray") -> int: # type: ignore
+    def findInMountainArray(self, target: int, mountainArr: 'MountainArray') -> int:  # type: ignore
+        # binary search find peak idx
+        # then binary search to find target in [0..peak]
+        # if can't find, find in [peak+1..n-1]
+
         n = mountainArr.length()
 
-        left, right = 0, n - 1
-        while left < right:
-            mid = (left + right) // 2
-            if mountainArr.get(mid) < mountainArr.get(mid + 1):
-                left = mid + 1
-            else:
-                right = mid
-        peak = left
+        cache = {}
 
-        # left part
-        left, right = 0, peak
-        while left <= right:
-            mid = (left + right) // 2
-            val = mountainArr.get(mid)
-            if val == target:
-                return mid
-            elif val < target:
-                left = mid + 1
-            else:
-                right = mid - 1
+        def get(i):
+            if i in cache:
+                return cache[i]
+            cache[i] = mountainArr.get(i)
+            return cache[i]
 
-        left, right = peak, n - 1
-        while left <= right:
-            mid = (left + right) // 2
-            val = mountainArr.get(mid)
-            if val == target:
-                return mid
-            elif val > target:
-                left = mid + 1
+        l, r = 0, n - 1
+        while l < r:
+            mid = (l + r) // 2
+            if get(mid) < get(mid + 1):
+                l = mid + 1
             else:
-                right = mid - 1
+                r = mid
+        peak = l
 
-        return -1
+        def binary_search(left, right, asc):
+            l, r = left, right
+            while l <= r:
+                mid = (l + r) // 2
+                val = get(mid)
+                if val == target:
+                    return mid
+                
+                if asc:
+                    if val < target:
+                        l = mid + 1
+                    else:
+                        r = mid - 1
+                else:
+                    if val < target:
+                        r = mid - 1
+                    else:
+                        l = mid + 1
+            return -1
+
+        ans = binary_search(0, peak, True)
+        if ans != -1:
+            return ans
+        
+        return binary_search(peak + 1, n - 1, False)

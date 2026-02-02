@@ -6,18 +6,19 @@ from typing import List
 class Solution:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
         if not intervals:
-            return True
-        
-        intervals.sort(key=lambda x:x[0])
+            return 0
 
-        heap = []
+        # sort by start time
+        intervals.sort(key=lambda x: x[0])
+
+        heap = [] # store cur end time 
 
         for start, end in intervals:
-            # if the earliest meeting end -> release
-            if heap and heap[0] <= start:
+            # prev' meeting end -> use it
+            if heap and start >= heap[0]:
                 heapq.heappop(heap)
             
-            # or means need one more room
+            # need new one
             heapq.heappush(heap, end)
         
         return len(heap)

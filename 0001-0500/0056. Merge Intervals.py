@@ -1,9 +1,6 @@
-# Medium
-# Array
 # Time:O(nlogn), Space:O(n)
-# https://leetcode.cn/problems/merge-intervals/
 
-from typing import *
+from typing import List
 
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
@@ -11,18 +8,18 @@ class Solution:
             return []
         
         # sort by start
-        intervals.sort(key=lambda x:x[0])
+        intervals.sort(key=lambda x: x[0])
 
-        res = [intervals[0]]
+        res = []
+        cur_start, cur_end = intervals[0]
 
-        for i in range(1, len(intervals)):
-            cur = intervals[i]
-            prev = res[-1]
-
-            if cur[0] <= prev[1]:
-                # merge
-                prev[1] = max(prev[1], cur[1])
+        for start, end in intervals[1:]:
+            # overlap
+            if start <= cur_end:
+                cur_end = max(cur_end, end)
             else:
-                res.append(cur)
+                res.append([cur_start, cur_end])
+                cur_start, cur_end = start, end
         
+        res.append([cur_start, cur_end]) # last interval
         return res

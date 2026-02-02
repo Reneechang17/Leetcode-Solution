@@ -1,13 +1,20 @@
-# Time:O(n²), Space:O(n)
+# Time:O(1), Space:O(1)
 
 from collections import Counter
 
 class Solution:
     def equalFrequency(self, word: str) -> bool:
-        for i in range(len(word)):
-            remaining = word[:i] + word[i+1:]
-            freq = Counter(remaining)
-            if len(set(freq.values())) <= 1:
+        count = Counter(word)
+
+        for c in count:
+            count[c] -= 1
+
+            freq = [v for v in count.values() if v > 0]
+
+            if len(set(freq)) == 1:
                 return True
+            
+            count[c] += 1
+        
         return False
     

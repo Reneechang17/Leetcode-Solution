@@ -3,9 +3,7 @@
 from typing import List
 
 class Solution:
-    def largestSquareArea(
-        self, bottomLeft: List[List[int]], topRight: List[List[int]]
-    ) -> int:
+    def largestSquareArea(self, bottomLeft: List[List[int]], topRight: List[List[int]]) -> int:
         n = len(bottomLeft)
         max_side = 0
 
@@ -20,6 +18,6 @@ class Solution:
                 if x1 < x2 and y1 < y2:
                     side = min(x2 - x1, y2 - y1)
                     max_side = max(max_side, side)
-
+        
         return max_side * max_side
     

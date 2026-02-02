@@ -1,30 +1,31 @@
-# Time:O(n × 2^n), Space:O(n × 2^n)
+# Time:O(n*k), Space:O(n)
 
 from typing import List
 
 class Solution:
     def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:
         word_set = set(wordDict)
-        memo = {}
+        memo = {} # start_idx -> list of sentences
 
-        def backtracking(start):
+        def dfs(start):
+            if start == len(s):
+                return [""]
+            
             if start in memo:
                 return memo[start]
-
-            if start == len(s):
-                return [[]]
-
+            
             res = []
-
             for end in range(start + 1, len(s) + 1):
                 word = s[start:end]
                 if word in word_set:
-                    sub_res = backtracking(end)
-                    for sub in sub_res:
-                        res.append([word] + sub)
-
+                    # from end, which sub can form the valid sentence
+                    suffix = dfs(end)
+                    for suf in suffix:
+                        if suf:
+                            res.append(word + " " + suf)
+                        else:
+                            res.append(word)
             memo[start] = res
             return res
 
-        sentences = backtracking(0)
-        return [" ".join(w) for w in sentences]
+        return dfs(0)
