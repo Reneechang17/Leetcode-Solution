@@ -8,23 +8,23 @@ class Node:
         self.neighbors = neighbors if neighbors is not None else []
 
 class Solution:
-    def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
+    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node:
             return None
+        
+        vis = {}
 
-        old_to_new = {}
+        def dfs(n):
+            if n in vis:
+                return vis[n]
+            
+            copy = Node(n.val)
+            vis[n] = copy
 
-        def dfs(node):
-            if node in old_to_new:
-                return old_to_new[node]
-
-            new_node = Node(node.val)
-            old_to_new[node] = new_node
-
-            for neighbor in node.neighbors:
-                new_node.neighbors.append(dfs(neighbor))
-
-            return new_node
-
+            for nei in n.neighbors:
+                copy.neighbors.append(dfs(nei))
+            
+            return copy
+        
         return dfs(node)
     

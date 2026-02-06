@@ -1,5 +1,3 @@
-# Time:O(n), Space:O(n)
-
 from collections import deque
 
 class Node:
@@ -9,6 +7,34 @@ class Node:
         self.right = right
         self.next = next
 
+# Time:O(n), Space:O(1)
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        if not root:
+            return None
+        
+        cur = root
+
+        while cur:
+            dummy = Node(0)
+            tail = dummy
+
+            while cur:
+                if cur.left:
+                    tail.next = cur.left
+                    tail = tail.next
+                
+                if cur.right:
+                    tail.next = cur.right
+                    tail = tail.next
+                
+                cur = cur.next
+            
+            cur = dummy.next
+        
+        return root
+
+# Time:O(n), Space:O(n)
 class Solution:
     def connect(self, root: "Node") -> "Node":
         if not root:
@@ -20,7 +46,7 @@ class Solution:
             size = len(que)
             prev = None
 
-            for i in range(size):
+            for _ in range(size):
                 node = que.popleft()
                 if prev:
                     prev.next = node
@@ -30,5 +56,7 @@ class Solution:
                     que.append(node.left)
                 if node.right:
                     que.append(node.right)
+            
+            prev.next = None
 
         return root

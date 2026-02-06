@@ -1,25 +1,22 @@
-# Medium
-# OrderDict
-# https://leetcode.cn/problems/first-unique-number/
-
-from typing import *
-from collections import Counter
+from typing import List
+from collections import defaultdict, deque
 
 class FirstUnique:
-    
+
     def __init__(self, nums: List[int]):
-        self.dict = {}
-        self.cnt = Counter(nums)
+        self.count = defaultdict(int)
+        self.que = deque()
         for x in nums:
-            if self.cnt[x] == 1:
-                self.dict[x] = None
-
+            self.add(x)
+    
+    # O(1)
     def showFirstUnique(self) -> int:
-        return next(iter(self.dict)) if self.dict else -1
-
+        while self.que and self.count[self.que[0]] > 1:
+            self.que.popleft()
+        
+        return self.que[0] if self.que else -1
+    
+    # O(1)
     def add(self, value: int) -> None:
-        if self.cnt[value] == 0:
-            self.dict[value] = None
-        elif self.cnt[value] == 1:
-            self.dict.pop(value, None)
-        self.cnt[value] += 1
+        self.count[value] += 1
+        self.que.append(value)
