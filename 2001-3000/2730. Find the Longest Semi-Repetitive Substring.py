@@ -1,18 +1,22 @@
-# Time:O(n²), Space:O(1)
+# Time:O(n), Space:O(1)
 
 class Solution:
     def longestSemiRepetitiveSubstring(self, s: str) -> int:
         n = len(s)
-        ans = 0
+        left = 0
+        ans = 1
+        pair_cnt = 0
 
-        for i in range(n):
-            cnt = 0
-            for j in range(i, n):
-                if j > i and s[j] == s[j - 1]:
-                    cnt += 1
-                if cnt > 1:
-                    break
-                ans = max(ans, j - i + 1)
+        for right in range(1, n):
+            if s[right] == s[right - 1]:
+                pair_cnt += 1
+            
+            while pair_cnt > 1:
+                if s[left] == s[left + 1]:
+                    pair_cnt -= 1
+                left += 1
+            
+            ans = max(ans, right - left + 1)
         
         return ans
     
