@@ -4,27 +4,29 @@ from typing import List
 
 class Solution:
     def maximumCount(self, nums: List[int]) -> int:
-        def first_non_neg():
-            l, r = 0, len(nums)
-            while l < r:
-                mid = (l + r) // 2
-                if nums[mid] < 0:
-                    l = mid + 1
-                else:
-                    r = mid
-            return l
+        n = len(nums)
 
-        def first_pos():
-            l, r = 0, len(nums)
-            while l < r:
-                mid = (l + r) // 2
-                if nums[mid] <= 0:
-                    l = mid + 1
-                else:
-                    r = mid
-            return l
-        
-        neg_count = first_non_neg()
-        pos_count = len(nums) - first_pos()
-        return max(neg_count, pos_count)
+        # find first >= 0
+        # 负数的右边界
+        left, right = 0, n
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] < 0:
+                left = mid + 1
+            else:
+                right = mid
+        neg_cnt = left
+
+        # find first > 0
+        # 正数的左边界
+        left, right = 0, n
+        while left < right:
+            mid = (left + right) // 2
+            if nums[mid] <= 0:
+                left = mid + 1
+            else:
+                right = mid
+        pos_cnt = n - left
+
+        return max(neg_cnt, pos_cnt)
     
