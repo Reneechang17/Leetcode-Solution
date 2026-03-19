@@ -9,8 +9,7 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        self.cnt = 0
+    def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
         self.ans = 0
 
         def inorder(node):
@@ -18,12 +17,8 @@ class Solution:
                 return
             
             inorder(node.left)
-            self.cnt += 1
-            
-            if self.cnt == k:
-                self.ans = node.val
-                return
-            
+            if low <= node.val <= high:
+                self.ans += node.val
             inorder(node.right)
 
         inorder(root)
