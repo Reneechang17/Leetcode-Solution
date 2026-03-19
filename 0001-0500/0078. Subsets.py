@@ -1,19 +1,20 @@
-# Time:O(n * 2^n), Space:O(n)
+# Time:O(2ⁿ × n), Space:O(n)
 
 from typing import List
 
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         res = []
+        path = []
 
-        def backtracking(index, path):
+        def backtracking(start):
             res.append(path[:])
-
-            for i in range(index, len(nums)):
+            
+            for i in range(start, len(nums)):
                 path.append(nums[i])
-                backtracking(i + 1, path)
+                backtracking(i + 1)
                 path.pop()
-
-        backtracking(0, [])
+                
+        backtracking(0)
         return res
     
